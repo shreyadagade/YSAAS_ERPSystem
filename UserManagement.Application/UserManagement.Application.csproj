@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Contracts\" />
   </ItemGroup>
 
 </Project>
