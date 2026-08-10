@@ -1,10 +1,10 @@
 <Solution>
   <Folder Name="/Services/" />
   <Folder Name="/Services/LeadManagementService/">
-    <Project Path="LeadManagementService/LeadManagement.API/LeadManagement.API.csproj" />
-    <Project Path="LeadManagementService/LeadManagement.Application/LeadManagement.Application.csproj" />
-    <Project Path="LeadManagementService/LeadManagement.Domain/LeadManagement.Domain.csproj" />
-    <Project Path="LeadManagementService/LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" />
+    <Project Path="LeadManagement.API/LeadManagement.API.csproj" Id="431711fa-759f-4745-9616-604d7bc85d44" />
+    <Project Path="LeadManagement.Application/LeadManagement.Application.csproj" Id="be1474d4-7a11-4063-ab17-adfe27d0fe56" />
+    <Project Path="LeadManagement.Domain/LeadManagement.Domain.csproj" Id="fc70fd68-1bc7-4e5e-bc1c-ea0b3698b716" />
+    <Project Path="LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" Id="15f0fdfa-447c-43a2-973f-367b939b42d2" />
   </Folder>
   <Folder Name="/Services/UserManagement/">
     <Project Path="UserManagement.API/UserManagement.API.csproj" />

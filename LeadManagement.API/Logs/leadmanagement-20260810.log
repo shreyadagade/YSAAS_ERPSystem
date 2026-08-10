@@ -1,0 +1,909 @@
+2026-08-10 16:53:43.307 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 16:53:43.359 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 16:53:43.683 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 16:53:43.697 +05:30 [INF] Hosting environment: Development
+2026-08-10 16:53:43.698 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 16:53:44.366 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 16:53:44.456 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 404 null null 105.1804ms
+2026-08-10 16:53:44.509 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7134/swagger/index.html, Response status code: 404
+2026-08-10 16:56:45.284 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 16:56:45.328 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 16:56:45.414 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 16:56:45.415 +05:30 [INF] Hosting environment: Development
+2026-08-10 16:56:45.416 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 16:56:46.809 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 16:56:47.044 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 200 null text/html;charset=utf-8 254.6346ms
+2026-08-10 16:56:47.061 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 16:56:47.061 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 16:56:47.061 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 16:56:47.061 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 16:56:47.062 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 16:56:47.072 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 200 null application/javascript;charset=utf-8 9.022ms
+2026-08-10 16:56:47.075 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 16:56:47.084 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 200 152 text/css 23.366ms
+2026-08-10 16:56:47.106 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 45.0451ms
+2026-08-10 16:56:47.110 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 200 26499 text/css 49.3423ms
+2026-08-10 16:56:47.125 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 200 77731 text/javascript 50.7663ms
+2026-08-10 16:56:47.144 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 200 421507 text/javascript 82.4178ms
+2026-08-10 16:56:47.355 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 16:56:47.376 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/favicon-32x32.png - null null
+2026-08-10 16:56:47.381 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 25.587ms
+2026-08-10 16:56:47.409 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/favicon-32x32.png - 200 628 image/png 32.083ms
+2026-08-10 16:56:54.747 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 16:56:54.749 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 2.1159ms
+2026-08-10 16:56:54.951 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 16:56:54.960 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 8.2081ms
+2026-08-10 16:59:19.486 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead - null null
+2026-08-10 16:59:19.495 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 16:59:19.524 +05:30 [INF] Route matched with {action = "GetAll", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 16:59:19.532 +05:30 [INF] Getting all active leads.
+2026-08-10 17:05:05.173 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 17:05:05.225 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 17:05:05.380 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 17:05:05.382 +05:30 [INF] Hosting environment: Development
+2026-08-10 17:05:05.383 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 17:05:05.712 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 17:05:05.884 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 304 null null 196.3687ms
+2026-08-10 17:05:05.902 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 17:05:05.902 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 17:05:05.902 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 17:05:05.902 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 17:05:05.902 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 17:05:05.929 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 17:05:05.932 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 304 null null 2.3322ms
+2026-08-10 17:05:05.932 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 304 null null 30.2882ms
+2026-08-10 17:05:05.933 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 304 null null 30.4705ms
+2026-08-10 17:05:05.933 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 304 null null 30.6578ms
+2026-08-10 17:05:05.946 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 43.2986ms
+2026-08-10 17:05:05.958 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 304 null null 55.5932ms
+2026-08-10 17:05:06.067 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 17:05:06.094 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 27.0182ms
+2026-08-10 17:05:12.147 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead - null null
+2026-08-10 17:05:12.159 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:05:12.187 +05:30 [INF] Route matched with {action = "GetAll", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:05:12.194 +05:30 [INF] Getting all active leads.
+2026-08-10 17:05:12.736 +05:30 [INF] Retrieved 0 leads.
+2026-08-10 17:05:12.750 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblLead, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.LeadDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:05:12.774 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API) in 581.2499ms
+2026-08-10 17:05:12.775 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:05:12.777 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/Lead - 200 null application/json; charset=utf-8 629.8311ms
+2026-08-10 17:06:32.824 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/Lead - application/json 218
+2026-08-10 17:06:32.830 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.Create (LeadManagement.API)'
+2026-08-10 17:06:32.844 +05:30 [INF] Route matched with {action = "Create", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.LeadDto) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:06:32.897 +05:30 [INF] Creating new lead. Email: minakshi@gmail.com, Mobile: 9876543210
+2026-08-10 17:06:33.203 +05:30 [INF] Lead created successfully. LeadId: 1
+2026-08-10 17:06:33.205 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:06:33.211 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.Create (LeadManagement.API) in 364.2764ms
+2026-08-10 17:06:33.212 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.Create (LeadManagement.API)'
+2026-08-10 17:06:33.213 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/Lead - 200 null application/json; charset=utf-8 388.7289ms
+2026-08-10 17:06:38.941 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/Lead - application/json 218
+2026-08-10 17:06:38.949 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.Create (LeadManagement.API)'
+2026-08-10 17:06:38.951 +05:30 [INF] Route matched with {action = "Create", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.LeadDto) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:06:38.958 +05:30 [INF] Creating new lead. Email: minakshi@gmail.com, Mobile: 9876543210
+2026-08-10 17:06:38.990 +05:30 [WRN] Lead creation failed: Duplicate email minakshi@gmail.com
+2026-08-10 17:06:46.436 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.Create (LeadManagement.API) in 7482.7933ms
+2026-08-10 17:06:46.440 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.Create (LeadManagement.API)'
+2026-08-10 17:06:46.472 +05:30 [WRN] Validation error. Path: /api/Lead
+System.ArgumentException: A lead with this email address already exists.
+   at LeadManagement.Application.Services.LeadService.CreateAsync(LeadDto lead) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\LeadService.cs:line 88
+   at LeadManagement.API.Controllers.LeadController.Create(LeadDto lead) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\LeadController.cs:line 45
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+2026-08-10 17:06:46.524 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/Lead - 400 null application/json 7582.4944ms
+2026-08-10 17:07:38.899 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead/1 - null null
+2026-08-10 17:07:38.903 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetById (LeadManagement.API)'
+2026-08-10 17:07:38.912 +05:30 [INF] Route matched with {action = "GetById", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(Int32) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:07:38.918 +05:30 [INF] Getting lead by ID. LeadId: 1
+2026-08-10 17:07:39.098 +05:30 [INF] Executing OkObjectResult, writing value of type 'LeadManagement.Application.DTOs.LeadDto'.
+2026-08-10 17:07:39.103 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.GetById (LeadManagement.API) in 188.5505ms
+2026-08-10 17:07:39.105 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.GetById (LeadManagement.API)'
+2026-08-10 17:07:39.107 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/Lead/1 - 200 null application/json; charset=utf-8 208.5979ms
+2026-08-10 17:16:38.491 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead - null null
+2026-08-10 17:16:38.503 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:16:38.507 +05:30 [INF] Route matched with {action = "GetAll", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:16:38.510 +05:30 [INF] Getting all active leads.
+2026-08-10 17:16:38.681 +05:30 [INF] Retrieved 1 leads.
+2026-08-10 17:16:38.683 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblLead, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.LeadDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:16:38.685 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API) in 175.8594ms
+2026-08-10 17:16:38.687 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:16:38.688 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/Lead - 200 null application/json; charset=utf-8 197.4854ms
+2026-08-10 17:20:14.601 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 17:20:14.658 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 17:20:14.912 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 17:20:14.914 +05:30 [INF] Hosting environment: Development
+2026-08-10 17:20:14.914 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 17:20:15.702 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 17:20:15.870 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 304 null null 180.6661ms
+2026-08-10 17:20:15.889 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 17:20:15.889 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 17:20:15.889 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 17:20:15.889 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 17:20:15.889 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 17:20:15.918 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 17:20:15.922 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 304 null null 32.5931ms
+2026-08-10 17:20:15.922 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 304 null null 32.8452ms
+2026-08-10 17:20:15.922 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 304 null null 32.837ms
+2026-08-10 17:20:15.922 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 304 null null 32.994ms
+2026-08-10 17:20:15.923 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 304 null null 5.1871ms
+2026-08-10 17:20:15.930 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 41.3754ms
+2026-08-10 17:20:16.038 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 17:20:16.070 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 31.9834ms
+2026-08-10 17:20:22.235 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead - null null
+2026-08-10 17:20:22.248 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:20:22.276 +05:30 [INF] Route matched with {action = "GetAll", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:20:22.286 +05:30 [INF] Getting all active leads.
+2026-08-10 17:20:22.779 +05:30 [INF] Retrieved 1 leads.
+2026-08-10 17:20:22.791 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblLead, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.LeadDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:20:22.821 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API) in 539.7067ms
+2026-08-10 17:20:22.823 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:20:22.825 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/Lead - 200 null application/json; charset=utf-8 590.227ms
+2026-08-10 17:20:38.124 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead/1 - null null
+2026-08-10 17:20:38.129 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetById (LeadManagement.API)'
+2026-08-10 17:20:38.144 +05:30 [INF] Route matched with {action = "GetById", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(Int32) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:20:38.161 +05:30 [INF] Getting lead by ID. LeadId: 1
+2026-08-10 17:20:38.196 +05:30 [INF] Executing OkObjectResult, writing value of type 'LeadManagement.Application.DTOs.LeadDto'.
+2026-08-10 17:20:38.198 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.GetById (LeadManagement.API) in 51.1794ms
+2026-08-10 17:20:38.202 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.GetById (LeadManagement.API)'
+2026-08-10 17:20:38.204 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/Lead/1 - 200 null application/json; charset=utf-8 80.3494ms
+2026-08-10 17:21:00.245 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7134/api/Lead/1 - application/json 372
+2026-08-10 17:21:00.249 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.Update (LeadManagement.API)'
+2026-08-10 17:21:00.257 +05:30 [INF] Route matched with {action = "Update", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(Int32, LeadManagement.Application.DTOs.LeadDto) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:21:00.287 +05:30 [INF] Updating lead. LeadId: 1
+2026-08-10 17:21:22.639 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 17:21:22.688 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 17:21:23.126 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 17:21:23.183 +05:30 [INF] Hosting environment: Development
+2026-08-10 17:21:23.184 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 17:21:23.192 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 17:21:23.344 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 304 null null 158.5049ms
+2026-08-10 17:21:23.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 17:21:23.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 17:21:23.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 17:21:23.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 17:21:23.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 17:21:23.383 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 17:21:23.386 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 304 null null 2.7928ms
+2026-08-10 17:21:23.390 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 304 null null 21.5758ms
+2026-08-10 17:21:23.390 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 304 null null 21.5303ms
+2026-08-10 17:21:23.390 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 304 null null 21.7347ms
+2026-08-10 17:21:23.390 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 304 null null 21.7094ms
+2026-08-10 17:21:23.397 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 28.9056ms
+2026-08-10 17:21:23.518 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 17:21:23.540 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 21.7559ms
+2026-08-10 17:21:57.355 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead - null null
+2026-08-10 17:21:57.368 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:21:57.405 +05:30 [INF] Route matched with {action = "GetAll", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:21:57.416 +05:30 [INF] Getting all active leads.
+2026-08-10 17:21:57.933 +05:30 [INF] Retrieved 1 leads.
+2026-08-10 17:21:57.945 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblLead, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.LeadDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:21:57.976 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API) in 565.0355ms
+2026-08-10 17:21:57.978 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:21:57.982 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/Lead - 200 null application/json; charset=utf-8 627.0511ms
+2026-08-10 17:22:18.304 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7134/api/Lead/1 - application/json 368
+2026-08-10 17:22:18.309 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.Update (LeadManagement.API)'
+2026-08-10 17:22:18.325 +05:30 [INF] Route matched with {action = "Update", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(Int32, LeadManagement.Application.DTOs.LeadDto) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:22:18.369 +05:30 [INF] Updating lead. LeadId: 1
+2026-08-10 17:22:18.465 +05:30 [INF] Lead updated successfully. LeadId: 1
+2026-08-10 17:22:18.467 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:22:18.471 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.Update (LeadManagement.API) in 143.2447ms
+2026-08-10 17:22:18.472 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.Update (LeadManagement.API)'
+2026-08-10 17:22:18.473 +05:30 [INF] Request finished HTTP/2 PUT https://localhost:7134/api/Lead/1 - 200 null application/json; charset=utf-8 168.86ms
+2026-08-10 17:22:33.206 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/Lead/1 - null null
+2026-08-10 17:22:33.209 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.Delete (LeadManagement.API)'
+2026-08-10 17:22:33.217 +05:30 [INF] Route matched with {action = "Delete", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:22:33.224 +05:30 [INF] Deleting lead. LeadId: 1
+2026-08-10 17:22:33.250 +05:30 [INF] Lead deleted successfully. LeadId: 1
+2026-08-10 17:22:33.251 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:22:33.254 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.Delete (LeadManagement.API) in 34.1323ms
+2026-08-10 17:22:33.256 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.Delete (LeadManagement.API)'
+2026-08-10 17:22:33.257 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/Lead/1 - 200 null application/json; charset=utf-8 51.2078ms
+2026-08-10 17:22:41.624 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7134/api/Lead/restore/1 - null 0
+2026-08-10 17:22:41.627 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.Restore (LeadManagement.API)'
+2026-08-10 17:22:41.636 +05:30 [INF] Route matched with {action = "Restore", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Restore(Int32) on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:22:41.640 +05:30 [INF] Restoring lead. LeadId: 1
+2026-08-10 17:22:41.667 +05:30 [INF] Lead restored successfully. LeadId: 1
+2026-08-10 17:22:41.668 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:22:41.670 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.Restore (LeadManagement.API) in 31.09ms
+2026-08-10 17:22:41.671 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.Restore (LeadManagement.API)'
+2026-08-10 17:22:41.672 +05:30 [INF] Request finished HTTP/2 PUT https://localhost:7134/api/Lead/restore/1 - 200 null application/json; charset=utf-8 48.4352ms
+2026-08-10 17:22:48.918 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/Lead - null null
+2026-08-10 17:22:48.929 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:22:48.931 +05:30 [INF] Route matched with {action = "GetAll", controller = "Lead"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.LeadController (LeadManagement.API).
+2026-08-10 17:22:48.936 +05:30 [INF] Getting all active leads.
+2026-08-10 17:22:48.962 +05:30 [INF] Retrieved 1 leads.
+2026-08-10 17:22:48.963 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblLead, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.LeadDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:22:48.964 +05:30 [INF] Executed action LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API) in 28.0833ms
+2026-08-10 17:22:48.965 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.LeadController.GetAll (LeadManagement.API)'
+2026-08-10 17:22:48.966 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/Lead - 200 null application/json; charset=utf-8 47.2636ms
+2026-08-10 17:23:22.148 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:23:22.156 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:23:22.175 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:23:22.185 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:23:22.242 +05:30 [INF] Retrieved 0 training courses.
+2026-08-10 17:23:22.243 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:23:22.248 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 70.1707ms
+2026-08-10 17:23:22.250 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:23:22.251 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 103.6875ms
+2026-08-10 17:24:04.026 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 216
+2026-08-10 17:24:04.030 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:24:04.040 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:24:04.050 +05:30 [INF] Creating training course. CourseName: python
+2026-08-10 17:24:04.163 +05:30 [INF] Training course created successfully. CourseId: 1
+2026-08-10 17:24:04.164 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:24:04.167 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 125.2062ms
+2026-08-10 17:24:04.170 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:24:04.171 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 145.1209ms
+2026-08-10 17:24:15.786 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse/1 - null null
+2026-08-10 17:24:15.790 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API)'
+2026-08-10 17:24:15.799 +05:30 [INF] Route matched with {action = "GetById", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:24:15.805 +05:30 [INF] Getting training course by ID. CourseId: 1
+2026-08-10 17:24:15.835 +05:30 [INF] Executing OkObjectResult, writing value of type 'LeadManagement.Application.DTOs.TrainingCourseDto'.
+2026-08-10 17:24:15.837 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API) in 36.0586ms
+2026-08-10 17:24:15.839 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API)'
+2026-08-10 17:24:15.840 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse/1 - 200 null application/json; charset=utf-8 53.8127ms
+2026-08-10 17:24:31.985 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse/1 - null null
+2026-08-10 17:24:31.990 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API)'
+2026-08-10 17:24:31.991 +05:30 [INF] Route matched with {action = "GetById", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:24:31.992 +05:30 [INF] Getting training course by ID. CourseId: 1
+2026-08-10 17:24:32.016 +05:30 [INF] Executing OkObjectResult, writing value of type 'LeadManagement.Application.DTOs.TrainingCourseDto'.
+2026-08-10 17:24:32.017 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API) in 25.4458ms
+2026-08-10 17:24:32.019 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API)'
+2026-08-10 17:24:32.020 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse/1 - 200 null application/json; charset=utf-8 35.6489ms
+2026-08-10 17:27:10.150 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 17:27:10.268 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 17:27:10.445 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 17:27:10.533 +05:30 [INF] Hosting environment: Development
+2026-08-10 17:27:10.533 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 17:27:10.575 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 17:27:10.743 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 304 null null 178.1215ms
+2026-08-10 17:27:10.765 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 17:27:10.765 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 17:27:10.765 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 17:27:10.765 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 17:27:10.765 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 17:27:10.780 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 17:27:10.783 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 304 null null 2.8364ms
+2026-08-10 17:27:10.797 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 304 null null 31.8502ms
+2026-08-10 17:27:10.797 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 304 null null 32.0546ms
+2026-08-10 17:27:10.797 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 304 null null 32.1876ms
+2026-08-10 17:27:10.797 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 304 null null 32.1698ms
+2026-08-10 17:27:10.803 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 37.7668ms
+2026-08-10 17:27:10.916 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 17:27:10.949 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 32.9038ms
+2026-08-10 17:27:20.210 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:27:20.222 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:27:20.248 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:27:20.256 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:27:20.834 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:27:20.848 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:27:20.875 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 621.228ms
+2026-08-10 17:27:20.878 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:27:20.881 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 670.8127ms
+2026-08-10 17:27:46.012 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 216
+2026-08-10 17:27:46.017 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:27:46.032 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:27:46.074 +05:30 [INF] Creating training course. CourseName: Java
+2026-08-10 17:28:17.001 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 30966.0595ms
+2026-08-10 17:28:17.005 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:28:17.037 +05:30 [ERR] Unhandled exception. Path: /api/TrainingCourse
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid Type.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__270_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryRowAsync[T](IDbConnection cnn, Row row, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 489
+   at LeadManagement.Infrastructure.Repositories.TrainingCourseRepository.CourseNameExistsAsync(String courseName, Nullable`1 courseId) in C:\YSAAS_ERPSystem\LeadManagement.Infrastructure\Repositories\TrainingCourseRepository.cs:line 139
+   at LeadManagement.Application.Services.TrainingCourseService.CreateAsync(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 49
+   at LeadManagement.API.Controllers.TrainingCourseController.Create(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 46
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+ClientConnectionId:abaa272d-21e6-4855-bf75-415bcbddefd1
+Error Number:50000,State:1,Class:16
+2026-08-10 17:28:17.111 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 500 null application/json 31098.9529ms
+2026-08-10 17:28:25.123 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 45
+2026-08-10 17:28:25.127 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:28:25.128 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:28:25.138 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-08-10 17:28:25.157 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 27.2233ms
+2026-08-10 17:28:25.159 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:28:25.160 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 400 null application/problem+json; charset=utf-8 37.278ms
+2026-08-10 17:29:00.001 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 43
+2026-08-10 17:29:00.010 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:29:00.011 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:29:00.012 +05:30 [INF] Creating training course. CourseName: JAVA
+2026-08-10 17:32:33.221 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 213207.481ms
+2026-08-10 17:32:33.226 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:32:33.281 +05:30 [ERR] Unhandled exception. Path: /api/TrainingCourse
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid Type.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__270_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryRowAsync[T](IDbConnection cnn, Row row, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 489
+   at LeadManagement.Infrastructure.Repositories.TrainingCourseRepository.CourseNameExistsAsync(String courseName, Nullable`1 courseId) in C:\YSAAS_ERPSystem\LeadManagement.Infrastructure\Repositories\TrainingCourseRepository.cs:line 139
+   at LeadManagement.Application.Services.TrainingCourseService.CreateAsync(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 49
+   at LeadManagement.API.Controllers.TrainingCourseController.Create(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 46
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+ClientConnectionId:abaa272d-21e6-4855-bf75-415bcbddefd1
+Error Number:50000,State:1,Class:16
+2026-08-10 17:32:33.293 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 500 null application/json 213292.559ms
+2026-08-10 17:33:10.696 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 29
+2026-08-10 17:33:10.698 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:33:10.699 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:33:10.701 +05:30 [INF] Creating training course. CourseName: JAVA
+2026-08-10 17:33:14.237 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 3536.9144ms
+2026-08-10 17:33:14.240 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:33:14.271 +05:30 [ERR] Unhandled exception. Path: /api/TrainingCourse
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid Type.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__270_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryRowAsync[T](IDbConnection cnn, Row row, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 489
+   at LeadManagement.Infrastructure.Repositories.TrainingCourseRepository.CourseNameExistsAsync(String courseName, Nullable`1 courseId) in C:\YSAAS_ERPSystem\LeadManagement.Infrastructure\Repositories\TrainingCourseRepository.cs:line 139
+   at LeadManagement.Application.Services.TrainingCourseService.CreateAsync(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 49
+   at LeadManagement.API.Controllers.TrainingCourseController.Create(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 46
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+ClientConnectionId:abaa272d-21e6-4855-bf75-415bcbddefd1
+Error Number:50000,State:1,Class:16
+2026-08-10 17:33:14.282 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 500 null application/json 3586.0457ms
+2026-08-10 17:33:20.988 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 17:33:21.042 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 17:33:21.323 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 17:33:21.324 +05:30 [INF] Hosting environment: Development
+2026-08-10 17:33:21.324 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 17:33:21.970 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 17:33:22.143 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 304 null null 184.1395ms
+2026-08-10 17:33:22.169 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 17:33:22.169 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 17:33:22.169 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 17:33:22.169 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 17:33:22.169 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 17:33:22.187 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 17:33:22.200 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 304 null null 12.7923ms
+2026-08-10 17:33:22.202 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 304 null null 33.0639ms
+2026-08-10 17:33:22.202 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 304 null null 33.1119ms
+2026-08-10 17:33:22.202 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 304 null null 32.9554ms
+2026-08-10 17:33:22.202 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 304 null null 32.9686ms
+2026-08-10 17:33:22.210 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 40.9204ms
+2026-08-10 17:33:22.333 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 17:33:22.359 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 26.802ms
+2026-08-10 17:33:32.272 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:33:32.285 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:33:32.309 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:33:32.317 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:33:32.874 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:33:32.886 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:33:32.911 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 595.7144ms
+2026-08-10 17:33:32.913 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:33:32.915 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 642.5065ms
+2026-08-10 17:33:58.079 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:33:58.089 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:33:58.090 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:33:58.095 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:33:58.128 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:33:58.130 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:33:58.131 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 36.7009ms
+2026-08-10 17:33:58.132 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:33:58.133 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 53.9743ms
+2026-08-10 17:36:28.336 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:36:28.346 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:36:28.349 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:36:28.356 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:36:28.386 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:36:28.387 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:36:28.388 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 33.905ms
+2026-08-10 17:36:28.389 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:36:28.390 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 54.0296ms
+2026-08-10 17:36:46.605 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/0 - null null
+2026-08-10 17:36:46.609 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:36:46.626 +05:30 [INF] Route matched with {action = "Delete", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:36:46.643 +05:30 [INF] Deleting training course. CourseId: 0
+2026-08-10 17:36:51.356 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API) in 4727.9143ms
+2026-08-10 17:36:51.358 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:36:51.373 +05:30 [WRN] Validation error. Path: /api/TrainingCourse/0
+System.ArgumentException: Invalid course ID.
+   at LeadManagement.Application.Services.TrainingCourseService.DeleteAsync(Int32 courseId) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 142
+   at LeadManagement.API.Controllers.TrainingCourseController.Delete(Int32 id) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 75
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+2026-08-10 17:36:51.403 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/0 - 400 null application/json 4798.4753ms
+2026-08-10 17:37:04.807 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/1 - null null
+2026-08-10 17:37:04.811 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:37:04.812 +05:30 [INF] Route matched with {action = "Delete", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:37:04.814 +05:30 [INF] Deleting training course. CourseId: 1
+2026-08-10 17:37:04.851 +05:30 [INF] Training course deleted successfully. CourseId: 1
+2026-08-10 17:37:04.853 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:37:04.857 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API) in 43.5782ms
+2026-08-10 17:37:04.859 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:37:04.860 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/1 - 200 null application/json; charset=utf-8 53.1467ms
+2026-08-10 17:37:16.293 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:37:16.297 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:37:16.298 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:37:16.300 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:37:16.332 +05:30 [INF] Retrieved 0 training courses.
+2026-08-10 17:37:16.334 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:37:16.336 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 35.8104ms
+2026-08-10 17:37:16.337 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:37:16.338 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 44.9452ms
+2026-08-10 17:37:45.482 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 33
+2026-08-10 17:37:45.487 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:37:45.496 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:37:45.521 +05:30 [INF] Creating training course. CourseName: string
+2026-08-10 17:38:04.224 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 18724.5408ms
+2026-08-10 17:38:04.226 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:38:04.255 +05:30 [ERR] Unhandled exception. Path: /api/TrainingCourse
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid Type.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__270_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryRowAsync[T](IDbConnection cnn, Row row, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 489
+   at LeadManagement.Infrastructure.Repositories.TrainingCourseRepository.CourseNameExistsAsync(String courseName, Nullable`1 courseId) in C:\YSAAS_ERPSystem\LeadManagement.Infrastructure\Repositories\TrainingCourseRepository.cs:line 139
+   at LeadManagement.Application.Services.TrainingCourseService.CreateAsync(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 49
+   at LeadManagement.API.Controllers.TrainingCourseController.Create(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 46
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+ClientConnectionId:50a76c63-0da9-4c06-a4cd-f41bbfda8cf5
+Error Number:50000,State:1,Class:16
+2026-08-10 17:38:04.272 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 500 null application/json 18790.4395ms
+2026-08-10 17:38:13.493 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 31
+2026-08-10 17:38:13.495 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:38:13.505 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:38:13.507 +05:30 [INF] Creating training course. CourseName: java
+2026-08-10 17:39:01.418 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 47911.7216ms
+2026-08-10 17:39:01.451 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:39:01.476 +05:30 [ERR] Unhandled exception. Path: /api/TrainingCourse
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid Type.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__270_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryRowAsync[T](IDbConnection cnn, Row row, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 489
+   at LeadManagement.Infrastructure.Repositories.TrainingCourseRepository.CourseNameExistsAsync(String courseName, Nullable`1 courseId) in C:\YSAAS_ERPSystem\LeadManagement.Infrastructure\Repositories\TrainingCourseRepository.cs:line 139
+   at LeadManagement.Application.Services.TrainingCourseService.CreateAsync(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 49
+   at LeadManagement.API.Controllers.TrainingCourseController.Create(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 46
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+ClientConnectionId:50a76c63-0da9-4c06-a4cd-f41bbfda8cf5
+Error Number:50000,State:1,Class:16
+2026-08-10 17:39:01.488 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 500 null application/json 47995.4024ms
+2026-08-10 17:40:38.156 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 17:40:38.204 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 17:40:38.507 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 17:40:38.510 +05:30 [INF] Hosting environment: Development
+2026-08-10 17:40:38.510 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 17:40:39.157 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 17:40:39.323 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 304 null null 175.6443ms
+2026-08-10 17:40:39.347 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 17:40:39.347 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 17:40:39.347 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 17:40:39.347 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 17:40:39.347 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 17:40:39.366 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 17:40:39.371 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 304 null null 5.6219ms
+2026-08-10 17:40:39.374 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 304 null null 26.5678ms
+2026-08-10 17:40:39.380 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 33.5945ms
+2026-08-10 17:40:39.380 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 304 null null 33.6803ms
+2026-08-10 17:40:39.382 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 304 null null 34.9469ms
+2026-08-10 17:40:39.390 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 304 null null 42.9097ms
+2026-08-10 17:40:39.542 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 17:40:39.590 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 47.8162ms
+2026-08-10 17:42:01.713 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 33
+2026-08-10 17:42:01.726 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:42:01.758 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:42:01.805 +05:30 [INF] Creating training course. CourseName: python
+2026-08-10 17:42:09.492 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 7728.3054ms
+2026-08-10 17:42:09.495 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:42:09.527 +05:30 [ERR] Unhandled exception. Path: /api/TrainingCourse
+Microsoft.Data.SqlClient.SqlException (0x80131904): Violation of UNIQUE KEY constraint 'UQ__tbltrain__B5B2A66ABFD481D4'. Cannot insert duplicate key in object 'erpsystem.tbltraining_courses'. The duplicate key value is (python).
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__270_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryRowAsync[T](IDbConnection cnn, Row row, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 489
+   at LeadManagement.Infrastructure.Repositories.TrainingCourseRepository.InsertAsync(TblTrainingCourse course) in C:\YSAAS_ERPSystem\LeadManagement.Infrastructure\Repositories\TrainingCourseRepository.cs:line 39
+   at LeadManagement.Application.Services.TrainingCourseService.CreateAsync(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 65
+   at LeadManagement.API.Controllers.TrainingCourseController.Create(TrainingCourseDto course) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 46
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+ClientConnectionId:9b42317a-f4c5-4e24-ae7e-0eee3268e45c
+Error Number:2627,State:1,Class:14
+2026-08-10 17:42:09.563 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 500 null application/json 7849.9217ms
+2026-08-10 17:50:35.916 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 34
+2026-08-10 17:50:35.922 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:50:35.923 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:50:35.927 +05:30 [INF] Creating training course. CourseName: dot net
+2026-08-10 17:50:36.187 +05:30 [INF] Training course created successfully. CourseId: 3
+2026-08-10 17:50:36.194 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:50:36.202 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 276.7221ms
+2026-08-10 17:50:36.205 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:50:36.206 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 290.1485ms
+2026-08-10 17:50:46.676 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:50:46.693 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:50:46.705 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:50:46.710 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:50:46.758 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:50:46.760 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:50:46.766 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 59.4545ms
+2026-08-10 17:50:46.771 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:50:46.772 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 95.3454ms
+2026-08-10 17:51:10.719 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/1 - null null
+2026-08-10 17:51:10.724 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:10.733 +05:30 [INF] Route matched with {action = "Delete", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:51:10.739 +05:30 [INF] Deleting training course. CourseId: 1
+2026-08-10 17:51:10.765 +05:30 [INF] Training course deleted successfully. CourseId: 1
+2026-08-10 17:51:10.766 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:51:10.770 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API) in 34.2301ms
+2026-08-10 17:51:10.772 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:10.773 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/1 - 200 null application/json; charset=utf-8 54.4563ms
+2026-08-10 17:51:16.735 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/2 - null null
+2026-08-10 17:51:16.738 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:16.741 +05:30 [INF] Route matched with {action = "Delete", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:51:16.743 +05:30 [INF] Deleting training course. CourseId: 2
+2026-08-10 17:51:16.767 +05:30 [INF] Training course deleted successfully. CourseId: 2
+2026-08-10 17:51:16.769 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:51:16.770 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API) in 27.3182ms
+2026-08-10 17:51:16.772 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:16.773 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/2 - 200 null application/json; charset=utf-8 37.227ms
+2026-08-10 17:51:19.580 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/2 - null null
+2026-08-10 17:51:19.583 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:19.584 +05:30 [INF] Route matched with {action = "Delete", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:51:19.585 +05:30 [INF] Deleting training course. CourseId: 2
+2026-08-10 17:51:19.607 +05:30 [INF] Training course deleted successfully. CourseId: 2
+2026-08-10 17:51:19.609 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:51:19.610 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API) in 24.6249ms
+2026-08-10 17:51:19.611 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:19.612 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/2 - 200 null application/json; charset=utf-8 31.633ms
+2026-08-10 17:51:25.325 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/0 - null null
+2026-08-10 17:51:25.337 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:25.342 +05:30 [INF] Route matched with {action = "Delete", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:51:25.345 +05:30 [INF] Deleting training course. CourseId: 0
+2026-08-10 17:51:30.158 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API) in 4813.9395ms
+2026-08-10 17:51:30.162 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 17:51:30.175 +05:30 [WRN] Validation error. Path: /api/TrainingCourse/0
+System.ArgumentException: Invalid course ID.
+   at LeadManagement.Application.Services.TrainingCourseService.DeleteAsync(Int32 courseId) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\TrainingCourseService.cs:line 142
+   at LeadManagement.API.Controllers.TrainingCourseController.Delete(Int32 id) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\TrainingCourseController.cs:line 75
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+2026-08-10 17:51:30.182 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/0 - 400 null application/json 4856.5831ms
+2026-08-10 17:51:38.027 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:51:38.032 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:51:38.034 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:51:38.036 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:51:38.059 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:51:38.061 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:51:38.062 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 25.9108ms
+2026-08-10 17:51:38.064 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:51:38.065 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 38.1847ms
+2026-08-10 17:51:39.315 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:51:39.319 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:51:39.320 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:51:39.322 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:51:39.397 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:51:39.399 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:51:39.400 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 78.1698ms
+2026-08-10 17:51:39.404 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:51:39.404 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 89.551ms
+2026-08-10 17:51:43.926 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:51:43.929 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:51:43.930 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:51:43.932 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:51:43.953 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:51:43.955 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:51:43.957 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 25.4467ms
+2026-08-10 17:51:43.959 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:51:43.960 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 34.6006ms
+2026-08-10 17:56:53.006 +05:30 [INF] Now listening on: https://localhost:7134
+2026-08-10 17:56:53.057 +05:30 [INF] Now listening on: http://localhost:5256
+2026-08-10 17:56:53.421 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-10 17:56:53.439 +05:30 [INF] Hosting environment: Development
+2026-08-10 17:56:53.440 +05:30 [INF] Content root path: C:\YSAAS_ERPSystem\LeadManagement.API
+2026-08-10 17:56:53.491 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.html - null null
+2026-08-10 17:56:53.653 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.html - 304 null null 169.2057ms
+2026-08-10 17:56:53.673 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - null null
+2026-08-10 17:56:53.673 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.css - null null
+2026-08-10 17:56:53.673 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - null null
+2026-08-10 17:56:53.674 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - null null
+2026-08-10 17:56:53.674 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - null null
+2026-08-10 17:56:53.724 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/index.js - null null
+2026-08-10 17:56:53.727 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.js - 304 null null 2.6755ms
+2026-08-10 17:56:53.729 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/index.css - 304 null null 55.8633ms
+2026-08-10 17:56:53.729 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-standalone-preset.js - 304 null null 55.706ms
+2026-08-10 17:56:53.729 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui.css - 304 null null 56.1605ms
+2026-08-10 17:56:53.731 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/swagger-ui-bundle.js - 304 null null 56.8824ms
+2026-08-10 17:56:53.736 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/_framework/aspnetcore-browser-refresh.js - 200 14941 application/javascript; charset=utf-8 62.0166ms
+2026-08-10 17:56:53.847 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - null null
+2026-08-10 17:56:53.871 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 24.7537ms
+2026-08-10 17:57:00.116 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:57:00.130 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:57:00.156 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:57:00.324 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:57:01.014 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 17:57:01.027 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:57:01.052 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 890.2697ms
+2026-08-10 17:57:01.056 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:57:01.058 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 941.9629ms
+2026-08-10 17:57:46.809 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 31
+2026-08-10 17:57:46.815 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:57:46.830 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:57:46.868 +05:30 [INF] Creating training course. CourseName: devops
+2026-08-10 17:57:47.029 +05:30 [INF] Training course created successfully. CourseId: 4
+2026-08-10 17:57:47.032 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:57:47.036 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 203.4595ms
+2026-08-10 17:57:47.038 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 17:57:47.039 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 230.2071ms
+2026-08-10 17:57:58.283 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse/4 - null null
+2026-08-10 17:57:58.290 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API)'
+2026-08-10 17:57:58.300 +05:30 [INF] Route matched with {action = "GetById", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:57:58.309 +05:30 [INF] Getting training course by ID. CourseId: 4
+2026-08-10 17:57:58.349 +05:30 [INF] Executing OkObjectResult, writing value of type 'LeadManagement.Application.DTOs.TrainingCourseDto'.
+2026-08-10 17:57:58.350 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API) in 48.6194ms
+2026-08-10 17:57:58.352 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetById (LeadManagement.API)'
+2026-08-10 17:57:58.353 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse/4 - 200 null application/json; charset=utf-8 69.1113ms
+2026-08-10 17:59:18.956 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7134/api/TrainingCourse/4 - application/json 58
+2026-08-10 17:59:18.960 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Update (LeadManagement.API)'
+2026-08-10 17:59:18.969 +05:30 [INF] Route matched with {action = "Update", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(Int32, LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:59:18.977 +05:30 [INF] Updating training course. CourseId: 4
+2026-08-10 17:59:19.053 +05:30 [INF] Training course updated successfully. CourseId: 4
+2026-08-10 17:59:19.056 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:59:19.059 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Update (LeadManagement.API) in 87.2836ms
+2026-08-10 17:59:19.060 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Update (LeadManagement.API)'
+2026-08-10 17:59:19.061 +05:30 [INF] Request finished HTTP/2 PUT https://localhost:7134/api/TrainingCourse/4 - 200 null application/json; charset=utf-8 105.2ms
+2026-08-10 17:59:28.498 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7134/api/TrainingCourse/4 - application/json 58
+2026-08-10 17:59:28.501 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Update (LeadManagement.API)'
+2026-08-10 17:59:28.504 +05:30 [INF] Route matched with {action = "Update", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(Int32, LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:59:28.506 +05:30 [INF] Updating training course. CourseId: 4
+2026-08-10 17:59:28.579 +05:30 [INF] Training course updated successfully. CourseId: 4
+2026-08-10 17:59:28.580 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 17:59:28.581 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Update (LeadManagement.API) in 75.8357ms
+2026-08-10 17:59:28.583 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Update (LeadManagement.API)'
+2026-08-10 17:59:28.583 +05:30 [INF] Request finished HTTP/2 PUT https://localhost:7134/api/TrainingCourse/4 - 200 null application/json; charset=utf-8 85.3211ms
+2026-08-10 17:59:37.993 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:59:37.998 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:59:38.008 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:59:38.013 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:59:38.054 +05:30 [INF] Retrieved 2 training courses.
+2026-08-10 17:59:38.055 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:59:38.057 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 43.3771ms
+2026-08-10 17:59:38.058 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:59:38.059 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 66.1917ms
+2026-08-10 17:59:47.701 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 17:59:47.705 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:59:47.707 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 17:59:47.709 +05:30 [INF] Getting all active training courses.
+2026-08-10 17:59:47.745 +05:30 [INF] Retrieved 2 training courses.
+2026-08-10 17:59:47.746 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 17:59:47.749 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 40.1006ms
+2026-08-10 17:59:47.751 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 17:59:47.752 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 51.7853ms
+2026-08-10 18:00:17.792 +05:30 [INF] Request starting HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/3 - null null
+2026-08-10 18:00:17.795 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 18:00:17.803 +05:30 [INF] Route matched with {action = "Delete", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 18:00:17.808 +05:30 [INF] Deleting training course. CourseId: 3
+2026-08-10 18:00:17.849 +05:30 [INF] Training course deleted successfully. CourseId: 3
+2026-08-10 18:00:17.850 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 18:00:17.851 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API) in 44.288ms
+2026-08-10 18:00:17.853 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Delete (LeadManagement.API)'
+2026-08-10 18:00:17.854 +05:30 [INF] Request finished HTTP/2 DELETE https://localhost:7134/api/TrainingCourse/3 - 200 null application/json; charset=utf-8 61.7939ms
+2026-08-10 18:00:27.751 +05:30 [INF] Request starting HTTP/2 PUT https://localhost:7134/api/TrainingCourse/restore/4 - null 0
+2026-08-10 18:00:27.755 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Restore (LeadManagement.API)'
+2026-08-10 18:00:27.763 +05:30 [INF] Route matched with {action = "Restore", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Restore(Int32) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 18:00:27.766 +05:30 [INF] Restoring training course. CourseId: 4
+2026-08-10 18:00:27.803 +05:30 [INF] Training course restored successfully. CourseId: 4
+2026-08-10 18:00:27.804 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 18:00:27.806 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Restore (LeadManagement.API) in 41.3621ms
+2026-08-10 18:00:27.809 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Restore (LeadManagement.API)'
+2026-08-10 18:00:27.809 +05:30 [INF] Request finished HTTP/2 PUT https://localhost:7134/api/TrainingCourse/restore/4 - 200 null application/json; charset=utf-8 58.8354ms
+2026-08-10 18:00:35.004 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 18:00:35.007 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:00:35.009 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 18:00:35.011 +05:30 [INF] Getting all active training courses.
+2026-08-10 18:00:35.053 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 18:00:35.054 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 18:00:35.057 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 46.3134ms
+2026-08-10 18:00:35.059 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:00:35.060 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 55.9734ms
+2026-08-10 18:00:53.822 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 18:00:53.827 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:00:53.829 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 18:00:53.830 +05:30 [INF] Getting all active training courses.
+2026-08-10 18:00:53.867 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 18:00:53.869 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 18:00:53.870 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 39.8809ms
+2026-08-10 18:00:53.871 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:00:53.871 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 49.541ms
+2026-08-10 18:01:08.427 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 18:01:08.430 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:01:08.431 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 18:01:08.432 +05:30 [INF] Getting all active training courses.
+2026-08-10 18:01:08.468 +05:30 [INF] Retrieved 1 training courses.
+2026-08-10 18:01:08.470 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 18:01:08.471 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 39.0902ms
+2026-08-10 18:01:08.472 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:01:08.473 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 46.2694ms
+2026-08-10 18:01:16.809 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/TrainingCourse - application/json 31
+2026-08-10 18:01:16.810 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 18:01:16.814 +05:30 [INF] Route matched with {action = "Create", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.TrainingCourseDto) on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 18:01:16.817 +05:30 [INF] Creating training course. CourseName: devops
+2026-08-10 18:01:16.891 +05:30 [INF] Training course created successfully. CourseId: 5
+2026-08-10 18:01:16.892 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType3`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-08-10 18:01:16.894 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API) in 76.9368ms
+2026-08-10 18:01:16.895 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.Create (LeadManagement.API)'
+2026-08-10 18:01:16.896 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 87.6453ms
+2026-08-10 18:01:23.159 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/TrainingCourse - null null
+2026-08-10 18:01:23.176 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:01:23.179 +05:30 [INF] Route matched with {action = "GetAll", controller = "TrainingCourse"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.TrainingCourseController (LeadManagement.API).
+2026-08-10 18:01:23.180 +05:30 [INF] Getting all active training courses.
+2026-08-10 18:01:23.218 +05:30 [INF] Retrieved 2 training courses.
+2026-08-10 18:01:23.220 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblTrainingCourse, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.TrainingCourseDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 18:01:23.222 +05:30 [INF] Executed action LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API) in 41.3672ms
+2026-08-10 18:01:23.223 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.TrainingCourseController.GetAll (LeadManagement.API)'
+2026-08-10 18:01:23.224 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/TrainingCourse - 200 null application/json; charset=utf-8 64.8321ms
+2026-08-10 18:01:42.498 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/EnquiryFollowup - null null
+2026-08-10 18:01:42.502 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.EnquiryFollowupController.GetAll (LeadManagement.API)'
+2026-08-10 18:01:42.510 +05:30 [INF] Route matched with {action = "GetAll", controller = "EnquiryFollowup"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.EnquiryFollowupController (LeadManagement.API).
+2026-08-10 18:01:42.516 +05:30 [INF] Getting all active enquiry follow-ups.
+2026-08-10 18:01:42.572 +05:30 [INF] Retrieved 0 enquiry follow-ups.
+2026-08-10 18:01:42.573 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblEnquiryFollowup, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.EnquiryFollowupDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 18:01:42.578 +05:30 [INF] Executed action LeadManagement.API.Controllers.EnquiryFollowupController.GetAll (LeadManagement.API) in 65.3271ms
+2026-08-10 18:01:42.580 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.EnquiryFollowupController.GetAll (LeadManagement.API)'
+2026-08-10 18:01:42.581 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/EnquiryFollowup - 200 null application/json; charset=utf-8 82.2893ms
+2026-08-10 18:02:42.585 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7134/api/EnquiryFollowup - application/json 133
+2026-08-10 18:02:42.590 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.EnquiryFollowupController.Create (LeadManagement.API)'
+2026-08-10 18:02:42.602 +05:30 [INF] Route matched with {action = "Create", controller = "EnquiryFollowup"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(LeadManagement.Application.DTOs.EnquiryFollowupDto) on controller LeadManagement.API.Controllers.EnquiryFollowupController (LeadManagement.API).
+2026-08-10 18:02:42.616 +05:30 [INF] Creating enquiry follow-up. EnquiryId: 1
+2026-08-10 18:05:05.595 +05:30 [INF] Executed action LeadManagement.API.Controllers.EnquiryFollowupController.Create (LeadManagement.API) in 142990.1139ms
+2026-08-10 18:05:05.615 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.EnquiryFollowupController.Create (LeadManagement.API)'
+2026-08-10 18:05:05.647 +05:30 [ERR] Unhandled exception. Path: /api/EnquiryFollowup
+Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK__tblenquir__enqui__61F08603". The conflict occurred in database "ysaaserpsystem", table "erpsystem.tblenquiries", column 'enquiry_id'.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__270_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Dapper.SqlMapper.QueryRowAsync[T](IDbConnection cnn, Row row, Type effectiveType, CommandDefinition command) in /_/Dapper/SqlMapper.Async.cs:line 489
+   at LeadManagement.Infrastructure.Repositories.EnquiryFollowupRepository.InsertAsync(TblEnquiryFollowup followup) in C:\YSAAS_ERPSystem\LeadManagement.Infrastructure\Repositories\EnquiryFollowupRepository.cs:line 44
+   at LeadManagement.Application.Services.EnquiryFollowupService.CreateAsync(EnquiryFollowupDto followup) in C:\YSAAS_ERPSystem\LeadManagement.Application\Services\EnquiryFollowupService.cs:line 84
+   at LeadManagement.API.Controllers.EnquiryFollowupController.Create(EnquiryFollowupDto followup) in C:\YSAAS_ERPSystem\LeadManagement.API\Controllers\EnquiryFollowupController.cs:line 47
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
+ClientConnectionId:9a8cd830-fd08-4bbe-bbd8-5390ada4bc87
+Error Number:547,State:0,Class:16
+2026-08-10 18:05:05.717 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/EnquiryFollowup - 500 null application/json 143131.9416ms
+2026-08-10 18:05:13.010 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7134/api/EnquiryFollowup - null null
+2026-08-10 18:05:13.015 +05:30 [INF] Executing endpoint 'LeadManagement.API.Controllers.EnquiryFollowupController.GetAll (LeadManagement.API)'
+2026-08-10 18:05:13.017 +05:30 [INF] Route matched with {action = "GetAll", controller = "EnquiryFollowup"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller LeadManagement.API.Controllers.EnquiryFollowupController (LeadManagement.API).
+2026-08-10 18:05:13.020 +05:30 [INF] Getting all active enquiry follow-ups.
+2026-08-10 18:05:13.053 +05:30 [INF] Retrieved 0 enquiry follow-ups.
+2026-08-10 18:05:13.055 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LeadManagement.Domain.Entities.TblEnquiryFollowup, LeadManagement.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LeadManagement.Application.DTOs.EnquiryFollowupDto, LeadManagement.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-08-10 18:05:13.057 +05:30 [INF] Executed action LeadManagement.API.Controllers.EnquiryFollowupController.GetAll (LeadManagement.API) in 38.1488ms
+2026-08-10 18:05:13.058 +05:30 [INF] Executed endpoint 'LeadManagement.API.Controllers.EnquiryFollowupController.GetAll (LeadManagement.API)'
+2026-08-10 18:05:13.059 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7134/api/EnquiryFollowup - 200 null application/json; charset=utf-8 49.2408ms
