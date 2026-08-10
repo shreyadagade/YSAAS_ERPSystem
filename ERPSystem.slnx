@@ -6,8 +6,4 @@
     <Project Path="UserManagement.Domain/UserManagement.Domain.csproj" />
     <Project Path="UserManagement.Infrastructure/UserManagement.Infrastructure.csproj" />
   </Folder>
-  <Project Path="LeadManagement.API/LeadManagement.API.csproj" />
-  <Project Path="LeadManagement.Application/LeadManagement.Application.csproj" />
-  <Project Path="LeadManagement.Domain/LeadManagement.Domain.csproj" />
-  <Project Path="LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" />
 </Solution>
