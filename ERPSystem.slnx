@@ -7,6 +7,7 @@
     <Project Path="LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" Id="15f0fdfa-447c-43a2-973f-367b939b42d2" />
   </Folder>
   <Folder Name="/Services/UserManagement/">
+    <File Path="README.md" />
     <Project Path="UserManagement.API/UserManagement.API.csproj" />
     <Project Path="UserManagement.Application/UserManagement.Application.csproj" />
     <Project Path="UserManagement.Domain/UserManagement.Domain.csproj" />
