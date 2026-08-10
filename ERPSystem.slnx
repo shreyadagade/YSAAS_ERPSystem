@@ -1,5 +1,11 @@
 <Solution>
   <Folder Name="/Services/" />
+  <Folder Name="/Services/LeadManagementService/">
+    <Project Path="LeadManagementService/LeadManagement.API/LeadManagement.API.csproj" />
+    <Project Path="LeadManagementService/LeadManagement.Application/LeadManagement.Application.csproj" />
+    <Project Path="LeadManagementService/LeadManagement.Domain/LeadManagement.Domain.csproj" />
+    <Project Path="LeadManagementService/LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" />
+  </Folder>
   <Folder Name="/Services/UserManagement/">
     <Project Path="UserManagement.API/UserManagement.API.csproj" />
     <Project Path="UserManagement.Application/UserManagement.Application.csproj" />
