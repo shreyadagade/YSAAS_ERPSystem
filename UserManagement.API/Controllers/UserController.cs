@@ -15,8 +15,7 @@ namespace UserManagement.API.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(
-            IUserService userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
@@ -49,28 +48,28 @@ namespace UserManagement.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("update-user")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
-        {
-            var result = await _userService.UpdateUserAsync(dto);
+        //[HttpPut("update-user")]
+        //public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
+        //{
+        //    var result = await _userService.UpdateUserAsync(dto);
 
-            return Ok(new
-            {
-                message = "User updated successfully."
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        message = "User updated successfully."
+        //    });
+        //}
 
 
-        [HttpDelete("delete-user")]
-        public async Task<IActionResult> DeleteUser([FromBody] DeleteUserDto dto)
-        {
-            var result = await _userService.DeleteUserAsync(dto);
+        //[HttpDelete("delete-user")]
+        //public async Task<IActionResult> DeleteUser([FromBody] DeleteUserDto dto)
+        //{
+        //    var result = await _userService.DeleteUserAsync(dto);
 
-            return Ok(new
-            {
-                message = "User deleted successfully."
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        message = "User deleted successfully."
+        //    });
+        //}
 
     }
 }

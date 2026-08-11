@@ -83,7 +83,6 @@ namespace UserManagement.Infrastructure.Services
             return "Password changed successfully.";
         }
 
-
         public async Task<string> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
             if (dto == null)
@@ -105,69 +104,28 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                return "If the email address is registered, a password reset link has been sent.";
+                return "Please check the email address and try again.";
             }
 
             if (!user.IsActive)
             {
-                return "If the email address is registered, a password reset link has been sent.";
+                return "User account is deactivated.";
             }
 
             var token =
                 await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var encodedEmail =
-                Uri.EscapeDataString(email);
-
-            var encodedToken =
-                Uri.EscapeDataString(token);
-
-            var resetLink =
-                $"https://localhost:7101/api/account/reset-password" +
-                $"?email={encodedEmail}&token={encodedToken}";
-
-            var emailRequest = new EmailRequestDto
-            {
-                ToEmail = email,
-                Subject = "CIIT ERP - Password Reset Request",
-
-                Body = $@"
-            <h2>CIIT ERP Password Reset</h2>
-
-            <p>Hello,</p>
-
-            <p>
-                We received a request to reset your password.
-            </p>
-
-            <p>
-                Click the link below to reset your password:
-            </p>
-
-            <p>
-                <a href=""{resetLink}"">
-                    Reset Password
-                </a>
-            </p>
-
-            <p>
-                If you did not request this, please ignore this email.
-            </p>
-
-            <p>
-                Regards,<br/>
-                CIIT ERP System
-            </p>"
-            };
-
-            await _emailService.SendEmailAsync(emailRequest);
-
-            return "If the email address is registered, a password reset link has been sent.";
+            return token;
         }
 
         public async Task<string> ResetPasswordAsync(ResetPasswordDto dto)
         {
-        
+            if (dto == null)
+            {
+                throw new ArgumentException(
+                    "Request data is required.");
+            }
+
             if (string.IsNullOrWhiteSpace(dto.EmailAddress))
             {
                 throw new ArgumentException(
@@ -186,9 +144,20 @@ namespace UserManagement.Infrastructure.Services
                     "New password is required.");
             }
 
-            var user =
-                await _userManager.FindByEmailAsync(
-                    dto.EmailAddress.Trim());
+            if (string.IsNullOrWhiteSpace(dto.ConfirmPassword))
+            {
+                throw new ArgumentException(
+                    "Confirm password is required.");
+            }
+
+            if (dto.NewPassword != dto.ConfirmPassword)
+            {
+                throw new ArgumentException(
+                    "New password and confirm password do not match.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(
+                dto.EmailAddress.Trim());
 
             if (user == null)
             {
@@ -202,19 +171,16 @@ namespace UserManagement.Infrastructure.Services
                     "User account is deactivated.");
             }
 
-            var result =
-                await _userManager.ResetPasswordAsync(
-                    user,
-                    dto.Token,
-                    dto.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(
+                user,
+                dto.Token,
+                dto.NewPassword);
 
             if (!result.Succeeded)
             {
-                var errors =
-                    string.Join(
-                        ", ",
-                        result.Errors.Select(
-                            e => e.Description));
+                var errors = string.Join(
+                    ", ",
+                    result.Errors.Select(e => e.Description));
 
                 throw new InvalidOperationException(
                     $"Password reset failed. {errors}");
@@ -223,6 +189,7 @@ namespace UserManagement.Infrastructure.Services
             return "Password reset successfully.";
         }
 
+        
     }
 }
 

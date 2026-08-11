@@ -14,8 +14,7 @@ namespace UserManagement.API.Controllers
     {
         private readonly IUserRoleService _userRoleService;
 
-        public UserRoleController(
-            IUserRoleService userRoleService)
+        public UserRoleController(IUserRoleService userRoleService)
         {
             _userRoleService = userRoleService;
         }

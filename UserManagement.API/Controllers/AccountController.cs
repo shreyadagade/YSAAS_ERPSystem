@@ -8,7 +8,7 @@ namespace UserManagement.API.Controllers
 {
     [ApiController]
     [Route("api/account")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Super User")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Super User")]
 
     public class AccountController : ControllerBase
     {
@@ -33,11 +33,12 @@ namespace UserManagement.API.Controllers
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
         {
-            var result = await _accountService.ForgotPasswordAsync(dto);
+            var token = await _accountService.ForgotPasswordAsync(dto);
 
             return Ok(new
             {
-                message = result
+                message = "Password reset token generated successfully.",
+                token = token
             });
         }
 
@@ -49,28 +50,6 @@ namespace UserManagement.API.Controllers
             return Ok(new
             {
                 message = result
-            });
-        }
-
-        [HttpGet("reset-password")]
-        public IActionResult ResetPasswordLink([FromQuery] string email,
-            [FromQuery] string token)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                return BadRequest("Email is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(token))
-            {
-                return BadRequest("Reset token is required.");
-            }
-
-            return Ok(new
-            {
-                message = "Reset link is valid. Use the POST reset-password API in Swagger.",
-                email = email,
-                token = token
             });
         }
 
