@@ -83,56 +83,52 @@ namespace UserManagement.Infrastructure.Services
             return "Password changed successfully.";
         }
 
-       
-        public async Task<string> ForgotPasswordAsync(string email)
+
+        public async Task<string> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
-            // 1. Validate email
-            if (string.IsNullOrWhiteSpace(email))
+            if (dto == null)
+            {
+                throw new ArgumentException(
+                    "Request data is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.EmailAddress))
             {
                 throw new ArgumentException(
                     "Email address is required.");
             }
 
-            email = email.Trim();
+            var email = dto.EmailAddress.Trim();
 
-            // 2. Find user
             var user =
                 await _userManager.FindByEmailAsync(email);
 
-            // 3. Do not reveal whether email exists
             if (user == null)
             {
                 return "If the email address is registered, a password reset link has been sent.";
             }
 
-            // 4. Check active user
             if (!user.IsActive)
             {
                 return "If the email address is registered, a password reset link has been sent.";
             }
 
-            // 5. Generate password reset token
             var token =
-                await _userManager.GeneratePasswordResetTokenAsync(
-                    user);
+                await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // 6. Encode email and token
             var encodedEmail =
                 Uri.EscapeDataString(email);
 
             var encodedToken =
                 Uri.EscapeDataString(token);
 
-            // 7. Create reset link
             var resetLink =
                 $"https://localhost:7101/api/account/reset-password" +
                 $"?email={encodedEmail}&token={encodedToken}";
 
-            // 8. Create email request
             var emailRequest = new EmailRequestDto
             {
                 ToEmail = email,
-
                 Subject = "CIIT ERP - Password Reset Request",
 
                 Body = $@"
@@ -155,8 +151,7 @@ namespace UserManagement.Infrastructure.Services
             </p>
 
             <p>
-                If you did not request a password reset,
-                please ignore this email.
+                If you did not request this, please ignore this email.
             </p>
 
             <p>
@@ -165,38 +160,32 @@ namespace UserManagement.Infrastructure.Services
             </p>"
             };
 
-            // 9. Send email
-            await _emailService.SendEmailAsync(
-                emailRequest);
+            await _emailService.SendEmailAsync(emailRequest);
 
-            // 10. Return success
             return "If the email address is registered, a password reset link has been sent.";
         }
 
         public async Task<string> ResetPasswordAsync(ResetPasswordDto dto)
         {
-            // 1. Validate email
+        
             if (string.IsNullOrWhiteSpace(dto.EmailAddress))
             {
                 throw new ArgumentException(
                     "Email address is required.");
             }
 
-            // 2. Validate reset token
             if (string.IsNullOrWhiteSpace(dto.Token))
             {
                 throw new ArgumentException(
                     "Reset token is required.");
             }
 
-            // 3. Validate new password
             if (string.IsNullOrWhiteSpace(dto.NewPassword))
             {
                 throw new ArgumentException(
                     "New password is required.");
             }
 
-            // 4. Find user
             var user =
                 await _userManager.FindByEmailAsync(
                     dto.EmailAddress.Trim());
@@ -207,21 +196,18 @@ namespace UserManagement.Infrastructure.Services
                     "Invalid password reset request.");
             }
 
-            // 5. Check active user
             if (!user.IsActive)
             {
                 throw new InvalidOperationException(
                     "User account is deactivated.");
             }
 
-            // 6. Reset password
             var result =
                 await _userManager.ResetPasswordAsync(
                     user,
                     dto.Token,
                     dto.NewPassword);
 
-            // 7. Handle Identity errors
             if (!result.Succeeded)
             {
                 var errors =
@@ -234,7 +220,6 @@ namespace UserManagement.Infrastructure.Services
                     $"Password reset failed. {errors}");
             }
 
-            // 8. Success
             return "Password reset successfully.";
         }
 

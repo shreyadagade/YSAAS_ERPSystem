@@ -7,7 +7,7 @@ namespace UserManagement.Application.Interfaces
     {
         Task<string> ChangePasswordAsync(ChangePasswordDto dto);
 
-        Task<string> ForgotPasswordAsync(string email);
+        Task<string> ForgotPasswordAsync(ForgotPasswordDto dto);
 
         Task<string> ResetPasswordAsync(ResetPasswordDto dto);
     }

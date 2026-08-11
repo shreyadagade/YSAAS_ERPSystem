@@ -8,8 +8,8 @@ using UserManagement.Infrastructure.Services;
 
 namespace UserManagement.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-    Roles = "Trainer")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+  //  Roles = "Trainer")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -51,24 +51,25 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPut("update-user")]
-        public async Task<IActionResult> UpdateUser(UpdateUserDto model)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
         {
-            var result = await _userService.UpdateUserAsync(model);
+            var result = await _userService.UpdateUserAsync(dto);
 
             return Ok(new
             {
-                message = "User updated successfully"
+                message = "User updated successfully."
             });
         }
 
+
         [HttpDelete("delete-user")]
-        public async Task<IActionResult> DeleteUser(DeleteUserDto model)
+        public async Task<IActionResult> DeleteUser([FromBody] DeleteUserDto dto)
         {
-            var result = await _userService.DeleteUserAsync(model);
+            var result = await _userService.DeleteUserAsync(dto);
 
             return Ok(new
             {
-                message = "User deleted successfully"
+                message = "User deleted successfully."
             });
         }
 
