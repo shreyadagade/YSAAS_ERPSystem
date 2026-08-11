@@ -8,8 +8,7 @@ using UserManagement.Infrastructure.Services;
 
 namespace UserManagement.API.Controllers
 {
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-  //  Roles = "Trainer")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Super User")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
