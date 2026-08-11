@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.DTOs.Account;
 using UserManagement.Application.Interfaces;
 
@@ -6,6 +8,8 @@ namespace UserManagement.API.Controllers
 {
     [ApiController]
     [Route("api/account")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Super User")]
+
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
