@@ -30,7 +30,7 @@ namespace UserManagement.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("login-employee")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var result =
