@@ -97,44 +97,104 @@ namespace UserManagement.Infrastructure.Services
             };
         }
 
-        public async Task<bool> UpdateUserAsync(UpdateUserDto model)
+        public async Task<bool> UpdateUserAsync(UpdateUserDto dto)
         {
-            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (dto == null)
+            {
+                throw new ArgumentException("Update data is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.UserId))
+            {
+                throw new ArgumentException("User ID is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.FullName))
+            {
+                throw new ArgumentException("Full name is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Email))
+            {
+                throw new ArgumentException("Email address is required.");
+            }
+
+            var user =
+                await _userManager.FindByIdAsync(dto.UserId);
 
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new InvalidOperationException(
+                    "User not found.");
             }
 
-            user.UserName = model.FullName;
-            user.Email = model.Email;
-            user.NormalizedEmail = model.Email.ToUpper();
-            user.NormalizedUserName = model.FullName.ToUpper();
+            var existingUser = await _userManager.FindByEmailAsync(dto.Email.Trim());
 
-            var result = await _userManager.UpdateAsync(user);
+            if (existingUser != null &&
+                existingUser.Id != user.Id)
+            {
+                throw new InvalidOperationException(
+                    "Email address is already registered.");
+            }
+
+            user.UserName = dto.FullName.Trim();
+            user.Email = dto.Email.Trim();
+
+            var result =
+                await _userManager.UpdateAsync(user);
 
             if (!result.Succeeded)
             {
-                throw new Exception("User update failed");
+                var errors =
+                    string.Join(
+                        ", ",
+                        result.Errors.Select(
+                            e => e.Description));
+
+                throw new InvalidOperationException(
+                    $"User update failed. {errors}");
             }
 
             return true;
         }
 
-        public async Task<bool> DeleteUserAsync(DeleteUserDto model)
+
+        public async Task<bool> DeleteUserAsync(DeleteUserDto dto)
         {
-            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (dto == null)
+            {
+                throw new ArgumentException(
+                    "Delete data is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.UserId))
+            {
+                throw new ArgumentException(
+                    "User ID is required.");
+            }
+
+            var user =
+                await _userManager.FindByIdAsync(dto.UserId);
 
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new InvalidOperationException(
+                    "User not found.");
             }
 
-            var result = await _userManager.DeleteAsync(user);
+            var result =
+                await _userManager.DeleteAsync(user);
 
             if (!result.Succeeded)
             {
-                throw new Exception("User delete failed");
+                var errors =
+                    string.Join(
+                        ", ",
+                        result.Errors.Select(
+                            e => e.Description));
+
+                throw new InvalidOperationException(
+                    $"User delete failed. {errors}");
             }
 
             return true;

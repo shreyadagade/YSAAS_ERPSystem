@@ -6,8 +6,8 @@ using UserManagement.Application.Interfaces;
 
 namespace UserManagement.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-     Roles = "Trainer")]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+     //Roles = "Trainer")]
     [ApiController]
     [Route("api/roles")]
     public class RoleController : ControllerBase

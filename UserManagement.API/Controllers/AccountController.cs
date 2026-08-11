@@ -26,11 +26,10 @@ namespace UserManagement.API.Controllers
             });
         }
 
-
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
         {
-            var result = await _accountService.ForgotPasswordAsync(email);
+            var result = await _accountService.ForgotPasswordAsync(dto);
 
             return Ok(new
             {
@@ -46,6 +45,28 @@ namespace UserManagement.API.Controllers
             return Ok(new
             {
                 message = result
+            });
+        }
+
+        [HttpGet("reset-password")]
+        public IActionResult ResetPasswordLink([FromQuery] string email,
+            [FromQuery] string token)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest("Email is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return BadRequest("Reset token is required.");
+            }
+
+            return Ok(new
+            {
+                message = "Reset link is valid. Use the POST reset-password API in Swagger.",
+                email = email,
+                token = token
             });
         }
 
