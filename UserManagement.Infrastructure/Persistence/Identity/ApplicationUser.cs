@@ -7,5 +7,7 @@ namespace UserManagement.Infrastructure.Persistence.Identity
 {
     public class ApplicationUser : IdentityUser
     {
+        public bool IsActive { get; set; } = true;
+
     }
 }

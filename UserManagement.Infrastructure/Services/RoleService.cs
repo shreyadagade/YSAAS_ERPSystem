@@ -1,0 +1,163 @@
+﻿using Microsoft.AspNetCore.Identity;
+using UserManagement.Application.DTOs.Role;
+using UserManagement.Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace UserManagement.Infrastructure.Services
+{
+    public class RoleService : IRoleService
+    {
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public RoleService(RoleManager<IdentityRole> roleManager)
+        {
+            _roleManager = roleManager;
+        }
+
+        public async Task<string> CreateRoleAsync(
+            CreateRoleDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.RoleName))
+            {
+                throw new ArgumentException(
+                    "Role name is required.");
+            }
+
+            var roleName =
+                dto.RoleName.Trim();
+
+            var existingRole =
+                await _roleManager.RoleExistsAsync(
+                    roleName);
+
+            if (existingRole)
+            {
+                throw new InvalidOperationException(
+                    "Role already exists.");
+            }
+
+            var role =
+                new IdentityRole(roleName);
+
+            var result =
+                await _roleManager.CreateAsync(role);
+
+            if (!result.Succeeded)
+            {
+                var errors =
+                    string.Join(
+                        ", ",
+                        result.Errors.Select(
+                            e => e.Description));
+
+                throw new InvalidOperationException(
+                    $"Role creation failed. {errors}");
+            }
+
+            return "Role created successfully.";
+        }
+
+        public async Task<List<RoleListDto>> GetRolesAsync()
+        {
+            return await _roleManager.Roles
+                .Select(role => new RoleListDto
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name!
+                })
+                .ToListAsync();
+        }
+
+        public async Task<string> UpdateRoleAsync(UpdateRoleDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.RoleId))
+            {
+                throw new ArgumentException(
+                    "Role ID is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.RoleName))
+            {
+                throw new ArgumentException(
+                    "Role name is required.");
+            }
+
+            var role =
+                await _roleManager.FindByIdAsync(
+                    dto.RoleId);
+
+            if (role == null)
+            {
+                throw new InvalidOperationException(
+                    "Role not found.");
+            }
+
+            var roleName = dto.RoleName.Trim();
+
+            var existingRole = await _roleManager.FindByNameAsync(
+                    roleName);
+
+            if (existingRole != null &&
+                existingRole.Id != role.Id)
+            {
+                throw new InvalidOperationException(
+                    "Role name already exists.");
+            }
+
+            role.Name = roleName;
+
+            var result = await _roleManager.UpdateAsync(role);
+
+            if (!result.Succeeded)
+            {
+                var errors =
+                    string.Join(
+                        ", ",
+                        result.Errors.Select(
+                            e => e.Description));
+
+                throw new InvalidOperationException(
+                    $"Role update failed. {errors}");
+            }
+
+            return "Role updated successfully.";
+        }
+
+        public async Task<string> DeleteRoleAsync(DeleteRoleDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.RoleId))
+            {
+                throw new ArgumentException(
+                    "Role ID is required.");
+            }
+
+            var role =
+                await _roleManager.FindByIdAsync(dto.RoleId);
+
+
+            if (role == null)
+            {
+                throw new InvalidOperationException(
+                    "Role not found.");
+            }
+
+            var result =
+                await _roleManager.DeleteAsync(role);
+
+            if (!result.Succeeded)
+            {
+                var errors =
+                    string.Join(
+                        ", ",
+                        result.Errors.Select(
+                            e => e.Description));
+
+                throw new InvalidOperationException(
+                    $"Role deletion failed. {errors}");
+            }
+
+            return "Role deleted successfully.";
+        }
+
+
+    }
+}
