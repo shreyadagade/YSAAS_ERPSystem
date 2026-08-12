@@ -1,5 +1,11 @@
 <Solution>
   <Folder Name="/Services/" />
+  <Folder Name="/Services/DeveloperManagemnent/">
+    <Project Path="DeveloperManagement.API/DeveloperManagement.API.csproj" Id="bcf61709-01e0-4c08-8d5f-b4019b88b807" />
+    <Project Path="DeveloperManagement.Application/DeveloperManagement.Application.csproj" Id="d99aa381-f240-4431-a53c-63d84f171e13" />
+    <Project Path="DeveloperManagement.Domain/DeveloperManagement.Domain.csproj" Id="3c5347ef-dcdc-4abc-b0ef-bb0958c8777e" />
+    <Project Path="DeveloperManagement.Infrastructure/DeveloperManagement.Infrastructure.csproj" Id="f8e086a1-c295-4fb8-89a4-a7987d8238b1" />
+  </Folder>
   <Folder Name="/Services/LeadManagementService/">
     <Project Path="LeadManagement.API/LeadManagement.API.csproj" Id="431711fa-759f-4745-9616-604d7bc85d44" />
     <Project Path="LeadManagement.Application/LeadManagement.Application.csproj" Id="be1474d4-7a11-4063-ab17-adfe27d0fe56" />
