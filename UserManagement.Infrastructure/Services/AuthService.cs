@@ -103,6 +103,7 @@ namespace UserManagement.Infrastructure.Services
             {
                 UserName = employeeCode,
                 Email = dto.EmailAddress,
+                PhoneNumber = dto.MobileNumber,
                 EmailConfirmed = false
             };
 
