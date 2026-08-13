@@ -32,6 +32,7 @@ namespace UserManagement.API.Controllers
             });
         }
 
+
         [HttpGet("get-all-users")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -39,6 +40,7 @@ namespace UserManagement.API.Controllers
 
             return Ok(result);
         }
+
 
         [HttpGet("get-user/{userId}")]
         public async Task<IActionResult> GetUserById(string userId)
@@ -48,28 +50,42 @@ namespace UserManagement.API.Controllers
             return Ok(result);
         }
 
-        //[HttpPut("update-user")]
-        //public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto dto)
-        //{
-        //    var result = await _userService.UpdateUserAsync(dto);
+        [HttpPut("update-user/{userId}")]
+        public async Task<IActionResult> UpdateUser(string userId,[FromBody] UpdateUserDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem(ModelState);
+            }
 
-        //    return Ok(new
-        //    {
-        //        message = "User updated successfully."
-        //    });
-        //}
+            var result = await _userService.UpdateUserAsync(userId, dto);
+
+            return Ok(new
+            {
+                message = "User updated successfully."
+            });
+        }
 
 
-        //[HttpDelete("delete-user")]
-        //public async Task<IActionResult> DeleteUser([FromBody] DeleteUserDto dto)
-        //{
-        //    var result = await _userService.DeleteUserAsync(dto);
+        [HttpDelete("delete-user/{userId}")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return BadRequest(new
+                {
+                    message = "User ID is required."
+                });
+            }
 
-        //    return Ok(new
-        //    {
-        //        message = "User deleted successfully."
-        //    });
-        //}
+            var result =
+                await _userService.DeleteUserAsync(userId);
+
+            return Ok(new
+            {
+                message = "User deleted successfully."
+            });
+        }
 
     }
 }

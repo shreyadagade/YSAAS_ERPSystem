@@ -65,22 +65,33 @@ namespace UserManagement.API.Controllers
         }
 
 
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateBranch([FromBody] UpdateBranchDto dto)
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateBranch(int id,[FromBody] UpdateBranchDto dto)
         {
-            if (!ModelState.IsValid)
-                return ValidationProblem(ModelState);
+            if (id <= 0)
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid branch ID."
+                });
+            }
 
-            var existingBranch =
-                await _branchService.GetByIdAsync(dto.BranchId);
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            var existingBranch = await _branchService.GetByIdAsync(id);
 
             if (existingBranch == null)
+            {
                 return NotFound(new
                 {
                     message = "Branch not found."
                 });
+            }
 
-            var result = await _branchService.UpdateAsync(dto);
+            var result = await _branchService.UpdateAsync(id, dto);
 
             return Ok(new
             {
@@ -98,8 +109,7 @@ namespace UserManagement.API.Controllers
                     message = "Invalid branch ID."
                 });
 
-            var existingBranch =
-                await _branchService.GetByIdAsync(id);
+            var existingBranch = await _branchService.GetByIdAsync(id);
 
             if (existingBranch == null)
                 return NotFound(new

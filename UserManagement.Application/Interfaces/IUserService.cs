@@ -10,7 +10,7 @@ namespace UserManagement.Application.Interfaces
         Task<string> ChangeUserStatusAsync(ChangeUserStatusDto dto);
         Task<List<UserDto>> GetAllUsersAsync();
         Task<UserDto> GetUserByIdAsync(string userId);
-        Task<bool> UpdateUserAsync(UpdateUserDto dto);
-        Task<bool> DeleteUserAsync(DeleteUserDto dto);
+        Task<string> UpdateUserAsync(string userId,UpdateUserDto dto);
+        Task<bool> DeleteUserAsync(string userId);
     }
 }

@@ -40,7 +40,12 @@ namespace UserManagement.Infrastructure.Services
         }
         public async Task<RegisterResponseDto> RegisterAsync(RegisterUserDto dto)
         {
-            
+            if (dto == null)
+            {
+                throw new ArgumentException(
+                    "Registration data is required.");
+            }
+
             if (string.IsNullOrWhiteSpace(dto.EmployeeName))
             {
                 throw new ArgumentException(
@@ -61,6 +66,15 @@ namespace UserManagement.Infrastructure.Services
                     "Mobile number is required.");
             }
 
+            if (!System.Text.RegularExpressions.Regex.IsMatch(
+                    dto.MobileNumber,@"^[0-9]{10}$"))
+            {
+                throw new ArgumentException(
+                    "Mobile number must be exactly 10 digits.");
+            }
+
+            var email = dto.EmailAddress.Trim();
+            var mobileNumber = dto.MobileNumber.Trim();
 
             var existingUser =
                 await _userManager.FindByEmailAsync(

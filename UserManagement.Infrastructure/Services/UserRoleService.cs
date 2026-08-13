@@ -90,23 +90,21 @@ namespace UserManagement.Infrastructure.Services
             return "Role assigned successfully.";
         }
 
-        public async Task<string> RemoveRoleAsync(RemoveRoleDto dto)
+        public async Task<string> RemoveRoleAsync(string userId,string roleId)
         {
-            if (string.IsNullOrWhiteSpace(dto.UserId))
+            if (string.IsNullOrWhiteSpace(userId))
             {
                 throw new ArgumentException(
                     "User ID is required.");
             }
 
-            if (string.IsNullOrWhiteSpace(dto.RoleId))
+            if (string.IsNullOrWhiteSpace(roleId))
             {
                 throw new ArgumentException(
                     "Role ID is required.");
             }
 
-            var user =
-                await _userManager.FindByIdAsync(
-                    dto.UserId);
+            var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
@@ -114,9 +112,7 @@ namespace UserManagement.Infrastructure.Services
                     "User not found.");
             }
 
-            var role =
-                await _roleManager.FindByIdAsync(
-                    dto.RoleId);
+            var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
@@ -124,10 +120,7 @@ namespace UserManagement.Infrastructure.Services
                     "Role not found.");
             }
 
-            var isAssigned =
-                await _userManager.IsInRoleAsync(
-                    user,
-                    role.Name!);
+            var isAssigned = await _userManager.IsInRoleAsync(user,role.Name!);
 
             if (!isAssigned)
             {
@@ -135,10 +128,7 @@ namespace UserManagement.Infrastructure.Services
                     "Role is not assigned to the user.");
             }
 
-            var result =
-                await _userManager.RemoveFromRoleAsync(
-                    user,
-                    role.Name!);
+            var result = await _userManager.RemoveFromRoleAsync(user,role.Name!);
 
             if (!result.Succeeded)
             {

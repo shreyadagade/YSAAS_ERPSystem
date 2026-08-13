@@ -9,7 +9,7 @@ namespace UserManagement.Application.Interfaces
     {
         Task<string> CreateRoleAsync(CreateRoleDto dto);
         Task<List<RoleListDto>> GetRolesAsync();
-        Task<string> UpdateRoleAsync(UpdateRoleDto dto);
-        Task<string> DeleteRoleAsync(DeleteRoleDto dto);
+        Task<string> UpdateRoleAsync(string roleId, UpdateRoleDto dto);
+        Task<string> DeleteRoleAsync(string roleId);
     }
 }

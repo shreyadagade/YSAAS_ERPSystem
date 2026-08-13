@@ -30,11 +30,26 @@ namespace UserManagement.API.Controllers
             });
         }
 
-        [HttpDelete("remove-assigned-role")]
-        public async Task<IActionResult> RemoveRole([FromBody] RemoveRoleDto dto)
+        [HttpDelete("remove-assigned-role/{userId}/{roleId}")]
+        public async Task<IActionResult> RemoveRole(string userId,string roleId)
         {
-            var result =
-                await _userRoleService.RemoveRoleAsync(dto);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return BadRequest(new
+                {
+                    message = "User ID is required."
+                });
+            }
+
+            if (string.IsNullOrWhiteSpace(roleId))
+            {
+                return BadRequest(new
+                {
+                    message = "Role ID is required."
+                });
+            }
+
+            var result = await _userRoleService.RemoveRoleAsync(userId,roleId);
 
             return Ok(new
             {
