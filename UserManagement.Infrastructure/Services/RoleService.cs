@@ -67,12 +67,18 @@ namespace UserManagement.Infrastructure.Services
                 .ToListAsync();
         }
 
-        public async Task<string> UpdateRoleAsync(UpdateRoleDto dto)
+        public async Task<string> UpdateRoleAsync(string roleId,UpdateRoleDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.RoleId))
+            if (string.IsNullOrWhiteSpace(roleId))
             {
                 throw new ArgumentException(
                     "Role ID is required.");
+            }
+
+            if (dto == null)
+            {
+                throw new ArgumentException(
+                    "Role data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.RoleName))
@@ -81,9 +87,7 @@ namespace UserManagement.Infrastructure.Services
                     "Role name is required.");
             }
 
-            var role =
-                await _roleManager.FindByIdAsync(
-                    dto.RoleId);
+            var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
@@ -93,8 +97,7 @@ namespace UserManagement.Infrastructure.Services
 
             var roleName = dto.RoleName.Trim();
 
-            var existingRole = await _roleManager.FindByNameAsync(
-                    roleName);
+            var existingRole = await _roleManager.FindByNameAsync(roleName);
 
             if (existingRole != null &&
                 existingRole.Id != role.Id)
@@ -122,17 +125,15 @@ namespace UserManagement.Infrastructure.Services
             return "Role updated successfully.";
         }
 
-        public async Task<string> DeleteRoleAsync(DeleteRoleDto dto)
+        public async Task<string> DeleteRoleAsync(string roleId)
         {
-            if (string.IsNullOrWhiteSpace(dto.RoleId))
+            if (string.IsNullOrWhiteSpace(roleId))
             {
                 throw new ArgumentException(
                     "Role ID is required.");
             }
 
-            var role =
-                await _roleManager.FindByIdAsync(dto.RoleId);
-
+            var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
@@ -140,8 +141,7 @@ namespace UserManagement.Infrastructure.Services
                     "Role not found.");
             }
 
-            var result =
-                await _roleManager.DeleteAsync(role);
+            var result = await _roleManager.DeleteAsync(role);
 
             if (!result.Succeeded)
             {
@@ -157,7 +157,6 @@ namespace UserManagement.Infrastructure.Services
 
             return "Role deleted successfully.";
         }
-
 
     }
 }

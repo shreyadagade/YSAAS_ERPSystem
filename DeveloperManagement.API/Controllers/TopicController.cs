@@ -35,7 +35,7 @@ namespace DeveloperManagement.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{topicId:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _topicService.GetByIdAsync(id);
@@ -43,7 +43,7 @@ namespace DeveloperManagement.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{topicId:int}")]
         public async Task<IActionResult> Update(int id,[FromBody] UpdateTopicDto dto)
         {
             var result = await _topicService.UpdateAsync(id, dto);
@@ -51,7 +51,7 @@ namespace DeveloperManagement.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{topicId:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _topicService.DeleteAsync(id);
@@ -63,7 +63,7 @@ namespace DeveloperManagement.API.Controllers
             });
         }
 
-        [HttpPatch("{id:int}/restore")]
+        [HttpPatch("{topicId:int}/restore")]
         public async Task<IActionResult> Restore(int id)
         {
             await _topicService.RestoreAsync(id);

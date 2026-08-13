@@ -39,10 +39,19 @@ namespace UserManagement.API.Controllers
             return Ok(roles);
         }
 
-        [HttpPut("update-role")]
-        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleDto dto)
+
+        [HttpPut("update-role/{roleId}")]
+        public async Task<IActionResult> UpdateRole(string roleId,[FromBody] UpdateRoleDto dto)
         {
-            var result = await _roleService.UpdateRoleAsync(dto);
+            if (string.IsNullOrWhiteSpace(roleId))
+            {
+                return BadRequest(new
+                {
+                    message = "Role ID is required."
+                });
+            }
+
+            var result = await _roleService.UpdateRoleAsync(roleId,dto);
 
             return Ok(new
             {
@@ -50,11 +59,18 @@ namespace UserManagement.API.Controllers
             });
         }
 
-        [HttpDelete("delete-role")]
-        public async Task<IActionResult> DeleteRole([FromBody] DeleteRoleDto dto)
+        [HttpDelete("delete-role/{roleId}")]
+        public async Task<IActionResult> DeleteRole(string roleId)
         {
-            var result =
-                await _roleService.DeleteRoleAsync(dto);
+            if (string.IsNullOrWhiteSpace(roleId))
+            {
+                return BadRequest(new
+                {
+                    message = "Role ID is required."
+                });
+            }
+
+            var result = await _roleService.DeleteRoleAsync(roleId);
 
             return Ok(new
             {

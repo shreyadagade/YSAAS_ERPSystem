@@ -20,8 +20,7 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("register-employee")]
-        public async Task<IActionResult> RegisterEmployee(
-            [FromBody] RegisterUserDto dto)
+        public async Task<IActionResult> RegisterEmployee([FromBody] RegisterUserDto dto)
         {
             var result =
                 await _authService.RegisterAsync(dto);

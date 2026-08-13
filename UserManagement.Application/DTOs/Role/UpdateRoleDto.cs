@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace UserManagement.Application.DTOs.Role
 {
     public class UpdateRoleDto
     {
-        public string RoleId { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Role name is required.")]
         public string RoleName { get; set; } = string.Empty;
     }
 }

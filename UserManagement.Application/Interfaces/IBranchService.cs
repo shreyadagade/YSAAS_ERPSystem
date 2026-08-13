@@ -13,7 +13,7 @@ namespace UserManagement.Application.Interfaces
 
         Task<int> InsertAsync(CreateBranchDto dto);
 
-        Task<int> UpdateAsync(UpdateBranchDto dto);
+        Task<int> UpdateAsync(int id, UpdateBranchDto dto);
 
         Task<int> DeleteAsync(int id);
 

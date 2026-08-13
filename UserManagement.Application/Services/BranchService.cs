@@ -68,30 +68,41 @@ namespace UserManagement.Application.Services
                 });
         }
 
-        public async Task<int> UpdateAsync(UpdateBranchDto dto)
+        public async Task<int> UpdateAsync(int id,UpdateBranchDto dto)
         {
-            if (dto.BranchId <= 0)
+            if (id <= 0)
             {
-                throw new ArgumentException("Branch ID must be greater than 0.");
+                throw new ArgumentException(
+                    "Branch ID must be greater than 0.");
+            }
+
+            if (dto == null)
+            {
+                throw new ArgumentException(
+                    "Branch data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.BranchName))
             {
-                throw new ArgumentException("Branch name is required.");
+                throw new ArgumentException(
+                    "Branch name is required.");
             }
 
             return await _repository.ExecuteNonQueryAsync(
                 StoredProcedure,
+
                 new StoredProcedureParameter
                 {
                     Name = "@Type",
                     Value = "Update"
                 },
+
                 new StoredProcedureParameter
                 {
                     Name = "@branch_id",
-                    Value = dto.BranchId
+                    Value = id
                 },
+
                 new StoredProcedureParameter
                 {
                     Name = "@branch_name",

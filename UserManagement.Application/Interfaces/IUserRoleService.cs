@@ -8,7 +8,7 @@ namespace UserManagement.Application.Interfaces
     public interface IUserRoleService
     {
         Task<string> AssignRoleAsync(AssignRoleDto dto);
-        Task<string> RemoveRoleAsync(RemoveRoleDto dto);
+        Task<string> RemoveRoleAsync(string userId,string roleId);
         Task<List<string>> GetUserRolesAsync(GetUserRolesDto dto);
     }
 }
