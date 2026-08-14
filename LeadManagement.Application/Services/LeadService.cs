@@ -13,6 +13,7 @@ namespace LeadManagement.Application.Services
         private readonly ILeadRepository _leadRepository;
         private readonly ILogger<LeadService> _logger;
 
+
         public LeadService(
             ILeadRepository leadRepository,
             ILogger<LeadService> logger)

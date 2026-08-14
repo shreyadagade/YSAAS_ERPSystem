@@ -1,9 +1,11 @@
-using Serilog;
 using LeadManagement.API.Middleware;
+using LeadManagement.Application.Interfaces;
 using LeadManagement.Application.Interfaces.Repositories;
 using LeadManagement.Application.Interfaces.Services;
 using LeadManagement.Application.Services;
 using LeadManagement.Infrastructure.Repositories;
+
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,8 @@ builder.Services.AddScoped<IEnquiryFollowupRepository, EnquiryFollowupRepository
 builder.Services.AddScoped<ILeadService, LeadService>();
 builder.Services.AddScoped<ITrainingCourseService, TrainingCourseService>();
 builder.Services.AddScoped<IEnquiryFollowupService, EnquiryFollowupService>();
+
+
 
 var app = builder.Build();
 

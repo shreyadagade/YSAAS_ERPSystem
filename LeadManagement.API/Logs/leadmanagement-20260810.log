@@ -96,7 +96,9 @@ System.ArgumentException: A lead with this email address already exists.
    at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
    at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
    at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
-   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, 
+   
+   ILogger logger)
    at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
    at LeadManagement.API.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in C:\YSAAS_ERPSystem\LeadManagement.API\Middleware\ExceptionHandlingMiddleware.cs:line 27
 2026-08-10 17:06:46.524 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7134/api/Lead - 400 null application/json 7582.4944ms

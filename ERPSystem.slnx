@@ -7,16 +7,29 @@
     <Project Path="DeveloperManagement.Infrastructure/DeveloperManagement.Infrastructure.csproj" Id="f8e086a1-c295-4fb8-89a4-a7987d8238b1" />
   </Folder>
   <Folder Name="/Services/LeadManagementService/">
-    <Project Path="LeadManagement.API/LeadManagement.API.csproj" Id="431711fa-759f-4745-9616-604d7bc85d44" />
-    <Project Path="LeadManagement.Application/LeadManagement.Application.csproj" Id="be1474d4-7a11-4063-ab17-adfe27d0fe56" />
-    <Project Path="LeadManagement.Domain/LeadManagement.Domain.csproj" Id="fc70fd68-1bc7-4e5e-bc1c-ea0b3698b716" />
-    <Project Path="LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" Id="15f0fdfa-447c-43a2-973f-367b939b42d2" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/LeadManagement.API/LeadManagement.API.csproj" Id="431711fa-759f-4745-9616-604d7bc85d44" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/LeadManagement.Application/LeadManagement.Application.csproj" Id="be1474d4-7a11-4063-ab17-adfe27d0fe56" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/LeadManagement.Domain/LeadManagement.Domain.csproj" Id="fc70fd68-1bc7-4e5e-bc1c-ea0b3698b716" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" Id="15f0fdfa-447c-43a2-973f-367b939b42d2" />
+  </Folder>
+  <Folder Name="/Services/StudentManagement/">
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/StudentManagement.API/StudentManagement.API.csproj" Id="437393d2-b1e4-4886-8c2d-841157e5afa9" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/StudentManagement.Application/StudentManagement.Application.csproj" Id="e82faab2-1780-4151-9010-7bf2bcb4ed4f" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/StudentManagement.Domain/StudentManagement.Domain.csproj" Id="5167af56-cf90-4def-9ed3-a275a4c641fd" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/StudentManagement.Infrastructure/StudentManagement.Infrastructure.csproj" Id="fe3a2af8-b2b8-456c-8d2e-b61cdb544c37" />
   </Folder>
   <Folder Name="/Services/UserManagement/">
+<<<<<<< HEAD
     <File Path="README.md" />
     <Project Path="UserManagement.API/UserManagement.API.csproj" />
     <Project Path="UserManagement.Application/UserManagement.Application.csproj" />
     <Project Path="UserManagement.Domain/UserManagement.Domain.csproj" />
     <Project Path="UserManagement.Infrastructure/UserManagement.Infrastructure.csproj" />
+=======
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/UserManagement.API/UserManagement.API.csproj" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/UserManagement.Application/UserManagement.Application.csproj" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/UserManagement.Domain/UserManagement.Domain.csproj" />
+    <Project Path="../../../../../../../../YSAAS_ERPSystem/UserManagement.Infrastructure/UserManagement.Infrastructure.csproj" />
+>>>>>>> 0217de4 (Completed Student Registration Module)
   </Folder>
 </Solution>
