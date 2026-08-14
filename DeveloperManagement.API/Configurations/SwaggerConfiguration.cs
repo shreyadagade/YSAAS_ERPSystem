@@ -30,12 +30,14 @@ public static class SwaggerConfiguration
             });
 
             options.AddSecurityRequirement(document =>
-                new OpenApiSecurityRequirement
-                {
-                    [new OpenApiSecuritySchemeReference("Bearer", document)] =
-                        new List<string>()
-                });
+                 new OpenApiSecurityRequirement
+                 {
+                     [new OpenApiSecuritySchemeReference(
+                         "Bearer",
+                         document)] = new List<string>()
+                 });
         });
+
         return services;
     }
 }
