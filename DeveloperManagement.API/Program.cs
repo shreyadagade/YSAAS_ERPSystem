@@ -10,6 +10,9 @@ builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddSwaggerConfiguration();
 
+builder.Services.AddAuthenticationConfiguration(
+    builder.Configuration);
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>

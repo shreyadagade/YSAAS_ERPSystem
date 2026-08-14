@@ -5,13 +5,13 @@ using DeveloperManagement.Application.Interfaces;
 
 namespace DeveloperManagement.Application.Services;
 
-public class TopicService : ITopicService
+public class TrainingTopicService : ITrainingTopicService
 {
     private readonly IGenericRepository _repository;
 
     private const string StoredProcedure = "erpsystem.sp_tbltraining_topics";
 
-    public TopicService(IGenericRepository repository)
+    public TrainingTopicService(IGenericRepository repository)
     {
         _repository = repository;
     }

@@ -86,6 +86,14 @@ namespace UserManagement.Infrastructure.Services
                     "A user with this email address already exists.");
             }
 
+            var existingMobile = await _userManager.Users.FirstOrDefaultAsync(
+            u => u.PhoneNumber == mobileNumber);
+
+            if (existingMobile != null)
+            {
+                throw new InvalidOperationException(
+                    "A user with this mobile number already exists.");
+            }
 
             var employeeCodeResult =
                 await _repository.ExecuteQueryAsync<EmployeeCodeResult>(

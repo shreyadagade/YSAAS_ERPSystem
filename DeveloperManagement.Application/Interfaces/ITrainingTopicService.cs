@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DeveloperManagement.Application.Interfaces
 {
-    public interface ITopicService
+    public interface ITrainingTopicService
     {
         Task<TopicResponseDto> CreateAsync(CreateTopicDto dto);
 
