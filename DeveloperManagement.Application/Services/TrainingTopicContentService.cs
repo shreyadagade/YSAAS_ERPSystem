@@ -1,4 +1,5 @@
 ﻿using DeveloperManagement.Application.Contracts;
+using DeveloperManagement.Application.DTOs.Topic;
 using DeveloperManagement.Application.DTOs.TopicContent;
 using DeveloperManagement.Application.Exceptions;
 using DeveloperManagement.Application.Interfaces;
@@ -15,24 +16,12 @@ namespace DeveloperManagement.Application.Services
             _repository = repository;
         }
 
-        public async Task<TrainingTopicContentResponseDto> CreateAsync(CreateTrainingTopicContentDto dto)
+        public async Task<List<TrainingTopicContentResponseDto>> CreateAsync(CreateTrainingTopicContentDto dto)
         {
             if (dto == null)
             {
                 throw new BadRequestException(
                     "Request data is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(dto.ContentName))
-            {
-                throw new BadRequestException(
-                    "Content name is required.");
-            }
-
-            if (dto.ContentName.Trim().Length > 100)
-            {
-                throw new BadRequestException(
-                    "Content name cannot exceed 100 characters.");
             }
 
             if (!dto.TopicId.HasValue || dto.TopicId <= 0)
@@ -41,18 +30,10 @@ namespace DeveloperManagement.Application.Services
                     "Topic ID must be greater than 0.");
             }
 
-            if (string.IsNullOrWhiteSpace(dto.Slides) &&
-                string.IsNullOrWhiteSpace(dto.VideoName))
+            if (dto.Contents == null || dto.Contents.Count == 0)
             {
                 throw new BadRequestException(
-                    "At least one of Slides or Video Name is required.");
-            }
-
-            if (!string.IsNullOrWhiteSpace(dto.VideoName) &&
-                dto.VideoName.Trim().Length > 100)
-            {
-                throw new BadRequestException(
-                    "Video name cannot exceed 100 characters.");
+                    "At least one content is required.");
             }
 
             var existingContents =
@@ -69,56 +50,90 @@ namespace DeveloperManagement.Application.Services
                         Value = dto.TopicId.Value
                     });
 
-            var duplicateContent = existingContents.Any(x =>
-                !string.IsNullOrWhiteSpace(x.ContentName) &&
-                x.ContentName.Trim().Equals(
-                    dto.ContentName.Trim(),
-                    StringComparison.OrdinalIgnoreCase));
-
-            if (duplicateContent)
-            {
-                throw new ConflictException(
-                    "Content name already exists for this topic.");
-            }
-
             var result =
-                await _repository.ExecuteQueryAsync<TrainingTopicContentResponseDto>(
-                    StoredProcedure,
-                    new StoredProcedureParameter
-                    {
-                        Name = "@Type",
-                        Value = "Insert"
-                    },
-                    new StoredProcedureParameter
-                    {
-                        Name = "@content_name",
-                        Value = dto.ContentName.Trim()
-                    },
-                    new StoredProcedureParameter
-                    {
-                        Name = "@topic_id",
-                        Value = dto.TopicId.Value
-                    },
-                    new StoredProcedureParameter
-                    {
-                        Name = "@slides",
-                        Value = dto.Slides
-                    },
-                    new StoredProcedureParameter
-                    {
-                        Name = "@video_name",
-                        Value = dto.VideoName?.Trim()
-                    });
+                new List<TrainingTopicContentResponseDto>();
 
-            var content = result.FirstOrDefault();
-
-            if (content == null)
+            foreach (var contentDto in dto.Contents)
             {
-                throw new Exception(
-                    "Content could not be created.");
+                if (string.IsNullOrWhiteSpace(contentDto.ContentName))
+                {
+                    throw new BadRequestException(
+                        "Content name is required.");
+                }
+
+                if (contentDto.ContentName.Trim().Length > 100)
+                {
+                    throw new BadRequestException(
+                        "Content name cannot exceed 100 characters.");
+                }
+
+                var duplicateContent = existingContents.Any(x =>
+                    !string.IsNullOrWhiteSpace(x.ContentName) &&
+                    x.ContentName.Trim().Equals(
+                        contentDto.ContentName.Trim(),
+                        StringComparison.OrdinalIgnoreCase));
+
+                if (duplicateContent)
+                {
+                    throw new ConflictException(
+                        $"Content name '{contentDto.ContentName}' already exists for this topic.");
+                }
+
+                var duplicateInRequest = result.Any(x =>
+                    !string.IsNullOrWhiteSpace(x.ContentName) &&
+                    x.ContentName.Trim().Equals(
+                        contentDto.ContentName.Trim(),
+                        StringComparison.OrdinalIgnoreCase));
+
+                if (duplicateInRequest)
+                {
+                    throw new ConflictException(
+                        $"Content name '{contentDto.ContentName}' is duplicated in the request.");
+                }
+
+                var insertedContent =
+                    await _repository.ExecuteQueryAsync<TrainingTopicContentResponseDto>(
+                        StoredProcedure,
+                        new StoredProcedureParameter
+                        {
+                            Name = "@Type",
+                            Value = "Insert"
+                        },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@content_name",
+                            Value = contentDto.ContentName.Trim()
+                        },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@topic_id",
+                            Value = dto.TopicId.Value
+                        },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@slides",
+                            Value = contentDto.Slides
+                        },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@video_name",
+                            Value = contentDto.VideoName?.Trim()
+                        });
+
+                var content = insertedContent.FirstOrDefault();
+
+                if (content == null)
+                {
+                    throw new Exception(
+                        "Content could not be created.");
+                }
+
+                result.Add(content);
+
+                existingContents.Add(content);
             }
 
-            return content;
+            return result;
         }
 
         public async Task<List<TrainingTopicContentResponseDto>> GetAllAsync()
@@ -228,12 +243,12 @@ namespace DeveloperManagement.Application.Services
                     "Topic ID must be greater than 0.");
             }
 
-            if (string.IsNullOrWhiteSpace(dto.Slides) &&
-                string.IsNullOrWhiteSpace(dto.VideoName))
-            {
-                throw new BadRequestException(
-                    "At least one of Slides or Video Name is required.");
-            }
+            //if (string.IsNullOrWhiteSpace(dto.Slides) &&
+            //    string.IsNullOrWhiteSpace(dto.VideoName))
+            //{
+            //    throw new BadRequestException(
+            //        "At least one of Slides or Video Name is required.");
+            //}
 
             if (!string.IsNullOrWhiteSpace(dto.VideoName) &&
                 dto.VideoName.Trim().Length > 100)
@@ -386,7 +401,6 @@ namespace DeveloperManagement.Application.Services
                     Value = contentId
                 });
         }
-
 
     }
 }

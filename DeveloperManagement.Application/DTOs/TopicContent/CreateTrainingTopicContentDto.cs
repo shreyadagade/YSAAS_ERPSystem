@@ -6,9 +6,15 @@ namespace DeveloperManagement.Application.DTOs.TopicContent
 {
     public class CreateTrainingTopicContentDto
     {
-        public string? ContentName { get; set; }
-
         public int? TopicId { get; set; }
+
+        public List<ContentItemDto> Contents { get; set; }
+            = new List<ContentItemDto>();
+    }
+
+    public class ContentItemDto
+    {
+        public string? ContentName { get; set; }
 
         public string? Slides { get; set; }
 

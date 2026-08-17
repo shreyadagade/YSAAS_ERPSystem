@@ -98,5 +98,18 @@ namespace DeveloperManagement.API.Controllers
                 message = "Training course restored successfully."
             });
         }
+
+        [HttpGet("get-course-details/{courseId:int}")]
+        public async Task<IActionResult> GetCourseDetails(int courseId)
+        {
+            var result = await _trainingCourseService.GetCourseDetailsAsync(courseId);
+
+            return Ok(new
+            {
+                statusCode = 200,
+                message = "Course details retrieved successfully.",
+                data = result
+            });
+        }
     }
 }

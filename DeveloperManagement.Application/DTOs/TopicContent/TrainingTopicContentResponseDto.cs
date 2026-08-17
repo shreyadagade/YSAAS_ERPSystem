@@ -17,5 +17,6 @@ namespace DeveloperManagement.Application.DTOs.TopicContent
         public string? Slides { get; set; }
 
         public string? VideoName { get; set; }
+
     }
 }

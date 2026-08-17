@@ -1,4 +1,5 @@
 ﻿using DeveloperManagement.Application.DTOs.Course;
+using DeveloperManagement.Application.DTOs.Details;
 
 namespace DeveloperManagement.Application.Interfaces
 {
@@ -15,5 +16,8 @@ namespace DeveloperManagement.Application.Interfaces
         Task<int> DeleteAsync(int courseId);
 
         Task<int> RestoreAsync(int courseId);
+
+        Task<CourseDetailsResponseDto> GetCourseDetailsAsync(int courseId);
+
     }
 }

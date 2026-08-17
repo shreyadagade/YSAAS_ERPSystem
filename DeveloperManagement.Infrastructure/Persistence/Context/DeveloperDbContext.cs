@@ -1,4 +1,6 @@
 ﻿using DeveloperManagement.Application.DTOs.Course;
+using DeveloperManagement.Application.DTOs.CourseTopic;
+using DeveloperManagement.Application.DTOs.Details;
 using DeveloperManagement.Application.DTOs.Topic;
 using DeveloperManagement.Application.DTOs.TopicContent;
 using DeveloperManagement.Domain.Entities;
@@ -18,7 +20,8 @@ namespace DeveloperManagement.Infrastructure.Persistence.Context
 
         public DbSet<TrainingTopic> TrainingTopics { get; set; }
         public DbSet<TrainingTopicContent> TrainingTopicContents { get; set; }
-
+        public DbSet<TrainingCourseTopic> TrainingCourseTopics { get; set; }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -55,6 +58,7 @@ namespace DeveloperManagement.Infrastructure.Persistence.Context
             modelBuilder.Entity<TopicResponseDto>()
                 .Property(x => x.PublicFolderId)
                 .HasColumnName("publicfolderid");
+
 
             modelBuilder.Entity<TrainingCourse>(entity =>
             {
@@ -109,6 +113,30 @@ namespace DeveloperManagement.Infrastructure.Persistence.Context
             modelBuilder.Entity<TrainingTopicContentResponseDto>()
               .HasNoKey();
 
+            modelBuilder.Entity<TrainingTopicContentResponseDto>()
+            .Property(x => x.ContentId)
+            .HasColumnName("content_id");
+
+            modelBuilder.Entity<TrainingTopicContentResponseDto>()
+            .Property(x => x.ContentName)
+            .HasColumnName("content_name");
+
+            modelBuilder.Entity<TrainingTopicContentResponseDto>()
+            .Property(x => x.TopicId)
+            .HasColumnName("topic_id");
+
+            modelBuilder.Entity<TrainingTopicContentResponseDto>()
+            .Property(x => x.TopicName)
+            .HasColumnName("topic_name");
+
+            modelBuilder.Entity<TrainingTopicContentResponseDto>()
+            .Property(x => x.Slides)
+            .HasColumnName("slides");
+
+            modelBuilder.Entity<TrainingTopicContentResponseDto>()
+            .Property(x => x.VideoName)
+            .HasColumnName("video_name");
+
             modelBuilder.Entity<TrainingTopicContent>(entity =>
             {
                 entity.ToTable("tbltopic_contents", "erpsystem");
@@ -130,7 +158,100 @@ namespace DeveloperManagement.Infrastructure.Persistence.Context
                 entity.Property(e => e.VideoName)
                     .HasColumnName("video_name");
             });
+
+            modelBuilder.Entity<TrainingCourseTopic>(entity =>
+            {
+                entity.ToTable("tbltraining_course_topics", "erpsystem");
+
+                entity.HasKey(e => e.CourseTopicId);
+
+                entity.Property(e => e.CourseTopicId)
+                    .HasColumnName("course_topic_id");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnName("course_id");
+
+                entity.Property(e => e.TopicId)
+                    .HasColumnName("topic_id");
+            });
+
+
+            modelBuilder.Entity<CourseTopicResponseDto>()
+                .HasNoKey();
+
+            modelBuilder.Entity<CourseTopicResponseDto>()
+                .Property(x => x.CourseTopicId)
+                .HasColumnName("course_topic_id");
+
+            modelBuilder.Entity<CourseTopicResponseDto>()
+                .Property(x => x.CourseId)
+                .HasColumnName("course_id");
+
+            modelBuilder.Entity<CourseTopicResponseDto>()
+                .Property(x => x.CourseName)
+                .HasColumnName("course_name");
+
+            modelBuilder.Entity<CourseTopicResponseDto>()
+                .Property(x => x.TopicId)
+                .HasColumnName("topic_id");
+
+            modelBuilder.Entity<CourseTopicResponseDto>()
+                .Property(x => x.TopicName)
+                .HasColumnName("topic_name");
+
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+    .HasNoKey();
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.CourseId)
+                .HasColumnName("course_id");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.CourseName)
+                .HasColumnName("course_name");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.FeesAmount)
+                .HasColumnName("fees_amount");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.FeesChangeDate)
+                .HasColumnName("fees_change_date");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.InstallmentPercentage)
+                .HasColumnName("installment_percentage");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.TopicId)
+                .HasColumnName("topic_id");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.TopicName)
+                .HasColumnName("topic_name");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.ContentId)
+                .HasColumnName("content_id");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.ContentName)
+                .HasColumnName("content_name");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.Slides)
+                .HasColumnName("slides");
+
+            modelBuilder.Entity<CourseDetailsFlatDto>()
+                .Property(x => x.VideoName)
+                .HasColumnName("video_name");
+
+
         }
+
+
+
     }
 }
 

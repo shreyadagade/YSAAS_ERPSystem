@@ -1,5 +1,6 @@
 ﻿using DeveloperManagement.Application.Contracts;
 using DeveloperManagement.Application.DTOs.Course;
+using DeveloperManagement.Application.DTOs.Details;
 using DeveloperManagement.Application.Exceptions;
 using DeveloperManagement.Application.Interfaces;
 
@@ -301,6 +302,71 @@ namespace DeveloperManagement.Application.Services
                     Name = "@course_id",
                     Value = courseId
                 });
+        }
+
+        public async Task<CourseDetailsResponseDto> GetCourseDetailsAsync(int courseId)
+        {
+            if (courseId <= 0)
+            {
+                throw new BadRequestException(
+                    "Course ID must be greater than 0.");
+            }
+
+            var result = await _repository.ExecuteQueryAsync<CourseDetailsFlatDto>(
+                StoredProcedure,
+                new StoredProcedureParameter
+                {
+                    Name = "@Type",
+                    Value = "GetCourseDetails"
+                },
+                new StoredProcedureParameter
+                {
+                    Name = "@course_id",
+                    Value = courseId
+                });
+
+            var firstRow = result.FirstOrDefault();
+
+            if (firstRow == null)
+            {
+                throw new NotFoundException(
+                    $"Course with ID {courseId} was not found.");
+            }
+
+            var response = new CourseDetailsResponseDto
+            {
+                CourseId = firstRow.CourseId,
+                CourseName = firstRow.CourseName,
+                FeesAmount = firstRow.FeesAmount,
+                FeesChangeDate = firstRow.FeesChangeDate,
+                InstallmentPercentage = firstRow.InstallmentPercentage,
+
+                Topics = result
+                    .GroupBy(x => new
+                    {
+                        x.TopicId,
+                        x.TopicName
+                    })
+                    .Select(topicGroup => new TopicDetailsDto
+                    {
+                        TopicId = topicGroup.Key.TopicId,
+                        TopicName = topicGroup.Key.TopicName,
+
+                        Contents = topicGroup
+                            .Where(x => x.ContentId.HasValue)
+                            .Select(x => new ContentDetailsDto
+                            {
+                                ContentId = x.ContentId!.Value,
+                                ContentName = x.ContentName,
+                                Slides = x.Slides,
+                                VideoName = x.VideoName
+                            })
+                            .ToList()
+                    })
+                    .ToList()
+            };
+
+            return response;
         }
     }
 }

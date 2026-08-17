@@ -22,6 +22,8 @@ public static class DependencyInjectionConfiguration
 
         services.AddScoped<ITrainingTopicContentService, TrainingTopicContentService>();
 
+        services.AddScoped<ITrainingCourseTopicService,TrainingCourseTopicService>();
+
         return services;
     }
 }

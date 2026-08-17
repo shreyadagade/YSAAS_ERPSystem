@@ -1,7 +1,4 @@
 ﻿using DeveloperManagement.Application.DTOs.TopicContent;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DeveloperManagement.Application.Interfaces
 {
@@ -11,7 +8,7 @@ namespace DeveloperManagement.Application.Interfaces
 
         Task<TrainingTopicContentResponseDto> GetByIdAsync(int contentId);
 
-        Task<TrainingTopicContentResponseDto> CreateAsync(CreateTrainingTopicContentDto dto);
+        Task<List<TrainingTopicContentResponseDto>> CreateAsync(CreateTrainingTopicContentDto dto);
 
         Task<int> UpdateAsync(int contentId,UpdateTrainingTopicContentDto dto);
 
