@@ -15,7 +15,10 @@ namespace StudentManagement.API.Controllers.Registration
             _service = service;
         }
 
-        // 1. GET: api/StudentDetails/{studentId}
+        // =========================================================
+        // 1. GET BY ID
+        // GET: api/StudentDetails/{studentId}
+        // =========================================================
         [HttpGet("{studentId}")]
         public async Task<IActionResult> GetById(int studentId)
         {
@@ -32,7 +35,11 @@ namespace StudentManagement.API.Controllers.Registration
             return Ok(student);
         }
 
-        // 2. GET: api/StudentDetails
+
+        // =========================================================
+        // 2. GET ALL
+        // GET: api/StudentDetails
+        // =========================================================
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -41,7 +48,11 @@ namespace StudentManagement.API.Controllers.Registration
             return Ok(students);
         }
 
-        // 3. POST: api/StudentDetails
+
+        // =========================================================
+        // 3. CREATE
+        // POST: api/StudentDetails
+        // =========================================================
         [HttpPost]
         public async Task<IActionResult> Add(StudentDetails student)
         {
@@ -49,16 +60,28 @@ namespace StudentManagement.API.Controllers.Registration
 
             return CreatedAtAction(
                 nameof(GetById),
-                new { studentId = result.StudentId },
-                result);
+                new
+                {
+                    studentId = result.StudentId
+                },
+                new
+                {
+                    message = "Student added successfully.",
+                    data = result
+                });
         }
 
-        // 4. PUT: api/StudentDetails/{studentId}
+
+        // =========================================================
+        // 4. UPDATE
+        // PUT: api/StudentDetails/{studentId}
+        // =========================================================
         [HttpPut("{studentId}")]
         public async Task<IActionResult> Update(
             int studentId,
             StudentDetails student)
         {
+            // Check URL ID and body ID
             if (studentId != student.StudentId)
             {
                 return BadRequest(new
@@ -67,6 +90,7 @@ namespace StudentManagement.API.Controllers.Registration
                 });
             }
 
+            // Check whether student exists
             var existing = await _service.GetByIdAsync(studentId);
 
             if (existing == null)
@@ -77,18 +101,28 @@ namespace StudentManagement.API.Controllers.Registration
                 });
             }
 
+            // Update student
             await _service.UpdateAsync(student);
+
+            // Get updated record
+            var updatedStudent = await _service.GetByIdAsync(studentId);
 
             return Ok(new
             {
-                message = "Student updated successfully."
+                message = "Student updated successfully.",
+                data = updatedStudent
             });
         }
 
-        // 5. DELETE: api/StudentDetails/{studentId}
+
+        // =========================================================
+        // 5. DELETE - SOFT DELETE
+        // DELETE: api/StudentDetails/{studentId}
+        // =========================================================
         [HttpDelete("{studentId}")]
         public async Task<IActionResult> Delete(int studentId)
         {
+            // Check whether student exists
             var existing = await _service.GetByIdAsync(studentId);
 
             if (existing == null)
@@ -99,33 +133,42 @@ namespace StudentManagement.API.Controllers.Registration
                 });
             }
 
+            // Soft delete
             await _service.DeleteAsync(studentId);
 
             return Ok(new
             {
-                message = "Student deleted successfully."
+                message = "Student deleted successfully.",
+                studentId = studentId
             });
         }
 
-        // 6. PUT: api/StudentDetails/restore/{studentId}
+
+        // =========================================================
+        // 6. RESTORE
+        // PUT: api/StudentDetails/restore/{studentId}
+        // =========================================================
         [HttpPut("restore/{studentId}")]
         public async Task<IActionResult> Restore(int studentId)
         {
-            var existing = await _service.GetByIdAsync(studentId);
+            // Restore the student
+            await _service.RestoreAsync(studentId);
 
-            if (existing == null)
+            // Get restored record
+            var restoredStudent = await _service.GetByIdAsync(studentId);
+
+            if (restoredStudent == null)
             {
                 return NotFound(new
                 {
-                    message = "Student not found."
+                    message = "Student could not be restored or student not found."
                 });
             }
 
-            await _service.RestoreAsync(studentId);
-
             return Ok(new
             {
-                message = "Student restored successfully."
+                message = "Student restored successfully.",
+                data = restoredStudent
             });
         }
     }

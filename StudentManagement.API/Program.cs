@@ -7,8 +7,10 @@ using StudentManagement.Application.Interfaces.Services.Registration;
 using StudentManagement.Application.Services;
 using StudentManagement.Application.Services.Registration;
 using StudentManagement.Infrastructure.Data;
+using StudentManagement.Infrastructure.Email;
 using StudentManagement.Infrastructure.Repositories;
 using StudentManagement.Infrastructure.Repositories.Registration;
+using StudentManagement.Infrastructure.Services;
 
 
 
@@ -32,6 +34,17 @@ builder.Services.AddScoped<IStudentDetailsService, StudentDetailsService>();
 builder.Services.AddScoped<IStudentQualificationService, StudentQualificationService>();
 builder.Services.AddScoped<IStudentRegistrationService, StudentRegistrationService>();
 
+// Email
+
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.AddScoped<IEmailService>(serviceProvider =>
+    new EmailService(
+        "smtp.gmail.com",
+        587,
+        "minakshigaike@gmail.com",
+        "yudr utnl mkbq tyhn"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

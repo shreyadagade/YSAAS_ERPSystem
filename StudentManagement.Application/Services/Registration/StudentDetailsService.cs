@@ -1,335 +1,142 @@
-﻿using System.Net.Mail;
-using System.Text.RegularExpressions;
-using StudentManagement.Application.Interfaces.Repositories.Registration;
+﻿using StudentManagement.Application.Interfaces.Repositories.Registration;
+using StudentManagement.Application.Interfaces.Services;
 using StudentManagement.Application.Interfaces.Services.Registration;
 using StudentManagement.Domain.Entities.Registration;
+using System.Security.Cryptography;
 
 namespace StudentManagement.Application.Services.Registration
 {
     public class StudentDetailsService : IStudentDetailsService
     {
         private readonly IStudentDetailsRepository _repository;
+        private readonly IEmailService _emailService;
 
         public StudentDetailsService(
-            IStudentDetailsRepository repository)
+            IStudentDetailsRepository repository,
+            IEmailService emailService)
         {
             _repository = repository;
+            _emailService = emailService;
         }
 
-        // ==========================================
+        // =====================================================
         // GET BY ID
-        // ==========================================
+        // =====================================================
         public async Task<StudentDetails?> GetByIdAsync(int studentId)
         {
-            if (studentId <= 0)
-            {
-                throw new ArgumentException(
-                    "Student ID must be greater than 0.");
-            }
-
             return await _repository.GetByIdAsync(studentId);
         }
 
-        // ==========================================
+        // =====================================================
         // GET ALL
-        // ==========================================
+        // =====================================================
         public async Task<IEnumerable<StudentDetails>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
 
-        // ==========================================
-        // ADD
-        // ==========================================
-        public async Task<StudentDetails> AddAsync(
-            StudentDetails student)
-        {
-            ValidateStudent(student);
-
-            return await _repository.AddAsync(student);
-        }
-
-        // ==========================================
-        // UPDATE
-        // ==========================================
-        public async Task UpdateAsync(
-            StudentDetails student)
-        {
-            if (student.StudentId <= 0)
-            {
-                throw new ArgumentException(
-                    "Student ID must be greater than 0.");
-            }
-
-            ValidateStudent(student);
-
-            var existing =
-                await _repository.GetByIdAsync(student.StudentId);
-
-            if (existing == null)
-            {
-                throw new KeyNotFoundException(
-                    "Student not found.");
-            }
-
-            await _repository.UpdateAsync(student);
-        }
-
-        // ==========================================
-        // DELETE
-        // ==========================================
-        public async Task DeleteAsync(int studentId)
-        {
-            if (studentId <= 0)
-            {
-                throw new ArgumentException(
-                    "Student ID must be greater than 0.");
-            }
-
-            var existing =
-                await _repository.GetByIdAsync(studentId);
-
-            if (existing == null)
-            {
-                throw new KeyNotFoundException(
-                    "Student not found.");
-            }
-
-            await _repository.DeleteAsync(studentId);
-        }
-
-        // ==========================================
-        // RESTORE
-        // ==========================================
-        public async Task RestoreAsync(int studentId)
-        {
-            if (studentId <= 0)
-            {
-                throw new ArgumentException(
-                    "Student ID must be greater than 0.");
-            }
-
-            await _repository.RestoreAsync(studentId);
-        }
-
-        // ==========================================
-        // VALIDATION
-        // ==========================================
-        private static void ValidateStudent(
-            StudentDetails student)
+        // =====================================================
+        // CREATE STUDENT
+        // =====================================================
+        public async Task<StudentDetails> AddAsync(StudentDetails student)
         {
             if (student == null)
             {
-                throw new ArgumentNullException(
-                    nameof(student),
+                throw new ArgumentException(
                     "Student data is required.");
             }
 
-            // ------------------------------------------
-            // Student Name
-            // ------------------------------------------
-            if (string.IsNullOrWhiteSpace(student.StudentName))
-            {
-                throw new ArgumentException(
-                    "Student name is required.");
-            }
+            // Get existing active students
+            var students = await _repository.GetAllAsync();
 
-            if (student.StudentName.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Student name cannot exceed 100 characters.");
-            }
-
-            // ------------------------------------------
-            // Gender
-            // ------------------------------------------
-            if (string.IsNullOrWhiteSpace(student.Gender))
-            {
-                throw new ArgumentException(
-                    "Gender is required.");
-            }
-
-            if (student.Gender.Length > 10)
-            {
-                throw new ArgumentException(
-                    "Gender cannot exceed 10 characters.");
-            }
-
-            // ------------------------------------------
-            // Mobile Number
-            // ------------------------------------------
-            if (string.IsNullOrWhiteSpace(student.MobileNumber))
-            {
-                throw new ArgumentException(
-                    "Mobile number is required.");
-            }
-
-            if (!Regex.IsMatch(
-                student.MobileNumber,
-                @"^\d{10,20}$"))
-            {
-                throw new ArgumentException(
-                    "Mobile number must contain only digits and be between 10 and 20 digits.");
-            }
-
-            // ------------------------------------------
-            // Email Address
-            // ------------------------------------------
+            // =====================================================
+            // EMAIL VALIDATION
+            // =====================================================
             if (string.IsNullOrWhiteSpace(student.EmailAddress))
             {
                 throw new ArgumentException(
                     "Email address is required.");
             }
 
-            if (student.EmailAddress.Length > 100)
+            bool emailExists = students.Any(x =>
+                !string.IsNullOrWhiteSpace(x.EmailAddress) &&
+                x.EmailAddress.Equals(
+                    student.EmailAddress,
+                    StringComparison.OrdinalIgnoreCase));
+
+            if (emailExists)
+            {
+                throw new InvalidOperationException(
+                    "A student with this email address already exists.");
+            }
+
+            // =====================================================
+            // MOBILE VALIDATION
+            // =====================================================
+            if (string.IsNullOrWhiteSpace(student.MobileNumber))
             {
                 throw new ArgumentException(
-                    "Email address cannot exceed 100 characters.");
+                    "Mobile number is required.");
             }
 
-            if (!IsValidEmail(student.EmailAddress))
+            if (!student.MobileNumber.All(char.IsDigit))
             {
                 throw new ArgumentException(
-                    "Please enter a valid email address.");
+                    "Mobile number must contain only digits.");
             }
 
-            // ------------------------------------------
-            // Password
-            // ------------------------------------------
-            if (string.IsNullOrWhiteSpace(student.Password))
+            if (student.MobileNumber.Length != 10)
             {
                 throw new ArgumentException(
-                    "Password is required.");
+                    "Mobile number must contain exactly 10 digits.");
             }
 
-            if (student.Password.Length < 6)
+            bool mobileExists = students.Any(x =>
+                !string.IsNullOrWhiteSpace(x.MobileNumber) &&
+                x.MobileNumber == student.MobileNumber);
+
+            if (mobileExists)
+            {
+                throw new InvalidOperationException(
+                    "A student with this mobile number already exists.");
+            }
+
+            // =====================================================
+            // AADHAR VALIDATION
+            // =====================================================
+            if (string.IsNullOrWhiteSpace(
+                student.AadharCardNumber))
             {
                 throw new ArgumentException(
-                    "Password must contain at least 6 characters.");
+                    "Aadhar card number is required.");
             }
 
-            if (student.Password.Length > 100)
+            if (!student.AadharCardNumber.All(char.IsDigit))
             {
                 throw new ArgumentException(
-                    "Password cannot exceed 100 characters.");
+                    "Aadhar card number must contain only digits.");
             }
 
-            // ------------------------------------------
-            // Birth Date
-            // ------------------------------------------
-            if (!student.BirthDate.HasValue)
+            if (student.AadharCardNumber.Length != 12)
             {
                 throw new ArgumentException(
-                    "Birth date is required.");
+                    "Aadhar card number must contain exactly 12 digits.");
             }
 
-            if (student.BirthDate.Value.Date > DateTime.Today)
+            bool aadharExists = students.Any(x =>
+                !string.IsNullOrWhiteSpace(x.AadharCardNumber) &&
+                x.AadharCardNumber ==
+                student.AadharCardNumber);
+
+            if (aadharExists)
             {
-                throw new ArgumentException(
-                    "Birth date cannot be in the future.");
+                throw new InvalidOperationException(
+                    "A student with this Aadhar card number already exists.");
             }
 
-            // ------------------------------------------
-            // Profile Photo
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.ProfilePhoto) &&
-                student.ProfilePhoto.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Profile photo path cannot exceed 100 characters.");
-            }
-
-            // ------------------------------------------
-            // Qualification
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.Qualification) &&
-                student.Qualification.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Qualification cannot exceed 100 characters.");
-            }
-
-            // ------------------------------------------
-            // Parent Name
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.ParentName) &&
-                student.ParentName.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Parent name cannot exceed 100 characters.");
-            }
-
-            // ------------------------------------------
-            // Parent Number
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.ParentNumber))
-            {
-                if (!Regex.IsMatch(
-                    student.ParentNumber,
-                    @"^\d{10,20}$"))
-                {
-                    throw new ArgumentException(
-                        "Parent number must contain only digits and be between 10 and 20 digits.");
-                }
-            }
-
-            // ------------------------------------------
-            // Student Code
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.StudentCode) &&
-                student.StudentCode.Length > 20)
-            {
-                throw new ArgumentException(
-                    "Student code cannot exceed 20 characters.");
-            }
-
-            // ------------------------------------------
-            // Last Name
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.LastName) &&
-                student.LastName.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Last name cannot exceed 100 characters.");
-            }
-
-            // ------------------------------------------
-            // WhatsApp Number
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.WhatsAppNumber))
-            {
-                if (!Regex.IsMatch(
-                    student.WhatsAppNumber,
-                    @"^\d{10,15}$"))
-                {
-                    throw new ArgumentException(
-                        "WhatsApp number must contain only digits and be between 10 and 15 digits.");
-                }
-            }
-
-            // ------------------------------------------
-            // Local Address
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.LocalAddress) &&
-                student.LocalAddress.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Local address cannot exceed 100 characters.");
-            }
-
-            // ------------------------------------------
-            // Permanent Address
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(student.PermanentAddress) &&
-                student.PermanentAddress.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Permanent address cannot exceed 100 characters.");
-            }
-
-            // ------------------------------------------
-            // Permanent Identification Number
-            // ------------------------------------------
+            // =====================================================
+            // PERMANENT IDENTIFICATION NUMBER VALIDATION
+            // =====================================================
             if (string.IsNullOrWhiteSpace(
                 student.PermanentIdentificationNumber))
             {
@@ -337,58 +144,192 @@ namespace StudentManagement.Application.Services.Registration
                     "Permanent identification number is required.");
             }
 
-            if (student.PermanentIdentificationNumber.Length > 15)
+            if (!student.PermanentIdentificationNumber.All(
+                char.IsDigit))
             {
                 throw new ArgumentException(
-                    "Permanent identification number cannot exceed 15 characters.");
+                    "Permanent identification number must contain only digits.");
             }
 
-            // ------------------------------------------
-            // Aadhar Card Number
-            // Database column:
-            // adhar_card_number
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(
-                student.AadharCardNumber))
+            if (student.PermanentIdentificationNumber.Length != 15)
             {
-                if (!Regex.IsMatch(
-                    student.AadharCardNumber,
-                    @"^\d{12}$"))
+                throw new ArgumentException(
+                    "Permanent identification number must contain exactly 15 digits.");
+            }
+
+            bool identificationExists = students.Any(x =>
+                !string.IsNullOrWhiteSpace(
+                    x.PermanentIdentificationNumber) &&
+                x.PermanentIdentificationNumber ==
+                student.PermanentIdentificationNumber);
+
+            if (identificationExists)
+            {
+                throw new InvalidOperationException(
+                    "A student with this permanent identification number already exists.");
+            }
+
+            // =====================================================
+            // GENERATE STUDENT CODE
+            // =====================================================
+            var lastStudentCode = students
+                .Where(x =>
+                    !string.IsNullOrWhiteSpace(x.StudentCode))
+                .Select(x => x.StudentCode!)
+                .Where(x =>
+                    x.StartsWith(
+                        "CTIS",
+                        StringComparison.OrdinalIgnoreCase))
+                .Select(x =>
                 {
-                    throw new ArgumentException(
-                        "Aadhar card number must contain exactly 12 digits.");
-                }
-            }
+                    var numberPart = x.Substring(4);
 
-            // ------------------------------------------
-            // Aadhar Card Photo
-            // ------------------------------------------
-            if (!string.IsNullOrWhiteSpace(
-                student.AadharCardPhoto) &&
-                student.AadharCardPhoto.Length > 100)
-            {
-                throw new ArgumentException(
-                    "Aadhar card photo path cannot exceed 100 characters.");
-            }
+                    return int.TryParse(
+                        numberPart,
+                        out int number)
+                        ? number
+                        : 0;
+                })
+                .DefaultIfEmpty(0)
+                .Max();
+
+            int nextNumber = lastStudentCode + 1;
+
+            student.StudentCode =
+                $"CTIS{nextNumber:D4}";
+
+            // =====================================================
+            // GENERATE PASSWORD
+            // =====================================================
+            string generatedPassword =
+                GeneratePassword();
+
+            student.Password =
+                generatedPassword;
+
+            // =====================================================
+            // INSERT STUDENT
+            // =====================================================
+            var result =
+                await _repository.AddAsync(student);
+
+            // =====================================================
+            // SEND REGISTRATION EMAIL
+            // =====================================================
+            await _emailService.SendRegistrationEmailAsync(
+                student.EmailAddress,
+                student.StudentCode,
+                generatedPassword,
+                student.StudentName ?? "Student");
+
+            return result;
         }
 
-        // ==========================================
-        // EMAIL VALIDATION
-        // ==========================================
-        private static bool IsValidEmail(string email)
+        // =====================================================
+        // UPDATE
+        // =====================================================
+        public async Task UpdateAsync(StudentDetails student)
         {
-            try
+            if (student == null)
             {
-                var mailAddress = new MailAddress(email);
+                throw new ArgumentException(
+                    "Student data is required.");
+            }
 
-                return mailAddress.Address.Equals(
-                    email,
-                    StringComparison.OrdinalIgnoreCase);
-            }
-            catch
+            if (student.StudentId <= 0)
             {
-                return false;
+                throw new ArgumentException(
+                    "StudentId is required.");
             }
+
+            await _repository.UpdateAsync(student);
+        }
+
+        // =====================================================
+        // DELETE
+        // =====================================================
+        public async Task DeleteAsync(int studentId)
+        {
+            if (studentId <= 0)
+            {
+                throw new ArgumentException(
+                    "Invalid StudentId.");
+            }
+
+            await _repository.DeleteAsync(studentId);
+        }
+
+        // =====================================================
+        // RESTORE
+        // =====================================================
+        public async Task RestoreAsync(int studentId)
+        {
+            if (studentId <= 0)
+            {
+                throw new ArgumentException(
+                    "Invalid StudentId.");
+            }
+
+            await _repository.RestoreAsync(studentId);
+        }
+
+        // =====================================================
+        // GENERATE RANDOM PASSWORD
+        // =====================================================
+        private static string GeneratePassword()
+        {
+            const string upper =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            const string lower =
+                "abcdefghijklmnopqrstuvwxyz";
+
+            const string numbers =
+                "0123456789";
+
+            const string special =
+                "@#$!";
+
+            string allCharacters =
+                upper + lower + numbers + special;
+
+            var password = new char[10];
+
+            password[0] =
+                upper[
+                    RandomNumberGenerator.GetInt32(
+                        upper.Length)];
+
+            password[1] =
+                lower[
+                    RandomNumberGenerator.GetInt32(
+                        lower.Length)];
+
+            password[2] =
+                numbers[
+                    RandomNumberGenerator.GetInt32(
+                        numbers.Length)];
+
+            password[3] =
+                special[
+                    RandomNumberGenerator.GetInt32(
+                        special.Length)];
+
+            for (int i = 4; i < password.Length; i++)
+            {
+                password[i] =
+                    allCharacters[
+                        RandomNumberGenerator.GetInt32(
+                            allCharacters.Length)];
+            }
+
+            // Shuffle password
+            return new string(
+                password
+                    .OrderBy(_ =>
+                        RandomNumberGenerator.GetInt32(
+                            int.MaxValue))
+                    .ToArray());
         }
     }
 }

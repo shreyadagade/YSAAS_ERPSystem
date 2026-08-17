@@ -16,6 +16,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             _context = context;
         }
 
+        // =========================
+        // GET BY ID
+        // =========================
         public async Task<StudentDetails?> GetByIdAsync(int studentId)
         {
             var connection = _context.Database.GetDbConnection();
@@ -43,6 +46,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             return MapStudent(reader);
         }
 
+        // =========================
+        // GET ALL
+        // =========================
         public async Task<IEnumerable<StudentDetails>> GetAllAsync()
         {
             var connection = _context.Database.GetDbConnection();
@@ -71,6 +77,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             return students;
         }
 
+        // =========================
+        // INSERT
+        // =========================
         public async Task<StudentDetails> AddAsync(StudentDetails student)
         {
             await _context.Database.ExecuteSqlRawAsync(
@@ -118,6 +127,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             return student;
         }
 
+        // =========================
+        // UPDATE
+        // =========================
         public async Task UpdateAsync(StudentDetails student)
         {
             await _context.Database.ExecuteSqlRawAsync(
@@ -165,6 +177,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                 student.BranchId);
         }
 
+        // =========================
+        // DELETE
+        // =========================
         public async Task DeleteAsync(int studentId)
         {
             await _context.Database.ExecuteSqlRawAsync(
@@ -174,6 +189,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                 studentId);
         }
 
+        // =========================
+        // RESTORE
+        // =========================
         public async Task RestoreAsync(int studentId)
         {
             await _context.Database.ExecuteSqlRawAsync(
@@ -183,6 +201,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                 studentId);
         }
 
+        // =========================
+        // MAPPING
+        // =========================
         private static StudentDetails MapStudent(DbDataReader reader)
         {
             return new StudentDetails
@@ -198,7 +219,8 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                 MobileNumber = GetString(reader, "mobile_number"),
 
                 EmailAddress =
-                    GetString(reader, "email_address") ?? string.Empty,
+                    GetString(reader, "email_address")
+                    ?? string.Empty,
 
                 Password = GetString(reader, "password"),
 
@@ -231,11 +253,12 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                         "permanent_identification_number")
                     ?? string.Empty,
 
-                // DB column = adhar_card_number
+                // IMPORTANT:
+                // Your SP returns aadhar_card_number
                 AadharCardNumber =
-                    GetString(reader, "adhar_card_number"),
+                    GetString(reader, "aadhar_card_number"),
 
-                // DB column = aadhar_card_photo
+                // Your SP returns aadhar_card_photo
                 AadharCardPhoto =
                     GetString(reader, "aadhar_card_photo"),
 
@@ -244,6 +267,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             };
         }
 
+        // =========================
+        // ADD PARAMETER
+        // =========================
         private static void AddParameter(
             DbCommand command,
             string parameterName,
@@ -257,6 +283,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             command.Parameters.Add(parameter);
         }
 
+        // =========================
+        // GET STRING
+        // =========================
         private static string? GetString(
             DbDataReader reader,
             string columnName)
@@ -268,9 +297,12 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                 return null;
             }
 
-            return reader.GetString(ordinal);
+            return Convert.ToString(reader.GetValue(ordinal));
         }
 
+        // =========================
+        // GET INT
+        // =========================
         private static int GetInt(
             DbDataReader reader,
             string columnName)
@@ -285,6 +317,9 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             return Convert.ToInt32(reader.GetValue(ordinal));
         }
 
+        // =========================
+        // GET DATETIME
+        // =========================
         private static DateTime? GetDateTime(
             DbDataReader reader,
             string columnName)

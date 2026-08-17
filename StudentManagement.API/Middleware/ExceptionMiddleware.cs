@@ -40,6 +40,15 @@ namespace StudentManagement.API.Middleware
                     HttpStatusCode.NotFound,
                     ex.Message);
             }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogWarning(ex, "Conflict/duplicate data.");
+
+                await WriteResponse(
+                    context,
+                    HttpStatusCode.Conflict,
+                    ex.Message);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Unhandled exception.");
