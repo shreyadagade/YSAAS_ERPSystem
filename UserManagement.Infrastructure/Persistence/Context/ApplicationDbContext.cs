@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Text;
 using UserManagement.Application.DTOs.Branch;
+using UserManagement.Application.DTOs.Menu;
+using UserManagement.Application.DTOs.RoleMenu;
 using UserManagement.Infrastructure.Persistence.Identity;
 using UserManagement.Infrastructure.Persistence.Models;
 
@@ -19,6 +21,7 @@ namespace UserManagement.Infrastructure.Persistence.Context
         }
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<MenuResponseDto> MenuResponseDtos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,7 +29,7 @@ namespace UserManagement.Infrastructure.Persistence.Context
 
             builder.HasDefaultSchema("erpsystem");
             builder.Entity<RefreshToken>()
-    .ToTable("RefreshTokens", "erpsystem");
+            .ToTable("RefreshTokens", "erpsystem");
 
             builder.Entity<RegisterEmployeeResult>()
             .HasNoKey();
@@ -43,6 +46,36 @@ namespace UserManagement.Infrastructure.Persistence.Context
 
                 entity.Property(x => x.BranchName)
                     .HasColumnName("branch_name");
+            });
+
+            builder.Entity<MenuResponseDto>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(x => x.MenuId)
+                    .HasColumnName("menu_id");
+
+                entity.Property(x => x.MenuName)
+                    .HasColumnName("menu_name");
+
+                entity.Property(x => x.MenuUrl)
+                    .HasColumnName("menu_url");
+
+                entity.Property(x => x.ParentMenuId)
+                    .HasColumnName("parent_menu_id");
+
+                entity.Property(x => x.Icon)
+                    .HasColumnName("icon");
+
+                entity.Property(x => x.DisplayOrder)
+                    .HasColumnName("display_order");
+            });
+
+            builder.Entity<RoleMenuResponseDto>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView(null);
+
             });
         }
     }
