@@ -1,4 +1,5 @@
-﻿using StudentManagement.Domain.Entities.Registration;
+﻿using StudentManagement.Application.DTOs.Payment;
+using StudentManagement.Domain.Entities.Registration;
 
 namespace StudentManagement.Application.Interfaces.Repositories.Registration
 {
@@ -15,5 +16,17 @@ namespace StudentManagement.Application.Interfaces.Repositories.Registration
         Task DeleteAsync(int paymentId);
 
         Task RestoreAsync(int paymentId);
+
+        Task<decimal> GetTotalPaidAsync(int registrationId);
+
+        Task<StudentPaymentResponseDto?> GetPaymentDetailsByIdAsync(
+            int paymentId);
+
+        Task<IEnumerable<StudentPaymentResponseDto>>
+            GetAllPaymentDetailsAsync();
+
+        Task<IEnumerable<StudentPaymentResponseDto>>
+            GetPaymentHistoryByRegistrationIdAsync(
+                int registrationId);
     }
 }

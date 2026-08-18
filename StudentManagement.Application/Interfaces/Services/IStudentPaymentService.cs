@@ -1,17 +1,40 @@
-﻿using StudentManagement.Domain.Entities.Registration;
+﻿using StudentManagement.Application.DTOs.Payment;
+using StudentManagement.Domain.Entities.Registration;
 
 namespace StudentManagement.Application.Interfaces.Services.Registration
 {
     public interface IStudentPaymentService
     {
-        Task<StudentPayment?> GetByIdAsync(int paymentId);
+        // CREATE PAYMENT
+        Task<StudentPaymentResponseDto> CreateCoursePaymentAsync(
+            StudentPaymentRequestDto request);
 
+        // GET BY PAYMENT ID
+        Task<StudentPayment?> GetByIdAsync(
+            int paymentId);
+
+        // GET ALL
         Task<IEnumerable<StudentPayment>> GetAllAsync();
 
-        Task<StudentPayment> AddAsync(StudentPayment payment);
+        // GET ALL PAYMENT DETAILS
+        Task<IEnumerable<StudentPaymentResponseDto>>
+            GetAllPaymentDetailsAsync();
 
-        Task UpdateAsync(StudentPayment payment);
+        // GET PAYMENT HISTORY BY REGISTRATION ID
+        Task<IEnumerable<StudentPaymentResponseDto>>
+            GetPaymentHistoryByRegistrationIdAsync(
+                int registrationId);
 
-        Task DeleteAsync(int paymentId);
+        // ADD
+        Task<StudentPayment> AddAsync(
+            StudentPayment payment);
+
+        // UPDATE
+        Task UpdateAsync(
+            StudentPayment payment);
+
+        // DELETE
+        Task DeleteAsync(
+            int paymentId);
     }
 }

@@ -1,110 +1,72 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagement.Application.DTOs.Payment;
 using StudentManagement.Application.Interfaces.Services.Registration;
-using StudentManagement.Domain.Entities.Registration;
 
-namespace StudentManagement.API.Controllers.Registration
+namespace StudentManagement.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class StudentPaymentController : ControllerBase
     {
-        private readonly IStudentPaymentService _service;
+        private readonly IStudentPaymentService _paymentService;
 
-        public StudentPaymentController(IStudentPaymentService service)
+        public StudentPaymentController(
+            IStudentPaymentService paymentService)
         {
-            _service = service;
+            _paymentService = paymentService;
         }
 
-        // 1. GET: api/StudentPayment/{paymentId}
-        [HttpGet("{paymentId}")]
-        public async Task<IActionResult> GetById(int paymentId)
+        // ==========================================
+        // CREATE COURSE PAYMENT
+        // ==========================================
+        [HttpPost("course-payment")]
+        public async Task<IActionResult> CreateCoursePayment(
+            [FromBody] StudentPaymentRequestDto request)
         {
-            var payment = await _service.GetByIdAsync(paymentId);
+            var result =
+                await _paymentService.CreateCoursePaymentAsync(request);
 
-            if (payment == null)
-            {
-                return NotFound(new
-                {
-                    message = "Student payment not found."
-                });
-            }
-
-            return Ok(payment);
+            return Ok(result);
         }
 
-        // 2. GET: api/StudentPayment
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+
+        // ==========================================
+        // GET ALL PAYMENT DETAILS
+        // ==========================================
+        [HttpGet("all-details")]
+        public async Task<IActionResult> GetAllPaymentDetails()
         {
-            var payments = await _service.GetAllAsync();
+            var payments =
+                await _paymentService.GetAllPaymentDetailsAsync();
 
             return Ok(payments);
         }
 
-        // 3. POST: api/StudentPayment
-        [HttpPost]
-        public async Task<IActionResult> Add(StudentPayment payment)
-        {
-            var result = await _service.AddAsync(payment);
 
-            return CreatedAtAction(
-                nameof(GetById),
-                new { paymentId = result.PaymentId },
-                result);
-        }
-
-        // 4. PUT: api/StudentPayment/{paymentId}
-        [HttpPut("{paymentId}")]
-        public async Task<IActionResult> Update(
-            int paymentId,
-            StudentPayment payment)
+        // ==========================================
+        // GET PAYMENT HISTORY BY REGISTRATION ID
+        // ==========================================
+        [HttpGet("history/{registrationId}")]
+        public async Task<IActionResult> GetPaymentHistory(
+            int registrationId)
         {
-            if (paymentId != payment.PaymentId)
+            var payments =
+                await _paymentService
+                    .GetPaymentHistoryByRegistrationIdAsync(
+                        registrationId);
+
+            if (payments == null || !payments.Any())
             {
-                return BadRequest(new
-                {
-                    message = "Payment ID does not match."
-                });
+                return NotFound(
+                    new
+                    {
+                        statusCode = 404,
+                        message =
+                            "No payment history found for this registration."
+                    });
             }
 
-            var existing = await _service.GetByIdAsync(paymentId);
-
-            if (existing == null)
-            {
-                return NotFound(new
-                {
-                    message = "Student payment not found."
-                });
-            }
-
-            await _service.UpdateAsync(payment);
-
-            return Ok(new
-            {
-                message = "Student payment updated successfully."
-            });
-        }
-
-        // 5. DELETE: api/StudentPayment/{paymentId}
-        [HttpDelete("{paymentId}")]
-        public async Task<IActionResult> Delete(int paymentId)
-        {
-            var existing = await _service.GetByIdAsync(paymentId);
-
-            if (existing == null)
-            {
-                return NotFound(new
-                {
-                    message = "Student payment not found."
-                });
-            }
-
-            await _service.DeleteAsync(paymentId);
-
-            return Ok(new
-            {
-                message = "Student payment deleted successfully."
-            });
+            return Ok(payments);
         }
     }
 }

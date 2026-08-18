@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.API.Middleware;
 using StudentManagement.Application.Interfaces.Repositories;
+using StudentManagement.Application.Interfaces.Repositories.Course;
 using StudentManagement.Application.Interfaces.Repositories.Registration;
 using StudentManagement.Application.Interfaces.Services;
 using StudentManagement.Application.Interfaces.Services.Registration;
@@ -9,8 +10,12 @@ using StudentManagement.Application.Services.Registration;
 using StudentManagement.Infrastructure.Data;
 using StudentManagement.Infrastructure.Email;
 using StudentManagement.Infrastructure.Repositories;
+using StudentManagement.Infrastructure.Repositories.Course;
 using StudentManagement.Infrastructure.Repositories.Registration;
 using StudentManagement.Infrastructure.Services;
+using StudentManagement.Application.Interfaces.Services.Course;
+using StudentManagement.Application.Services.Course;
+using StudentManagement.Application.Services.Payment;
 
 
 
@@ -28,11 +33,13 @@ builder.Services.AddScoped<IStudentDetailsRepository, StudentDetailsRepository>(
 builder.Services.AddScoped<IStudentPaymentRepository, StudentPaymentRepository>();
 builder.Services.AddScoped<IStudentQualificationRepository, StudentQualificationRepository>();
 builder.Services.AddScoped<IStudentRegistrationRepository, StudentRegistrationRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 //Service
 builder.Services.AddScoped<IStudentPaymentService, StudentPaymentService>();
 builder.Services.AddScoped<IStudentDetailsService, StudentDetailsService>();
 builder.Services.AddScoped<IStudentQualificationService, StudentQualificationService>();
 builder.Services.AddScoped<IStudentRegistrationService, StudentRegistrationService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 // Email
 
