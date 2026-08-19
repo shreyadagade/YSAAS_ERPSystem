@@ -1,6 +1,10 @@
-﻿using DeveloperManagement.Application.DTOs.Course;
+﻿using DeveloperManagement.Application.DTOs.ContentInterviewQuestion;
+using DeveloperManagement.Application.DTOs.ContentQuestion;
+using DeveloperManagement.Application.DTOs.Course;
 using DeveloperManagement.Application.DTOs.CourseTopic;
 using DeveloperManagement.Application.DTOs.Details;
+using DeveloperManagement.Application.DTOs.ProgramAnswer;
+using DeveloperManagement.Application.DTOs.ProgramQuestion;
 using DeveloperManagement.Application.DTOs.Topic;
 using DeveloperManagement.Application.DTOs.TopicContent;
 using DeveloperManagement.Domain.Entities;
@@ -21,7 +25,11 @@ namespace DeveloperManagement.Infrastructure.Persistence.Context
         public DbSet<TrainingTopic> TrainingTopics { get; set; }
         public DbSet<TrainingTopicContent> TrainingTopicContents { get; set; }
         public DbSet<TrainingCourseTopic> TrainingCourseTopics { get; set; }
-       
+        public DbSet<ProgramQuestionResponseDto> ProgramQuestionResponses { get; set; }
+        public DbSet<ProgramAnswerResponseDto> ProgramAnswerResponseDtos { get; set; }
+        public DbSet<ContentQuestionResponseDto> ContentQuestionResponseDtos { get; set; }
+        public DbSet<ContentInterviewQuestionResponseDto> ContentInterviewQuestionResponseDtos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -201,7 +209,7 @@ namespace DeveloperManagement.Infrastructure.Persistence.Context
 
 
             modelBuilder.Entity<CourseDetailsFlatDto>()
-    .HasNoKey();
+            .HasNoKey();
 
             modelBuilder.Entity<CourseDetailsFlatDto>()
                 .Property(x => x.CourseId)
@@ -246,6 +254,98 @@ namespace DeveloperManagement.Infrastructure.Persistence.Context
             modelBuilder.Entity<CourseDetailsFlatDto>()
                 .Property(x => x.VideoName)
                 .HasColumnName("video_name");
+
+            modelBuilder.Entity<ProgramQuestionResponseDto>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(x => x.ProgramQuestionId)
+                    .HasColumnName("program_question_id");
+
+                entity.Property(x => x.ContentId)
+                    .HasColumnName("content_id");
+
+                entity.Property(x => x.ContentName)
+                    .HasColumnName("content_name");
+
+                entity.Property(x => x.QuestionTitle)
+                    .HasColumnName("question_title");
+
+                entity.Property(x => x.QuestionDescription)
+                    .HasColumnName("question_description");
+            });
+
+            modelBuilder.Entity<ProgramAnswerResponseDto>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(x => x.ProgramAnswerId)
+                    .HasColumnName("program_answer_id");
+
+                entity.Property(x => x.ProgramQuestionId)
+                    .HasColumnName("program_question_id");
+
+                entity.Property(x => x.QuestionTitle)
+                    .HasColumnName("question_title");
+
+                entity.Property(x => x.ProgramAnswer)
+                    .HasColumnName("program_answer");
+
+                entity.Property(x => x.ProgramDescription)
+                    .HasColumnName("program_description");
+            });
+
+            modelBuilder.Entity<ContentQuestionResponseDto>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(x => x.QuestionId)
+                    .HasColumnName("question_id");
+
+                entity.Property(x => x.ContentId)
+                    .HasColumnName("content_id");
+
+                entity.Property(x => x.ContentName)
+                    .HasColumnName("content_name");
+
+                entity.Property(x => x.Question)
+                    .HasColumnName("question");
+
+                entity.Property(x => x.Option1)
+                    .HasColumnName("option1");
+
+                entity.Property(x => x.Option2)
+                    .HasColumnName("option2");
+
+                entity.Property(x => x.Option3)
+                    .HasColumnName("option3");
+
+                entity.Property(x => x.Option4)
+                    .HasColumnName("option4");
+
+                entity.Property(x => x.CorrectOptionNumber)
+                    .HasColumnName("correct_option_number");
+            });
+
+            modelBuilder.Entity<ContentInterviewQuestionResponseDto>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(x => x.QuestionId)
+                    .HasColumnName("question_id");
+
+                entity.Property(x => x.ContentId)
+                    .HasColumnName("content_id");
+
+                entity.Property(x => x.ContentName)
+                    .HasColumnName("content_name");
+
+                entity.Property(x => x.Question)
+                    .HasColumnName("question");
+
+                entity.Property(x => x.Answer)
+                    .HasColumnName("answer");
+            });
 
 
         }

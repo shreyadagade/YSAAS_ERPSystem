@@ -12,6 +12,12 @@
     <Project Path="LeadManagement.Domain/LeadManagement.Domain.csproj" Id="fc70fd68-1bc7-4e5e-bc1c-ea0b3698b716" />
     <Project Path="LeadManagement.Infrastructure/LeadManagement.Infrastructure.csproj" Id="15f0fdfa-447c-43a2-973f-367b939b42d2" />
   </Folder>
+  <Folder Name="/Services/StudentManagement/">
+    <Project Path="StudentManagement.API/StudentManagement.API.csproj" />
+    <Project Path="StudentManagement.Application/StudentManagement.Application.csproj" />
+    <Project Path="StudentManagement.Domain/StudentManagement.Domain.csproj" />
+    <Project Path="StudentManagement.Infrastructure/StudentManagement.Infrastructure.csproj" />
+  </Folder>
   <Folder Name="/Services/UserManagement/">
     <File Path="README.md" />
     <Project Path="UserManagement.API/UserManagement.API.csproj" />

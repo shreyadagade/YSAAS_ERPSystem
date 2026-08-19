@@ -24,6 +24,15 @@ public static class DependencyInjectionConfiguration
 
         services.AddScoped<ITrainingCourseTopicService,TrainingCourseTopicService>();
 
+        services.AddScoped<ITrainingContentProgramQuestionService,TrainingContentProgramQuestionService>();
+
+        services.AddScoped<ITrainingContentProgramAnswerService,
+            TrainingContentProgramAnswerService>();
+
+        services.AddScoped<ITrainingContentQuestionService,TrainingContentQuestionService>();
+
+        services.AddScoped<ITrainingContentInterviewQuestionService,TrainingContentInterviewQuestionService>();
+
         return services;
     }
 }
