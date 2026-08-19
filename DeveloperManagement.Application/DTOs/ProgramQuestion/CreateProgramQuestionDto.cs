@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DeveloperManagement.Application.DTOs.ProgramQuestion
+{
+    public class CreateProgramQuestionDto
+    {
+        public int? ContentId { get; set; }
+        public string? QuestionTitle { get; set; }
+        public string? QuestionDescription { get; set; }
+    }
+}
