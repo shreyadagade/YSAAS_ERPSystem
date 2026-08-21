@@ -210,11 +210,11 @@ namespace LeadManagement.Application.Services
             {
                 CourseId = entity.CourseId,
                 CourseName = entity.CourseName,
-                Flag = entity.Flag,
-                InsertedAt = entity.InsertedAt,
-                UpdatedAt = entity.UpdatedAt,
-                DeletedAt = entity.DeletedAt,
-                RestoredAt = entity.RestoredAt
+                //Flag = entity.Flag,
+                //InsertedAt = entity.InsertedAt,
+                //UpdatedAt = entity.UpdatedAt,
+                //DeletedAt = entity.DeletedAt,
+                //RestoredAt = entity.RestoredAt
             };
         }
 
@@ -233,11 +233,11 @@ namespace LeadManagement.Application.Services
             {
                 CourseId = entity.CourseId,
                 CourseName = entity.CourseName,
-                Flag = entity.Flag,
-                InsertedAt = entity.InsertedAt,
-                UpdatedAt = entity.UpdatedAt,
-                DeletedAt = entity.DeletedAt,
-                RestoredAt = entity.RestoredAt
+                //Flag = entity.Flag,
+                //InsertedAt = entity.InsertedAt,
+                //UpdatedAt = entity.UpdatedAt,
+                //DeletedAt = entity.DeletedAt,
+                //RestoredAt = entity.RestoredAt
             });
         }
     }

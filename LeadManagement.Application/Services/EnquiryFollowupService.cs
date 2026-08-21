@@ -238,10 +238,10 @@ namespace LeadManagement.Application.Services
                 FollowUpDate = entity.FollowUpDate,
                 FollowUpBy = entity.FollowUpBy,
                 Description = entity.Description,
-                CreatedAt = entity.CreatedAt,
-                UpdatedAt = entity.UpdatedAt,
-                DeletedAt = entity.DeletedAt,
-                RestoredAt = entity.RestoredAt
+                //CreatedAt = entity.CreatedAt,
+                //UpdatedAt = entity.UpdatedAt,
+                //DeletedAt = entity.DeletedAt,
+                //RestoredAt = entity.RestoredAt
             };
         }
 
@@ -263,10 +263,10 @@ namespace LeadManagement.Application.Services
                 FollowUpDate = entity.FollowUpDate,
                 FollowUpBy = entity.FollowUpBy,
                 Description = entity.Description,
-                CreatedAt = entity.CreatedAt,
-                UpdatedAt = entity.UpdatedAt,
-                DeletedAt = entity.DeletedAt,
-                RestoredAt = entity.RestoredAt
+                //CreatedAt = entity.CreatedAt,
+                //UpdatedAt = entity.UpdatedAt,
+                //DeletedAt = entity.DeletedAt,
+                //RestoredAt = entity.RestoredAt
             });
         }
     }
