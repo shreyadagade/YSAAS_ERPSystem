@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using UserManagement.Application.Exceptions;
 
 namespace UserManagement.API.Middleware
 {
@@ -21,6 +22,25 @@ namespace UserManagement.API.Middleware
             {
                 await _next(context);
             }
+            catch (AppException ex)
+            {
+                _logger.LogWarning(
+                    ex,
+                    "Application exception occurred. Request: {Method} {Path}",
+                    context.Request.Method,
+                    context.Request.Path);
+
+                context.Response.StatusCode = ex.StatusCode;
+                context.Response.ContentType = "application/json";
+
+                var response = new
+                {
+                    statusCode = ex.StatusCode,
+                    message = ex.Message
+                };
+
+                await context.Response.WriteAsJsonAsync(response);
+            }
             catch (SqlException ex)
             {
                 _logger.LogError(
@@ -30,49 +50,21 @@ namespace UserManagement.API.Middleware
                     context.Request.Path);
 
                 context.Response.StatusCode =
-                    StatusCodes.Status400BadRequest;
+                    StatusCodes.Status500InternalServerError;
 
                 context.Response.ContentType = "application/json";
 
-                var message = ex.Message.Contains(
-                    "UNIQUE KEY",
-                    StringComparison.OrdinalIgnoreCase)
-                    ? "Branch name already exists."
-                    : "The requested database operation could not be completed.";
-
                 var response = new
                 {
                     statusCode = context.Response.StatusCode,
-                    message = message
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
-            }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogWarning(
-                    ex,
-                    "Authentication or business operation failed. Request: {Method} {Path}",
-                    context.Request.Method,
-                    context.Request.Path);
-
-                context.Response.StatusCode =
-                    StatusCodes.Status401Unauthorized;
-
-                context.Response.ContentType =
-                    "application/json";
-
-                var response = new
-                {
-                    statusCode = context.Response.StatusCode,
-                    message = ex.Message
+                    message = "A database error occurred while processing your request."
                 };
 
                 await context.Response.WriteAsJsonAsync(response);
             }
             catch (ArgumentException ex)
             {
-                _logger.LogError(
+                _logger.LogWarning(
                     ex,
                     "Validation exception occurred. Request: {Method} {Path}",
                     context.Request.Method,
