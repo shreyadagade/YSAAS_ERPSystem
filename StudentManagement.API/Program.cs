@@ -1,21 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using StudentManagement.API.Middleware;
 using StudentManagement.Application.Interfaces.Repositories;
-using StudentManagement.Application.Interfaces.Repositories.Course;
-using StudentManagement.Application.Interfaces.Repositories.Registration;
 using StudentManagement.Application.Interfaces.Services;
-using StudentManagement.Application.Interfaces.Services.Registration;
 using StudentManagement.Application.Services;
-using StudentManagement.Application.Services.Registration;
 using StudentManagement.Infrastructure.Data;
-using StudentManagement.Infrastructure.Email;
+
 using StudentManagement.Infrastructure.Repositories;
-using StudentManagement.Infrastructure.Repositories.Course;
-using StudentManagement.Infrastructure.Repositories.Registration;
-using StudentManagement.Infrastructure.Services;
-using StudentManagement.Application.Interfaces.Services.Course;
-using StudentManagement.Application.Services.Course;
-using StudentManagement.Application.Services.Payment;
+using StudentManagement.Application.Interfaces.Repositories.Student;
+using StudentManagement.Application.Interfaces.Services.Student;
+using StudentManagement.Application.Services.Student;
+using StudentManagement.Infrastructure.Repositories.Student;
 
 
 
@@ -30,28 +24,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>  options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 //Repository
 builder.Services.AddScoped<IStudentDetailsRepository, StudentDetailsRepository>();
-builder.Services.AddScoped<IStudentPaymentRepository, StudentPaymentRepository>();
-builder.Services.AddScoped<IStudentQualificationRepository, StudentQualificationRepository>();
-builder.Services.AddScoped<IStudentRegistrationRepository, StudentRegistrationRepository>();
-builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 //Service
-builder.Services.AddScoped<IStudentPaymentService, StudentPaymentService>();
 builder.Services.AddScoped<IStudentDetailsService, StudentDetailsService>();
-builder.Services.AddScoped<IStudentQualificationService, StudentQualificationService>();
-builder.Services.AddScoped<IStudentRegistrationService, StudentRegistrationService>();
-builder.Services.AddScoped<ICourseService, CourseService>();
+
 
 // Email
 
-builder.Services.Configure<EmailSettings>(
-    builder.Configuration.GetSection("EmailSettings"));
+//builder.Services.Configure<EmailSettings>(
+//    builder.Configuration.GetSection("EmailSettings"));
 
-builder.Services.AddScoped<IEmailService>(serviceProvider =>
-    new EmailService(
-        "smtp.gmail.com",
-        587,
-        "minakshigaike@gmail.com",
-        "yudr utnl mkbq tyhn"));
+//builder.Services.AddScoped<IEmailService>(serviceProvider =>
+//    new EmailService(
+//        "smtp.gmail.com",
+//        587,
+//        "minakshigaike@gmail.com",
+//        "yudr utnl mkbq tyhn"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

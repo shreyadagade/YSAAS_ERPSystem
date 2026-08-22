@@ -1,9 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace StudentManagement.Application.DTOs.Registration
+﻿namespace StudentManagement.Domain.Entities.Student
 {
-    public class StudentDetailsDto
+    public class StudentDetails
     {
         public int StudentId { get; set; }
 
@@ -22,6 +19,7 @@ namespace StudentManagement.Application.DTOs.Registration
         public string? ProfilePhoto { get; set; }
 
         public string? Qualification { get; set; }
+        public string? BranchName { get; set; }
 
         public int? Flag { get; set; }
 
@@ -33,7 +31,7 @@ namespace StudentManagement.Application.DTOs.Registration
 
         public string? LastName { get; set; }
 
-        public string? WhatsAppNumber { get; set; }
+        public string? WhatsappNumber { get; set; }
 
         public string? LocalAddress { get; set; }
 
@@ -42,13 +40,11 @@ namespace StudentManagement.Application.DTOs.Registration
         public string PermanentIdentificationNumber { get; set; }
             = string.Empty;
 
-        [Column("adhar_card_number")]
         public string? AadharCardNumber { get; set; }
 
-        [Column("adhar_card_photo")]
         public string? AadharCardPhoto { get; set; }
 
-        public int BranchId { get; set; }
+        public int? BranchId { get; set; }
 
         public DateTime? InsertedAt { get; set; }
 
