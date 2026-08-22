@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using UserManagement.Application.Contracts;
 using UserManagement.Application.DTOs.Auth;
 using UserManagement.Application.DTOs.Email;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
 using UserManagement.Infrastructure.Persistence.Context;
 using UserManagement.Infrastructure.Persistence.Identity;
 using UserManagement.Infrastructure.Persistence.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace UserManagement.Infrastructure.Services
 {
@@ -19,9 +20,7 @@ namespace UserManagement.Infrastructure.Services
         private readonly JwtService _jwtService;
         private readonly ApplicationDbContext _context;
 
-        private const string StoredProcedure =
-            "erpsystem.sp_register_employee";
-
+        private const string StoredProcedure = "erpsystem.sp_register_employee";
 
         public AuthService(
             UserManager<ApplicationUser> userManager,
@@ -42,47 +41,48 @@ namespace UserManagement.Infrastructure.Services
         {
             if (dto == null)
             {
-                throw new ArgumentException(
+                throw new BadRequestException(
                     "Registration data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.EmployeeName))
             {
-                throw new ArgumentException(
+                throw new BadRequestException(
                     "Employee name is required.");
             }
 
-
             if (string.IsNullOrWhiteSpace(dto.EmailAddress))
             {
-                throw new ArgumentException(
+                throw new BadRequestException(
                     "Email address is required.");
             }
 
-
-            if (string.IsNullOrWhiteSpace(dto.MobileNumber))
-            {
-                throw new ArgumentException(
+            if(string.IsNullOrWhiteSpace(dto.MobileNumber))
+{
+                throw new BadRequestException(
                     "Mobile number is required.");
             }
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(
-                    dto.MobileNumber,@"^[0-9]{10}$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(dto.MobileNumber,@"^[7-9][0-9]{9}$"))
             {
-                throw new ArgumentException(
-                    "Mobile number must be exactly 10 digits.");
+                throw new BadRequestException(
+                    "Mobile number must be exactly 10 digits and start with 7, 8, or 9.");
             }
 
             var email = dto.EmailAddress.Trim();
             var mobileNumber = dto.MobileNumber.Trim();
 
-            var existingUser =
-                await _userManager.FindByEmailAsync(
-                    dto.EmailAddress);
+            if (!System.Text.RegularExpressions.Regex.IsMatch(email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                throw new BadRequestException(
+                    "Please enter a valid email address.");
+            }
+
+            var existingUser = await _userManager.FindByEmailAsync(dto.EmailAddress);
 
             if (existingUser != null)
             {
-                throw new InvalidOperationException(
+                throw new ConflictException(
                     "A user with this email address already exists.");
             }
 
@@ -91,9 +91,11 @@ namespace UserManagement.Infrastructure.Services
 
             if (existingMobile != null)
             {
-                throw new InvalidOperationException(
+                throw new ConflictException(
                     "A user with this mobile number already exists.");
             }
+
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
             var employeeCodeResult =
                 await _repository.ExecuteQueryAsync<EmployeeCodeResult>(
@@ -106,20 +108,15 @@ namespace UserManagement.Infrastructure.Services
                     });
 
 
-            var employeeCode =
-                employeeCodeResult
-                    .FirstOrDefault()
-                    ?.EmployeeCode;
-
+            var employeeCode = employeeCodeResult.FirstOrDefault()?.EmployeeCode;
 
             if (string.IsNullOrWhiteSpace(employeeCode))
             {
-                throw new InvalidOperationException(
+                throw new BadRequestException(
                     "Employee code could not be generated.");
             }
 
-            var password =
-                _passwordGenerator.GeneratePassword();
+            var password = _passwordGenerator.GeneratePassword();
 
             var user = new ApplicationUser
             {
@@ -129,78 +126,83 @@ namespace UserManagement.Infrastructure.Services
                 EmailConfirmed = false
             };
 
-
-            var result = await _userManager.CreateAsync(user,password);
+            var result = await _userManager.CreateAsync(user, password);
 
             if (!result.Succeeded)
             {
-                var errors =
-                    string.Join(
-                        ", ",
-                        result.Errors.Select(
-                            e => e.Description));
+                var errors = string.Join(", ",result.Errors.Select(e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"User registration failed. {errors}");
+                await transaction.RollbackAsync();
+
+                throw new BadRequestException($"User registration failed. {errors}");
             }
 
-            var resultFromSp =
-                await _repository.ExecuteQueryAsync<RegisterEmployeeResult>(
-                    StoredProcedure,
+            List<RegisterEmployeeResult> resultFromSp;
 
-                    new StoredProcedureParameter
-                    {
-                        Name = "@Type",
-                        Value = "Insert"
-                    },
+            try
+            {
+                resultFromSp = await _repository.ExecuteQueryAsync<RegisterEmployeeResult>(
+                        StoredProcedure,
 
-                    new StoredProcedureParameter
-                    {
-                        Name = "@employee_name",
-                        Value = dto.EmployeeName
-                    },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@Type",
+                            Value = "Insert"
+                        },
 
-                    new StoredProcedureParameter
-                    {
-                        Name = "@employee_code",
-                        Value = employeeCode
-                    },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@employee_name",
+                            Value = dto.EmployeeName
+                        },
 
-                    new StoredProcedureParameter
-                    {
-                        Name = "@email_address",
-                        Value = dto.EmailAddress
-                    },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@employee_code",
+                            Value = employeeCode
+                        },
 
-                    new StoredProcedureParameter
-                    {
-                        Name = "@mobile_number",
-                        Value = dto.MobileNumber
-                    },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@email_address",
+                            Value = email
+                        },
 
-                    new StoredProcedureParameter
-                    {
-                        Name = "@branch_id",
-                        Value = dto.BranchId
-                    },
+                        new StoredProcedureParameter
+                        {
+                            Name = "@mobile_number",
+                            Value = mobileNumber
+                        },
 
-                    new StoredProcedureParameter
-                    {
-                        Name = "@user_id",
-                        Value = user.Id
-                    }
-                );
+                        new StoredProcedureParameter
+                        {
+                            Name = "@branch_id",
+                            Value = dto.BranchId
+                        },
 
-            var employee =
-                resultFromSp.FirstOrDefault();
+                        new StoredProcedureParameter
+                        {
+                            Name = "@user_id",
+                            Value = user.Id
+                        }
+                    );
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+
+            var employee = resultFromSp.FirstOrDefault();
 
             if (employee == null)
             {
-                await _userManager.DeleteAsync(user);
+                await transaction.RollbackAsync();
 
-                throw new InvalidOperationException(
-                    "Employee registration failed.");
+                throw new BadRequestException("Employee registration failed.");
             }
+
+            await transaction.CommitAsync();
 
             var emailRequest = new EmailRequestDto
             {
@@ -240,13 +242,11 @@ namespace UserManagement.Infrastructure.Services
             };
 
 
-            await _emailService.SendEmailAsync(
-                emailRequest);
+            await _emailService.SendEmailAsync(emailRequest);
 
             return new RegisterResponseDto
             {
-                Message =
-                    "User registered successfully.",
+                Message = "User registered successfully.",
 
                 UserId =
                     employee.UserId,

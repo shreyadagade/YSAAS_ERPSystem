@@ -22,10 +22,11 @@ namespace UserManagement.API.Controllers
         [HttpPost("register-employee")]
         public async Task<IActionResult> RegisterEmployee([FromBody] RegisterUserDto dto)
         {
-            var result =
-                await _authService.RegisterAsync(dto);
+            var result = await _authService.RegisterAsync(dto);
 
-            return Ok(result);
+            return StatusCode(
+                StatusCodes.Status201Created,
+                result);
         }
 
         [AllowAnonymous]
