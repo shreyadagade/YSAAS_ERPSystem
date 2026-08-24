@@ -93,7 +93,7 @@ namespace StudentManagement.Application.Services.Student
                     request.EmailAddress,
 
                 Password =
-                    generatedPassword,
+    BCrypt.Net.BCrypt.HashPassword(generatedPassword),
 
                 BirthDate =
                     request.BirthDate,

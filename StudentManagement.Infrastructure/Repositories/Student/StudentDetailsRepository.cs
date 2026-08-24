@@ -460,5 +460,52 @@ namespace StudentManagement.Infrastructure.Repositories.Student
 
             command.Parameters.Add(parameter);
         }
+
+// =====================================================
+// GET STUDENT BY STUDENT CODE - LOGIN
+// =====================================================
+public async Task<StudentDetails?> GetByStudentCodeAsync(
+    string studentCode)
+        {
+            var connection =
+                _context.Database.GetDbConnection();
+
+            if (connection.State != ConnectionState.Open)
+            {
+                await connection.OpenAsync();
+            }
+
+            using var command =
+                connection.CreateCommand();
+
+            command.CommandText =
+                "erpsystem.sp_tblstudent_details";
+
+            command.CommandType =
+                CommandType.StoredProcedure;
+
+            AddParameter(
+                command,
+                "@Type",
+                "GetByStudentCode");
+
+            AddParameter(
+                command,
+                "@student_code",
+                studentCode);
+
+            using var reader =
+                await command.ExecuteReaderAsync();
+
+            if (!await reader.ReadAsync())
+            {
+                return null;
+            }
+
+            return MapStudent(reader);
+        }
+
+
+
     }
 }

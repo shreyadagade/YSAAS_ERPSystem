@@ -4,22 +4,32 @@ namespace StudentManagement.Application.Interfaces.Repositories.Student
 {
     public interface IStudentDetailsRepository
     {
-        // Get one student by ID
-        Task<StudentDetails?> GetByIdAsync(int studentId);
+        // GET BY ID
+        Task<StudentDetails?> GetByIdAsync(
+            int studentId);
 
-        // Get all active students
+        // GET ALL
         Task<IEnumerable<StudentDetails>> GetAllAsync();
 
-        // Create student
-        Task<StudentDetails> AddAsync(StudentDetails student);
+        // CREATE
+        Task<StudentDetails> AddAsync(
+            StudentDetails student);
 
-        // Update student
-        Task UpdateAsync(StudentDetails student);
+        // UPDATE
+        Task UpdateAsync(
+            StudentDetails student);
 
-        // Soft delete student
-        Task DeleteAsync(int studentId);
+        // DELETE
+        Task DeleteAsync(
+            int studentId);
 
-        // Restore deleted student
-        Task RestoreAsync(int studentId);
+        // RESTORE
+        Task RestoreAsync(
+            int studentId);
+
+        // LOGIN
+        Task<StudentDetails?> GetByStudentCodeAsync(
+            string studentCode);
     }
 }
+
