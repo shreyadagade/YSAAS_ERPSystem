@@ -49,15 +49,23 @@ namespace UserManagement.API.Middleware
                     context.Request.Method,
                     context.Request.Path);
 
-                context.Response.StatusCode =
-                    StatusCodes.Status500InternalServerError;
-
                 context.Response.ContentType = "application/json";
+
+                var isBusinessError =
+                    ex.Message.Contains(
+                        "Branch is not deleted or does not exist.",
+                        StringComparison.OrdinalIgnoreCase);
+
+                context.Response.StatusCode = isBusinessError
+                    ? StatusCodes.Status400BadRequest
+                    : StatusCodes.Status500InternalServerError;
 
                 var response = new
                 {
                     statusCode = context.Response.StatusCode,
-                    message = "A database error occurred while processing your request."
+                    message = isBusinessError
+                        ? ex.Message
+                        : "A database error occurred while processing your request."
                 };
 
                 await context.Response.WriteAsJsonAsync(response);

@@ -38,5 +38,20 @@ namespace UserManagement.Infrastructure.Repositories
             return await _context.Database.ExecuteSqlRawAsync($"EXEC {storedProcedure} {parameterNames}",
                 sqlParameters);
         }
+
+        public async Task<List<T>> ExecuteRawQueryAsync<T>(string sql,params StoredProcedureParameter[] parameters)
+            where T : class
+        {
+            var sqlParameters = parameters
+                .Select(p => new SqlParameter(
+                    p.Name,
+                    p.Value ?? DBNull.Value))
+                .ToArray();
+
+            return await _context.Set<T>()
+                .FromSqlRaw(sql, sqlParameters)
+                .AsNoTracking()
+                .ToListAsync();
+        }
     }
 }
