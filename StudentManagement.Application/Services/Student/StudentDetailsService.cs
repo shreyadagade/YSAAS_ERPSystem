@@ -3,17 +3,19 @@ using StudentManagement.Application.Interfaces.Repositories.Student;
 using StudentManagement.Application.Interfaces.Services.Student;
 using StudentManagement.Domain.Entities.Student;
 
-
 namespace StudentManagement.Application.Services.Student
 {
     public class StudentDetailsService : IStudentDetailsService
     {
         private readonly IStudentDetailsRepository _repository;
+        private readonly IEmailService _emailService;
 
         public StudentDetailsService(
-            IStudentDetailsRepository repository)
+            IStudentDetailsRepository repository,
+            IEmailService emailService)
         {
             _repository = repository;
+            _emailService = emailService;
         }
 
         // =====================================================
@@ -52,7 +54,7 @@ namespace StudentManagement.Application.Services.Student
         }
 
         // =====================================================
-        // CREATE
+        // CREATE STUDENT
         // =====================================================
         public async Task<StudentDetailsResponseDto> AddAsync(
             StudentDetailsRequestDto request)
@@ -65,29 +67,139 @@ namespace StudentManagement.Application.Services.Student
 
             ValidateStudent(request);
 
+            // =================================================
+            // STEP 1: GENERATE PASSWORD
+            // =================================================
+
+            var generatedPassword =
+                PasswordGenerator.GeneratePassword();
+
+            // =================================================
+            // STEP 2: CREATE STUDENT ENTITY
+            // =================================================
+
             var student = new StudentDetails
             {
-                StudentName = request.StudentName,
-                Gender = request.Gender,
-                MobileNumber = request.MobileNumber,
-                EmailAddress = request.EmailAddress,
-                BirthDate = request.BirthDate,
-                ProfilePhoto = request.ProfilePhoto,
-                Qualification = request.Qualification,
-                ParentName = request.ParentName,
-                ParentNumber = request.ParentNumber,
-                LastName = request.LastName,
-                WhatsappNumber = request.WhatsappNumber,
-                LocalAddress = request.LocalAddress,
-                PermanentAddress = request.PermanentAddress,
-                PermanentIdentificationNumber = request.PermanentIdentificationNumber,
-                AadharCardNumber = request.AadharCardNumber,
-                AadharCardPhoto = request.AadharCardPhoto,
-                BranchId = request.BranchId
+                StudentName =
+                    request.StudentName,
+
+                Gender =
+                    request.Gender,
+
+                MobileNumber =
+                    request.MobileNumber,
+
+                EmailAddress =
+                    request.EmailAddress,
+
+                Password =
+                    generatedPassword,
+
+                BirthDate =
+                    request.BirthDate,
+
+                ProfilePhoto =
+                    request.ProfilePhoto,
+
+                Qualification =
+                    request.Qualification,
+
+                ParentName =
+                    request.ParentName,
+
+                ParentNumber =
+                    request.ParentNumber,
+
+                LastName =
+                    request.LastName,
+
+                WhatsappNumber =
+                    request.WhatsappNumber,
+
+                LocalAddress =
+                    request.LocalAddress,
+
+                PermanentAddress =
+                    request.PermanentAddress,
+
+                PermanentIdentificationNumber =
+                    request.PermanentIdentificationNumber,
+
+                AadharCardNumber =
+                    request.AadharCardNumber,
+
+                AadharCardPhoto =
+                    request.AadharCardPhoto,
+
+                BranchId =
+                    request.BranchId
             };
+
+            // =================================================
+            // STEP 3: INSERT STUDENT
+            // =================================================
 
             var result =
                 await _repository.AddAsync(student);
+
+            // At this point StudentId is available.
+            // Example: StudentId = 5
+
+            if (result.StudentId <= 0)
+            {
+                throw new Exception(
+                    "Student was created but StudentId was not generated.");
+            }
+
+            // =================================================
+            // STEP 4: GENERATE STUDENT CODE
+            // =================================================
+
+            result.StudentCode =
+                StudentCodeGenerator.GenerateStudentCode(
+                    result.StudentId);
+
+            // Keep the generated password.
+            result.Password =
+                generatedPassword;
+
+            // =================================================
+            // STEP 5: UPDATE STUDENT CODE AND PASSWORD
+            // =================================================
+
+            await _repository.UpdateAsync(result);
+
+            // =================================================
+            // STEP 6: SEND EMAIL
+            // =================================================
+
+            if (string.IsNullOrWhiteSpace(result.EmailAddress))
+            {
+                throw new Exception(
+                    "Student email address is required to send login credentials.");
+            }
+
+            var emailSubject =
+                "Student Account Created Successfully";
+
+            var emailBody =
+                $"Dear {result.StudentName},\n\n" +
+                $"Your student account has been created successfully.\n\n" +
+                $"Student Code: {result.StudentCode}\n" +
+                $"Email: {result.EmailAddress}\n" +
+                $"Password: {generatedPassword}\n\n" +
+                $"Please keep these credentials safe.\n\n" +
+                $"Regards,\n" +
+                $"Student Management Team";
+
+            await _emailService.SendEmailAsync(
+                result.EmailAddress,
+                emailSubject,
+                emailBody);
+
+            // =================================================
+            // STEP 7: RETURN RESPONSE
+            // =================================================
 
             return MapToResponse(result);
         }
@@ -134,8 +246,6 @@ namespace StudentManagement.Application.Services.Student
             existing.EmailAddress =
                 request.EmailAddress;
 
-          
-
             existing.BirthDate =
                 request.BirthDate;
 
@@ -151,7 +261,6 @@ namespace StudentManagement.Application.Services.Student
             existing.ParentNumber =
                 request.ParentNumber;
 
-          
             existing.LastName =
                 request.LastName;
 
@@ -175,6 +284,9 @@ namespace StudentManagement.Application.Services.Student
 
             existing.BranchId =
                 request.BranchId;
+
+            // Do NOT change the existing password
+            // during normal student update.
 
             await _repository.UpdateAsync(existing);
         }
@@ -205,8 +317,7 @@ namespace StudentManagement.Application.Services.Student
         // =====================================================
         // RESTORE
         // =====================================================
-
-public async Task RestoreAsync(int studentId)
+        public async Task RestoreAsync(int studentId)
         {
             if (studentId <= 0)
             {
@@ -217,15 +328,16 @@ public async Task RestoreAsync(int studentId)
             await _repository.RestoreAsync(studentId);
         }
 
-
-
         // =====================================================
         // VALIDATION
         // =====================================================
         private static void ValidateStudent(
             StudentDetailsRequestDto request)
         {
+            // -------------------------------------------------
             // Student Name
+            // -------------------------------------------------
+
             if (string.IsNullOrWhiteSpace(
                 request.StudentName))
             {
@@ -239,7 +351,10 @@ public async Task RestoreAsync(int studentId)
                     "Student name cannot exceed 100 characters.");
             }
 
+            // -------------------------------------------------
             // Email
+            // -------------------------------------------------
+
             if (string.IsNullOrWhiteSpace(
                 request.EmailAddress))
             {
@@ -259,7 +374,10 @@ public async Task RestoreAsync(int studentId)
                     "Invalid email address.");
             }
 
+            // -------------------------------------------------
             // Mobile Number
+            // -------------------------------------------------
+
             if (!string.IsNullOrWhiteSpace(
                 request.MobileNumber) &&
                 request.MobileNumber.Length > 20)
@@ -268,7 +386,10 @@ public async Task RestoreAsync(int studentId)
                     "Mobile number cannot exceed 20 characters.");
             }
 
+            // -------------------------------------------------
             // Gender
+            // -------------------------------------------------
+
             if (!string.IsNullOrWhiteSpace(
                 request.Gender) &&
                 request.Gender.Length > 10)
@@ -277,7 +398,10 @@ public async Task RestoreAsync(int studentId)
                     "Gender cannot exceed 10 characters.");
             }
 
+            // -------------------------------------------------
             // Permanent Identification Number
+            // -------------------------------------------------
+
             if (string.IsNullOrWhiteSpace(
                 request.PermanentIdentificationNumber))
             {
@@ -291,7 +415,10 @@ public async Task RestoreAsync(int studentId)
                     "Permanent identification number cannot exceed 15 characters.");
             }
 
+            // -------------------------------------------------
             // Branch
+            // -------------------------------------------------
+
             if (request.BranchId.HasValue &&
                 request.BranchId.Value <= 0)
             {
@@ -365,7 +492,8 @@ public async Task RestoreAsync(int studentId)
                 BranchId =
                     student.BranchId,
 
-                BranchName = student.BranchName
+                BranchName =
+                    student.BranchName
             };
         }
     }

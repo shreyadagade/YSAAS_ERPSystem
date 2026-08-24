@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentManagement.Domain.Entities.Registration;
 using StudentManagement.Domain.Entities.Student;
 
 namespace StudentManagement.Infrastructure.Data
@@ -11,8 +12,19 @@ namespace StudentManagement.Infrastructure.Data
         {
         }
 
+        // =====================================================
+        // DBSETS
+        // =====================================================
+
         // Student Details
         public DbSet<StudentDetails> StudentDetails
+        {
+            get;
+            set;
+        }
+
+        // Student Registration
+        public DbSet<StudentRegistration> StudentRegistrations
         {
             get;
             set;
@@ -112,6 +124,53 @@ namespace StudentManagement.Infrastructure.Data
                 entity.Property(e => e.RestoredAt)
                     .HasColumnName("RestoredAt");
             });
+
+            // =====================================================
+            // STUDENT REGISTRATION
+            // =====================================================
+
+            modelBuilder.Entity<StudentRegistration>(entity =>
+            {
+                entity.HasKey(e => e.RegistrationId);
+
+                entity.ToTable(
+                    "tblstudent_registrations",
+                    "erpsystem");
+
+                entity.Property(e => e.RegistrationId)
+                    .HasColumnName("registration_id");
+
+                entity.Property(e => e.StudentId)
+                    .HasColumnName("student_id");
+
+                entity.Property(e => e.RegistrationDate)
+                    .HasColumnName("registration_date");
+
+                entity.Property(e => e.Discount)
+                    .HasColumnName("discount");
+
+                entity.Property(e => e.Flag)
+                    .HasColumnName("flag");
+
+                entity.Property(e => e.CurrentStatus)
+                    .HasColumnName("current_status");
+
+                entity.Property(e => e.InsertedAt)
+                    .HasColumnName("InsertedAt");
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasColumnName("UpdatedAt");
+
+                entity.Property(e => e.DeletedAt)
+                    .HasColumnName("DeletedAt");
+
+                entity.Property(e => e.RestoredAt)
+                    .HasColumnName("RestoredAt");
+
+                entity.Property(e => e.CourseId)
+                    .HasColumnName("course_id");
+            });
         }
     }
 }
+

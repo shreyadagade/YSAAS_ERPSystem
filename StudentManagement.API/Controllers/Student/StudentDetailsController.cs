@@ -70,8 +70,8 @@ namespace StudentManagement.API.Controllers.Student
                 new
                 {
                     
-                    data = result
-                    message = "Student created successfully.",
+                    data = result,
+                    message = "Student created successfully."
                 });
         }
 
