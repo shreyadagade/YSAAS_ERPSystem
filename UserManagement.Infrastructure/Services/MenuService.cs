@@ -1,5 +1,6 @@
 ﻿using UserManagement.Application.Contracts;
 using UserManagement.Application.DTOs.Menu;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
 
 namespace UserManagement.Infrastructure.Services
@@ -50,7 +51,15 @@ namespace UserManagement.Infrastructure.Services
                         Value = id
                     });
 
-            return result.FirstOrDefault();
+            var menu = result.FirstOrDefault();
+
+            if (menu == null)
+            {
+                throw new NotFoundException(
+                    "Menu not found.");
+            }
+
+            return menu;
         }
 
         public async Task<int> InsertAsync(CreateMenuDto dto)
@@ -107,7 +116,7 @@ namespace UserManagement.Infrastructure.Services
                 });
         }
 
-        public async Task<int> UpdateAsync(int id,UpdateMenuDto dto)
+        public async Task<int> UpdateAsync(int id, UpdateMenuDto dto)
         {
             if (id <= 0)
             {
@@ -127,51 +136,61 @@ namespace UserManagement.Infrastructure.Services
                     "Menu name is required.");
             }
 
-            return await _repository.ExecuteNonQueryAsync(
-                StoredProcedure,
+            var result =
+                await _repository.ExecuteNonQueryAsync(
+                    StoredProcedure,
 
-                new StoredProcedureParameter
-                {
-                    Name = "@Type",
-                    Value = "Update"
-                },
+                    new StoredProcedureParameter
+                    {
+                        Name = "@Type",
+                        Value = "Update"
+                    },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@menu_id",
-                    Value = id
-                },
+                    new StoredProcedureParameter
+                    {
+                        Name = "@menu_id",
+                        Value = id
+                    },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@menu_name",
-                    Value = dto.MenuName.Trim()
-                },
+                    new StoredProcedureParameter
+                    {
+                        Name = "@menu_name",
+                        Value = dto.MenuName.Trim()
+                    },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@menu_url",
-                    Value = dto.MenuUrl
-                },
+                    new StoredProcedureParameter
+                    {
+                        Name = "@menu_url",
+                        Value = dto.MenuUrl
+                    },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@parent_menu_id",
-                    Value = dto.ParentMenuId
-                },
+                    new StoredProcedureParameter
+                    {
+                        Name = "@parent_menu_id",
+                        Value = dto.ParentMenuId
+                    },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@icon",
-                    Value = dto.Icon
-                },
+                    new StoredProcedureParameter
+                    {
+                        Name = "@icon",
+                        Value = dto.Icon
+                    },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@display_order",
-                    Value = dto.DisplayOrder
-                });
+                    new StoredProcedureParameter
+                    {
+                        Name = "@display_order",
+                        Value = dto.DisplayOrder
+                    });
+
+            if (result <= 0)
+            {
+                throw new NotFoundException(
+                    "Menu not found.");
+            }
+
+            return result;
         }
+
 
         public async Task<int> DeleteAsync(int id)
         {
@@ -181,20 +200,27 @@ namespace UserManagement.Infrastructure.Services
                     "Menu ID must be greater than 0.");
             }
 
-            return await _repository.ExecuteNonQueryAsync(
+            var result = await _repository.ExecuteNonQueryAsync(
                 StoredProcedure,
+            new StoredProcedureParameter
+            {
+                Name = "@Type",
+                Value = "Delete"
+            },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@Type",
-                    Value = "Delete"
-                },
+            new StoredProcedureParameter
+            {
+                Name = "@menu_id",
+                Value = id
+            });
 
-                new StoredProcedureParameter
-                {
-                    Name = "@menu_id",
-                    Value = id
-                });
+            if (result <= 0)
+            {
+                throw new NotFoundException(
+                    "Menu not found.");
+            }
+
+            return result;
         }
 
         public async Task<int> RestoreAsync(int id)
@@ -205,20 +231,29 @@ namespace UserManagement.Infrastructure.Services
                     "Menu ID must be greater than 0.");
             }
 
-            return await _repository.ExecuteNonQueryAsync(
-                StoredProcedure,
+            var result =
+                await _repository.ExecuteNonQueryAsync(
+                    StoredProcedure,
 
-                new StoredProcedureParameter
-                {
-                    Name = "@Type",
-                    Value = "Restore"
-                },
+                    new StoredProcedureParameter
+                    {
+                        Name = "@Type",
+                        Value = "Restore"
+                    },
 
-                new StoredProcedureParameter
-                {
-                    Name = "@menu_id",
-                    Value = id
-                });
+                    new StoredProcedureParameter
+                    {
+                        Name = "@menu_id",
+                        Value = id
+                    });
+
+            if (result <= 0)
+            {
+                throw new NotFoundException(
+                    "Menu not found or already active.");
+            }
+
+            return result;
         }
     }
 }

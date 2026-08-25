@@ -23,8 +23,7 @@ namespace UserManagement.Infrastructure.Persistence.Context
 
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<MenuResponseDto> MenuResponseDtos { get; set; }
-        public DbSet<Branch> Branches { get; set; }
-
+       
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -63,16 +62,59 @@ namespace UserManagement.Infrastructure.Persistence.Context
                     .HasColumnName("branch_name");
             });
 
-            builder.Entity<BranchRestoreCheck>(entity =>
+            builder.Entity<EmployeeResponseDto>(entity =>
             {
                 entity.HasNoKey();
+
+                entity.Property(x => x.EmployeeId)
+                    .HasColumnName("employee_id");
+
+                entity.Property(x => x.EmployeeName)
+                    .HasColumnName("employee_name");
+
+                entity.Property(x => x.EmployeeCode)
+                    .HasColumnName("employee_code");
+
+                entity.Property(x => x.EmailAddress)
+                    .HasColumnName("email_address");
+
+                entity.Property(x => x.MobileNumber)
+                    .HasColumnName("mobile_number");
+
+                entity.Property(x => x.ProfilePhoto)
+                    .HasColumnName("profile_photo");
+
+                entity.Property(x => x.BirthDate)
+                    .HasColumnName("birth_date");
+
+                entity.Property(x => x.JoiningDate)
+                    .HasColumnName("joining_date");
+
+                entity.Property(x => x.Salary)
+                    .HasColumnName("salary");
+
+                entity.Property(x => x.Qualification)
+                    .HasColumnName("qualification");
+
+                entity.Property(x => x.Gender)
+                    .HasColumnName("gender");
 
                 entity.Property(x => x.BranchId)
                     .HasColumnName("branch_id");
 
-                entity.Property(x => x.Flag)
-                    .HasColumnName("flag");
+                entity.Property(x => x.AadharCardNumber)
+                    .HasColumnName("aadhar_card_number");
+
+                entity.Property(x => x.PanNumber)
+                    .HasColumnName("pan_number");
+
+                entity.Property(x => x.LocalAddress)
+                    .HasColumnName("local_address");
+
+                entity.Property(x => x.UserId)
+                    .HasColumnName("user_id");
             });
+
 
             builder.Entity<MenuResponseDto>(entity =>
             {

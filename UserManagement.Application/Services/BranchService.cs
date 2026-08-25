@@ -146,36 +146,7 @@ namespace UserManagement.Application.Services
         {
             if (id <= 0)
             {
-                throw new BadRequestException("Branch ID must be greater than 0.");
-            }
-
-            var result =
-                await _repository.ExecuteRawQueryAsync<BranchRestoreCheck>(
-                    """
-            SELECT
-                branch_id AS BranchId,
-                flag AS Flag
-            FROM erpsystem.tblbranches
-            WHERE branch_id = @branch_id
-            """,
-                    new StoredProcedureParameter
-                    {
-                        Name = "@branch_id",
-                        Value = id
-                    });
-
-            var branch = result.FirstOrDefault();
-
-            if (branch == null)
-            {
-                throw new NotFoundException(
-                    "Branch not found.");
-            }
-
-            if (branch.Flag == 0)
-            {
-                throw new BadRequestException(
-                    "Branch is already active.");
+                throw new ArgumentException("Branch ID must be greater than 0.");
             }
 
             return await _repository.ExecuteNonQueryAsync(

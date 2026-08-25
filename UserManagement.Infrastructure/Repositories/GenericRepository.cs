@@ -39,19 +39,19 @@ namespace UserManagement.Infrastructure.Repositories
                 sqlParameters);
         }
 
-        public async Task<List<T>> ExecuteRawQueryAsync<T>(string sql,params StoredProcedureParameter[] parameters)
-            where T : class
-        {
-            var sqlParameters = parameters
-                .Select(p => new SqlParameter(
-                    p.Name,
-                    p.Value ?? DBNull.Value))
-                .ToArray();
+        //public async Task<List<T>> ExecuteRawQueryAsync<T>(string sql,params StoredProcedureParameter[] parameters)
+        //    where T : class
+        //{
+        //    var sqlParameters = parameters
+        //        .Select(p => new SqlParameter(
+        //            p.Name,
+        //            p.Value ?? DBNull.Value))
+        //        .ToArray();
 
-            return await _context.Set<T>()
-                .FromSqlRaw(sql, sqlParameters)
-                .AsNoTracking()
-                .ToListAsync();
-        }
+        //    return await _context.Set<T>()
+        //        .FromSqlRaw(sql, sqlParameters)
+        //        .AsNoTracking()
+        //        .ToListAsync();
+        //}
     }
 }

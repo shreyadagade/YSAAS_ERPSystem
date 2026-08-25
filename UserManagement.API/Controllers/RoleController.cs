@@ -6,7 +6,7 @@ using UserManagement.Application.Interfaces;
 
 namespace UserManagement.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "Super User")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "Super User")]
     [ApiController]
     [Route("api/roles")]
     public class RoleController : ControllerBase
