@@ -1,4 +1,5 @@
 ﻿using StudentManagement.Application.DTOs.Student;
+using StudentManagement.Application.Helpers;
 using StudentManagement.Application.Interfaces.Repositories.Student;
 using StudentManagement.Application.Interfaces.Services.Student;
 using StudentManagement.Domain.Entities.Student;
@@ -56,8 +57,9 @@ namespace StudentManagement.Application.Services.Student
         // =====================================================
         // CREATE STUDENT
         // =====================================================
-        public async Task<StudentDetailsResponseDto> AddAsync(
-            StudentDetailsRequestDto request)
+ 
+public async Task<StudentDetailsResponseDto> AddAsync(
+    StudentDetailsRequestDto request)
         {
             if (request == null)
             {
@@ -67,16 +69,24 @@ namespace StudentManagement.Application.Services.Student
 
             ValidateStudent(request);
 
-            // =================================================
+            // =====================================================
             // STEP 1: GENERATE PASSWORD
-            // =================================================
+            // =====================================================
 
             var generatedPassword =
                 PasswordGenerator.GeneratePassword();
 
-            // =================================================
-            // STEP 2: CREATE STUDENT ENTITY
-            // =================================================
+            // =====================================================
+            // STEP 2: HASH PASSWORD
+            // =====================================================
+
+            var hashedPassword =
+                BCrypt.Net.BCrypt.HashPassword(
+                    generatedPassword);
+
+            // =====================================================
+            // STEP 3: CREATE STUDENT ENTITY
+            // =====================================================
 
             var student = new StudentDetails
             {
@@ -92,8 +102,9 @@ namespace StudentManagement.Application.Services.Student
                 EmailAddress =
                     request.EmailAddress,
 
+                // Store HASHED password in database
                 Password =
-    BCrypt.Net.BCrypt.HashPassword(generatedPassword),
+                    hashedPassword,
 
                 BirthDate =
                     request.BirthDate,
@@ -135,15 +146,12 @@ namespace StudentManagement.Application.Services.Student
                     request.BranchId
             };
 
-            // =================================================
-            // STEP 3: INSERT STUDENT
-            // =================================================
+            // =====================================================
+            // STEP 4: INSERT STUDENT
+            // =====================================================
 
             var result =
                 await _repository.AddAsync(student);
-
-            // At this point StudentId is available.
-            // Example: StudentId = 5
 
             if (result.StudentId <= 0)
             {
@@ -151,29 +159,27 @@ namespace StudentManagement.Application.Services.Student
                     "Student was created but StudentId was not generated.");
             }
 
-            // =================================================
-            // STEP 4: GENERATE STUDENT CODE
-            // =================================================
+            // =====================================================
+            // STEP 5: GENERATE STUDENT CODE
+            // =====================================================
 
             result.StudentCode =
                 StudentCodeGenerator.GenerateStudentCode(
                     result.StudentId);
 
-            // Keep the generated password.
-            result.Password =
-                generatedPassword;
 
-            // =================================================
-            // STEP 5: UPDATE STUDENT CODE AND PASSWORD
-            // =================================================
+            // =====================================================
+            // STEP 6: UPDATE STUDENT CODE
+            // =====================================================
 
             await _repository.UpdateAsync(result);
 
-            // =================================================
-            // STEP 6: SEND EMAIL
-            // =================================================
+            // =====================================================
+            // STEP 7: SEND LOGIN CREDENTIALS
+            // =====================================================
 
-            if (string.IsNullOrWhiteSpace(result.EmailAddress))
+            if (string.IsNullOrWhiteSpace(
+                result.EmailAddress))
             {
                 throw new Exception(
                     "Student email address is required to send login credentials.");
@@ -197,9 +203,9 @@ namespace StudentManagement.Application.Services.Student
                 emailSubject,
                 emailBody);
 
-            // =================================================
-            // STEP 7: RETURN RESPONSE
-            // =================================================
+            // =====================================================
+            // STEP 8: RETURN RESPONSE
+            // =====================================================
 
             return MapToResponse(result);
         }
