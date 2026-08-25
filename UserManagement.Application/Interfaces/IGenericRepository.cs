@@ -11,5 +11,8 @@ namespace UserManagement.Application.Interfaces
             where T : class;
 
         Task<int> ExecuteNonQueryAsync(string storedProcedure, params StoredProcedureParameter[] parameters);
+
+        //Task<List<T>> ExecuteRawQueryAsync<T>(string sql,params StoredProcedureParameter[] parameters)
+            //?where T : class;
     }
 }

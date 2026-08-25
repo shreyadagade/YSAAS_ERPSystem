@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UserManagement.Application.Contracts;
 using UserManagement.Application.DTOs.User;
 using UserManagement.Application.Interfaces;
 using UserManagement.Infrastructure.Persistence.Identity;
-using UserManagement.Application.Contracts;
-using Microsoft.EntityFrameworkCore;
+using UserManagement.Infrastructure.Persistence.Models;
 
 namespace UserManagement.Infrastructure.Services
 {
@@ -64,19 +65,44 @@ namespace UserManagement.Infrastructure.Services
 
         public async Task<List<UserDto>> GetAllUsersAsync()
         {
-            var users = _userManager.Users.ToList();
+            var employees =
+                await _repository.ExecuteQueryAsync<EmployeeResponseDto>(
+                    StoredProcedure,
+                    new StoredProcedureParameter
+                    {
+                        Name = "@Type",
+                        Value = "GetAll"
+                    });
 
             var userList = new List<UserDto>();
 
-            foreach (var user in users)
+            foreach (var employee in employees)
             {
-                var roles = await _userManager.GetRolesAsync(user);
+                if (string.IsNullOrWhiteSpace(employee.UserId))
+                {
+                    continue;
+                }
+
+                var user =
+                    await _userManager.FindByIdAsync(employee.UserId);
+
+                if (user == null)
+                {
+                    continue;
+                }
+
+                var roles =
+                    await _userManager.GetRolesAsync(user);
 
                 userList.Add(new UserDto
                 {
                     Id = user.Id,
-                    Email = user.Email,
-                    FullName = user.UserName,
+                    EmployeeCode = employee.EmployeeCode,
+                    EmployeeName = employee.EmployeeName,
+                    EmailAddress = employee.EmailAddress,
+                    MobileNumber = employee.MobileNumber,
+                    BranchId = employee.BranchId,
+                    IsActive = user.IsActive,
                     Roles = roles.ToList()
                 });
             }
@@ -86,20 +112,53 @@ namespace UserManagement.Infrastructure.Services
 
         public async Task<UserDto> GetUserByIdAsync(string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                throw new ArgumentException(
+                    "User ID is required.");
+            }
+
+            var user =
+                await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                throw new Exception("User not found");
+                throw new InvalidOperationException(
+                    "User not found.");
             }
 
-            var roles = await _userManager.GetRolesAsync(user);
+            var employees =
+                await _repository.ExecuteQueryAsync<EmployeeResponseDto>(
+                    StoredProcedure,
+
+                    new StoredProcedureParameter
+                    {
+                        Name = "@Type",
+                        Value = "GetAll"
+                    });
+
+            var employee =
+                employees.FirstOrDefault(
+                    x => x.UserId == userId);
+
+            if (employee == null)
+            {
+                throw new InvalidOperationException(
+                    "Employee record not found.");
+            }
+
+            var roles =
+                await _userManager.GetRolesAsync(user);
 
             return new UserDto
             {
                 Id = user.Id,
-                Email = user.Email,
-                FullName = user.UserName,
+                EmployeeCode = employee.EmployeeCode,
+                EmployeeName = employee.EmployeeName,
+                EmailAddress = employee.EmailAddress,
+                MobileNumber = employee.MobileNumber,
+                BranchId = employee.BranchId,
+                IsActive = user.IsActive,
                 Roles = roles.ToList()
             };
         }

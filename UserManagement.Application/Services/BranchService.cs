@@ -1,5 +1,6 @@
 ﻿using UserManagement.Application.Contracts;
 using UserManagement.Application.DTOs.Branch;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
 
 namespace UserManagement.Application.Services
@@ -29,11 +30,11 @@ namespace UserManagement.Application.Services
         {
             if (id <= 0)
             {
-                throw new ArgumentException("Branch ID must be greater than 0.");
+                throw new BadRequestException("Branch ID must be greater than 0.");
             }
 
             var result = await _repository.ExecuteQueryAsync<BranchResponseDto>(
-                StoredProcedure,
+                    StoredProcedure,
                 new StoredProcedureParameter
                 {
                     Name = "@Type",
@@ -45,14 +46,21 @@ namespace UserManagement.Application.Services
                     Value = id
                 });
 
-            return result.FirstOrDefault();
+                var branch = result.FirstOrDefault();
+
+            if (branch == null)
+            {
+                throw new NotFoundException("Branch not found.");
+            }
+
+            return branch;
         }
 
         public async Task<int> InsertAsync(CreateBranchDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.BranchName))
             {
-                throw new ArgumentException("Branch name is required.");
+                throw new BadRequestException("Branch name is required.");
             }
 
             return await _repository.ExecuteNonQueryAsync(StoredProcedure,
@@ -72,21 +80,22 @@ namespace UserManagement.Application.Services
         {
             if (id <= 0)
             {
-                throw new ArgumentException(
+                throw new BadRequestException(
                     "Branch ID must be greater than 0.");
             }
 
             if (dto == null)
             {
-                throw new ArgumentException(
+                throw new BadRequestException(
                     "Branch data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.BranchName))
             {
-                throw new ArgumentException(
+                throw new BadRequestException(
                     "Branch name is required.");
             }
+            var existingBranch = await GetByIdAsync(id);
 
             return await _repository.ExecuteNonQueryAsync(
                 StoredProcedure,
@@ -114,8 +123,10 @@ namespace UserManagement.Application.Services
         {
             if (id <= 0)
             {
-                throw new ArgumentException("Branch ID must be greater than 0.");
+                throw new BadRequestException("Branch ID must be greater than 0.");
             }
+
+            var existingBranch = await GetByIdAsync(id);
 
             return await _repository.ExecuteNonQueryAsync(
                 StoredProcedure,

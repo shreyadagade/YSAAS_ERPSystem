@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UserManagement.Application.DTOs.Account;
 using UserManagement.Application.DTOs.Email;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
 using UserManagement.Infrastructure.Persistence.Identity;
 
@@ -22,6 +23,12 @@ namespace UserManagement.Infrastructure.Services
 
         public async Task<string> ChangePasswordAsync(ChangePasswordDto dto)
         {
+            if (dto == null)
+            {
+                throw new ArgumentException(
+                    "Request data is required.");
+            }
+
             if (string.IsNullOrWhiteSpace(dto.UserId))
             {
                 throw new ArgumentException(
@@ -52,13 +59,13 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     "User not found.");
             }
 
             if (!user.IsActive)
             {
-                throw new InvalidOperationException(
+                throw new ForbiddenException(
                     "User account is deactivated.");
             }
 
@@ -76,7 +83,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
+                throw new BadRequestException(
                     $"Password change failed. {errors}");
             }
 
@@ -104,12 +111,14 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                return "Please check the email address and try again.";
+                throw new NotFoundException(
+                    "User not found with the provided email address.");
             }
 
             if (!user.IsActive)
             {
-                return "User account is deactivated.";
+                throw new ForbiddenException(
+                    "User account is deactivated.");
             }
 
             var token =
@@ -161,15 +170,16 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                throw new InvalidOperationException(
-                    "Invalid password reset request.");
+                throw new NotFoundException(
+                    "User not found.");
             }
 
             if (!user.IsActive)
             {
-                throw new InvalidOperationException(
+                throw new ForbiddenException(
                     "User account is deactivated.");
             }
+
 
             var result = await _userManager.ResetPasswordAsync(
                 user,
@@ -182,8 +192,8 @@ namespace UserManagement.Infrastructure.Services
                     ", ",
                     result.Errors.Select(e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"Password reset failed. {errors}");
+                throw new BadRequestException(
+                     $"Password reset failed. {errors}");
             }
 
             return "Password reset successfully.";

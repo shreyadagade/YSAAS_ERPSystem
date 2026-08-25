@@ -1,5 +1,6 @@
 ﻿using UserManagement.Application.Contracts;
 using UserManagement.Application.DTOs.Menu;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
 
 namespace UserManagement.Infrastructure.Services
@@ -50,7 +51,15 @@ namespace UserManagement.Infrastructure.Services
                         Value = id
                     });
 
-            return result.FirstOrDefault();
+            var menu = result.FirstOrDefault();
+
+            if (menu == null)
+            {
+                throw new NotFoundException(
+                    "Menu not found.");
+            }
+
+            return menu;
         }
 
         public async Task<int> InsertAsync(CreateMenuDto dto)
@@ -107,7 +116,7 @@ namespace UserManagement.Infrastructure.Services
                 });
         }
 
-        public async Task<int> UpdateAsync(int id,UpdateMenuDto dto)
+        public async Task<int> UpdateAsync(int id, UpdateMenuDto dto)
         {
             if (id <= 0)
             {

@@ -22,6 +22,19 @@ namespace UserManagement.API.Middleware
             {
                 await _next(context);
             }
+            catch (EmailException ex)
+            {
+                _logger.LogWarning(
+                    ex,
+                    "Registration email could not be sent. Request: {Method} {Path}",
+                    context.Request.Method,
+                    context.Request.Path);
+
+                await WriteResponseAsync(
+                    context,
+                    StatusCodes.Status500InternalServerError,
+                    ex.Message);
+            }
             catch (AppException ex)
             {
                 _logger.LogWarning(
@@ -30,16 +43,10 @@ namespace UserManagement.API.Middleware
                     context.Request.Method,
                     context.Request.Path);
 
-                context.Response.StatusCode = ex.StatusCode;
-                context.Response.ContentType = "application/json";
-
-                var response = new
-                {
-                    statusCode = ex.StatusCode,
-                    message = ex.Message
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
+                await WriteResponseAsync(
+                    context,
+                    ex.StatusCode,
+                    ex.Message);
             }
             catch (SqlException ex)
             {
@@ -49,18 +56,10 @@ namespace UserManagement.API.Middleware
                     context.Request.Method,
                     context.Request.Path);
 
-                context.Response.StatusCode =
-                    StatusCodes.Status500InternalServerError;
-
-                context.Response.ContentType = "application/json";
-
-                var response = new
-                {
-                    statusCode = context.Response.StatusCode,
-                    message = "A database error occurred while processing your request."
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
+                await WriteResponseAsync(
+                    context,
+                    StatusCodes.Status500InternalServerError,
+                    "Unable to process your request due to a database error. Please try again later.");
             }
             catch (ArgumentException ex)
             {
@@ -70,18 +69,23 @@ namespace UserManagement.API.Middleware
                     context.Request.Method,
                     context.Request.Path);
 
-                context.Response.StatusCode =
-                    StatusCodes.Status400BadRequest;
+                await WriteResponseAsync(
+                    context,
+                    StatusCodes.Status400BadRequest,
+                    ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogWarning(
+                    ex,
+                    "Invalid operation occurred. Request: {Method} {Path}",
+                    context.Request.Method,
+                    context.Request.Path);
 
-                context.Response.ContentType = "application/json";
-
-                var response = new
-                {
-                    statusCode = context.Response.StatusCode,
-                    message = ex.Message
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
+                await WriteResponseAsync(
+                    context,
+                    StatusCodes.Status400BadRequest,
+                    ex.Message);
             }
             catch (Exception ex)
             {
@@ -91,19 +95,28 @@ namespace UserManagement.API.Middleware
                     context.Request.Method,
                     context.Request.Path);
 
-                context.Response.StatusCode =
-                    StatusCodes.Status500InternalServerError;
-
-                context.Response.ContentType = "application/json";
-
-                var response = new
-                {
-                    statusCode = context.Response.StatusCode,
-                    message = "Something went wrong while processing your request."
-                };
-
-                await context.Response.WriteAsJsonAsync(response);
+                await WriteResponseAsync(
+                    context,
+                    StatusCodes.Status500InternalServerError,
+                    "Something went wrong while processing your request. Please try again later.");
             }
+        }
+
+        private static async Task WriteResponseAsync(
+            HttpContext context,
+            int statusCode,
+            string message)
+        {
+            context.Response.StatusCode = statusCode;
+            context.Response.ContentType = "application/json";
+
+            var response = new
+            {
+                statusCode,
+                message
+            };
+
+            await context.Response.WriteAsJsonAsync(response);
         }
     }
 }

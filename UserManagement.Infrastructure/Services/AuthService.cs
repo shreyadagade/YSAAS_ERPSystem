@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using UserManagement.Application.Contracts;
 using UserManagement.Application.DTOs.Auth;
 using UserManagement.Application.DTOs.Email;
@@ -19,16 +20,18 @@ namespace UserManagement.Infrastructure.Services
         private readonly IEmailService _emailService;
         private readonly JwtService _jwtService;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<AuthService> _logger;
 
         private const string StoredProcedure = "erpsystem.sp_register_employee";
 
         public AuthService(
-            UserManager<ApplicationUser> userManager,
-            IGenericRepository repository,
-            IPasswordGenerator passwordGenerator,
-            IEmailService emailService,
-            JwtService jwtService,
-            ApplicationDbContext context)
+                UserManager<ApplicationUser> userManager,
+                IGenericRepository repository,
+                IPasswordGenerator passwordGenerator,
+                IEmailService emailService,
+                JwtService jwtService,
+                ApplicationDbContext context,
+                ILogger<AuthService> logger)
         {
             _userManager = userManager;
             _repository = repository;
@@ -36,6 +39,7 @@ namespace UserManagement.Infrastructure.Services
             _emailService = emailService;
             _jwtService = jwtService;
             _context = context;
+            _logger = logger;
         }
         public async Task<RegisterResponseDto> RegisterAsync(RegisterUserDto dto)
         {
@@ -57,13 +61,13 @@ namespace UserManagement.Infrastructure.Services
                     "Email address is required.");
             }
 
-            if(string.IsNullOrWhiteSpace(dto.MobileNumber))
-{
+            if (string.IsNullOrWhiteSpace(dto.MobileNumber))
+            {
                 throw new BadRequestException(
                     "Mobile number is required.");
             }
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(dto.MobileNumber,@"^[7-9][0-9]{9}$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(dto.MobileNumber, @"^[7-9][0-9]{9}$"))
             {
                 throw new BadRequestException(
                     "Mobile number must be exactly 10 digits and start with 7, 8, or 9.");
@@ -72,7 +76,7 @@ namespace UserManagement.Infrastructure.Services
             var email = dto.EmailAddress.Trim();
             var mobileNumber = dto.MobileNumber.Trim();
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 throw new BadRequestException(
                     "Please enter a valid email address.");
@@ -130,7 +134,7 @@ namespace UserManagement.Infrastructure.Services
 
             if (!result.Succeeded)
             {
-                var errors = string.Join(", ",result.Errors.Select(e => e.Description));
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
 
                 await transaction.RollbackAsync();
 
@@ -241,27 +245,36 @@ namespace UserManagement.Infrastructure.Services
                     </p>"
             };
 
+            try
+            {
+                await _emailService.SendEmailAsync(emailRequest);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "User registered successfully, but registration email could not be sent. UserId: {UserId}, EmployeeCode: {EmployeeCode}, Email: {Email}",
+                    employee.UserId,
+                    employee.EmployeeCode,
+                    employee.EmailAddress);
 
-            await _emailService.SendEmailAsync(emailRequest);
+                throw new EmailException(
+                    "User registered successfully, but the registration email could not be sent. Please contact the administrator.");
+            }
 
             return new RegisterResponseDto
             {
                 Message = "User registered successfully.",
 
-                UserId =
-                    employee.UserId,
+                UserId = employee.UserId,
 
-                EmployeeCode =
-                    employee.EmployeeCode,
+                EmployeeCode = employee.EmployeeCode,
 
-                EmployeeName =
-                    employee.EmployeeName,
+                EmployeeName = employee.EmployeeName,
 
-                EmailAddress =
-                    employee.EmailAddress,
+                EmailAddress = employee.EmailAddress,
 
-                MobileNumber =
-                    employee.MobileNumber
+                MobileNumber = employee.MobileNumber
             };
         }
 
@@ -285,22 +298,22 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "Invalid username or password.");
             }
 
             if (!user.IsActive)
             {
-                throw new InvalidOperationException(
+                throw new ForbiddenException(
                     "User account is deactivated.");
             }
 
             var passwordResult =
-                await _userManager.CheckPasswordAsync(user,dto.Password);
+                await _userManager.CheckPasswordAsync(user, dto.Password);
 
             if (!passwordResult)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "Invalid username or password.");
             }
 
@@ -343,19 +356,19 @@ namespace UserManagement.Infrastructure.Services
 
             if (refreshToken == null)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "Invalid refresh token.");
             }
 
             if (refreshToken.IsRevoked)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "Refresh token has been revoked.");
             }
 
             if (refreshToken.ExpiryDate <= DateTime.UtcNow)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "Refresh token has expired.");
             }
 
@@ -365,13 +378,13 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "User not found.");
             }
 
             if (!user.IsActive)
             {
-                throw new InvalidOperationException(
+                throw new ForbiddenException(
                     "User account is deactivated.");
             }
 
@@ -420,13 +433,13 @@ namespace UserManagement.Infrastructure.Services
 
             if (token == null)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "Invalid refresh token.");
             }
 
             if (token.IsRevoked)
             {
-                throw new InvalidOperationException(
+                throw new UnauthorizedException(
                     "Refresh token has already been revoked.");
             }
 

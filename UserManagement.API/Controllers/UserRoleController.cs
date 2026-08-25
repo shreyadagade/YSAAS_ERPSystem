@@ -57,6 +57,7 @@ namespace UserManagement.API.Controllers
             });
         }
 
+        [AllowAnonymous]
         [HttpPost("get-user-roles")]
         public async Task<IActionResult> GetUserRoles([FromBody] GetUserRolesDto dto)
         {

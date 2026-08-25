@@ -19,22 +19,24 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(
-            [FromBody] CreateMenuDto dto)
+        public async Task<IActionResult> Create([FromBody] CreateMenuDto dto)
         {
             var result =
                 await _menuService.InsertAsync(dto);
 
-            return Ok(new
-            {
-                message = "Menu created successfully."
-            });
+            return StatusCode(
+                StatusCodes.Status201Created,
+                new
+                {
+                    message = "Menu created successfully."
+                });
         }
 
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _menuService.GetAllAsync();
+            var result =
+                await _menuService.GetAllAsync();
 
             return Ok(result);
         }
@@ -42,23 +44,14 @@ namespace UserManagement.API.Controllers
         [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _menuService.GetByIdAsync(id);
-
-            if (result == null)
-            {
-                return NotFound(new
-                {
-                    message = "Menu not found."
-                });
-            }
+            var result =
+                await _menuService.GetByIdAsync(id);
 
             return Ok(result);
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Update(
-            int id,
-            [FromBody] UpdateMenuDto dto)
+        public async Task<IActionResult> Update(int id,[FromBody] UpdateMenuDto dto)
         {
             var result =
                 await _menuService.UpdateAsync(id, dto);
