@@ -14,7 +14,8 @@ namespace StudentManagement.Application.DTOs.Login
             public string? StudentName { get; set; }
 
             public string? EmailAddress { get; set; }
+        public string? Token { get; set; }
 
-            public string Message { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
         }
     }

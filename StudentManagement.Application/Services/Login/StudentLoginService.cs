@@ -7,11 +7,14 @@ namespace StudentManagement.Application.Services.Student
     public class StudentLoginService : IStudentLoginService
     {
         private readonly IStudentDetailsRepository _studentRepository;
+        private readonly IJwtService _jwtService;
 
         public StudentLoginService(
-            IStudentDetailsRepository studentRepository)
+            IStudentDetailsRepository studentRepository,
+            IJwtService jwtService)
         {
             _studentRepository = studentRepository;
+            _jwtService = jwtService;
         }
 
         // =====================================================
@@ -78,22 +81,38 @@ namespace StudentManagement.Application.Services.Student
             }
 
             // =================================================
+            // GENERATE JWT TOKEN
+            // =================================================
+
+            var token =
+                _jwtService.GenerateToken(
+                    student.StudentId,
+                    student.StudentCode!);
+
+            // =================================================
             // LOGIN SUCCESS
             // =================================================
 
             return new StudentLoginResponseDto
             {
-                StudentId = student.StudentId,
+                StudentId =
+                    student.StudentId,
 
-                StudentCode = student.StudentCode,
+                StudentCode =
+                    student.StudentCode,
 
-                StudentName = student.StudentName,
+                StudentName =
+                    student.StudentName,
 
-                EmailAddress = student.EmailAddress,
+                EmailAddress =
+                    student.EmailAddress,
 
-                Message = "Login successful."
+                Token =
+                    token,
+
+                Message =
+                    "Login successful."
             };
         }
     }
 }
-
