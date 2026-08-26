@@ -6,7 +6,7 @@ using UserManagement.Application.Interfaces;
 
 namespace UserManagement.API.Controllers
 {
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "Super User")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Super User")]
     [ApiController]
     [Route("api/menu")]
     public class MenuController : ControllerBase
@@ -19,15 +19,15 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] CreateMenuDto dto)
+        public async Task<IActionResult> Create(CreateMenuDto dto)
         {
-            var result =
-                await _menuService.InsertAsync(dto);
+            await _menuService.InsertAsync(dto);
 
             return StatusCode(
                 StatusCodes.Status201Created,
                 new
                 {
+                    statusCode = StatusCodes.Status201Created,
                     message = "Menu created successfully."
                 });
         }
@@ -35,29 +35,37 @@ namespace UserManagement.API.Controllers
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAll()
         {
-            var result =
-                await _menuService.GetAllAsync();
+            var result = await _menuService.GetAllAsync();
 
-            return Ok(result);
+            return Ok(new
+            {
+                statusCode = StatusCodes.Status200OK,
+                message = "Menus retrieved successfully.",
+                data = result
+            });
         }
 
         [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result =
-                await _menuService.GetByIdAsync(id);
-
-            return Ok(result);
-        }
-
-        [HttpPut("update/{id}")]
-        public async Task<IActionResult> Update(int id,[FromBody] UpdateMenuDto dto)
-        {
-            var result =
-                await _menuService.UpdateAsync(id, dto);
+            var result = await _menuService.GetByIdAsync(id);
 
             return Ok(new
             {
+                statusCode = StatusCodes.Status200OK,
+                message = "Menu retrieved successfully.",
+                data = result
+            });
+        }
+
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> Update(int id,UpdateMenuDto dto)
+        {
+            await _menuService.UpdateAsync(id, dto);
+
+            return Ok(new
+            {
+                statusCode = StatusCodes.Status200OK,
                 message = "Menu updated successfully."
             });
         }
@@ -65,11 +73,11 @@ namespace UserManagement.API.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result =
-                await _menuService.DeleteAsync(id);
+            await _menuService.DeleteAsync(id);
 
             return Ok(new
             {
+                statusCode = StatusCodes.Status200OK,
                 message = "Menu deleted successfully."
             });
         }
@@ -77,11 +85,11 @@ namespace UserManagement.API.Controllers
         [HttpPut("restore/{id}")]
         public async Task<IActionResult> Restore(int id)
         {
-            var result =
-                await _menuService.RestoreAsync(id);
+            await _menuService.RestoreAsync(id);
 
             return Ok(new
             {
+                statusCode = StatusCodes.Status200OK,
                 message = "Menu restored successfully."
             });
         }

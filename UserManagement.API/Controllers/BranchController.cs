@@ -50,7 +50,7 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateBranch([FromBody] CreateBranchDto dto)
+        public async Task<IActionResult> CreateBranch(CreateBranchDto dto)
         {
             var result = await _branchService.InsertAsync(dto);
 
@@ -60,12 +60,11 @@ namespace UserManagement.API.Controllers
                 {
                     statusCode = StatusCodes.Status201Created,
                     message = "Branch created successfully.",
-                    data = result
                 });
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateBranch(int id,[FromBody] UpdateBranchDto dto)
+        public async Task<IActionResult> UpdateBranch(int id,UpdateBranchDto dto)
         {
             var result = await _branchService.UpdateAsync(id, dto);
 
@@ -75,7 +74,6 @@ namespace UserManagement.API.Controllers
                 {
                     statusCode = StatusCodes.Status200OK,
                     message = "Branch updated successfully.",
-                    data = result
                 });
         }
 
@@ -90,7 +88,6 @@ namespace UserManagement.API.Controllers
                 {
                     statusCode = StatusCodes.Status200OK,
                     message = "Branch deleted successfully.",
-                    data = result
                 });
         }
 
@@ -106,7 +103,6 @@ namespace UserManagement.API.Controllers
                 {
                     statusCode = StatusCodes.Status200OK,
                     message = "Branch restored successfully.",
-                    data = result
                 });
         }
     }

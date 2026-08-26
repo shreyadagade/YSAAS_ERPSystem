@@ -2,6 +2,7 @@
 using UserManagement.Application.DTOs.Role;
 using UserManagement.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using UserManagement.Application.Exceptions;
 
 namespace UserManagement.Infrastructure.Services
 {
@@ -13,33 +14,25 @@ namespace UserManagement.Infrastructure.Services
             _roleManager = roleManager;
         }
 
-        public async Task<string> CreateRoleAsync(
-            CreateRoleDto dto)
+        public async Task<string> CreateRoleAsync(CreateRoleDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.RoleName))
             {
-                throw new ArgumentException(
-                    "Role name is required.");
+                throw new BadRequestException("Role name is required.");
             }
 
-            var roleName =
-                dto.RoleName.Trim();
+            var roleName = dto.RoleName.Trim();
 
-            var existingRole =
-                await _roleManager.RoleExistsAsync(
-                    roleName);
+            var existingRole = await _roleManager.RoleExistsAsync(roleName);
 
             if (existingRole)
             {
-                throw new InvalidOperationException(
-                    "Role already exists.");
+                throw new BadRequestException("Role already exists.");
             }
 
-            var role =
-                new IdentityRole(roleName);
+            var role = new IdentityRole(roleName);
 
-            var result =
-                await _roleManager.CreateAsync(role);
+            var result = await _roleManager.CreateAsync(role);
 
             if (!result.Succeeded)
             {
@@ -49,8 +42,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"Role creation failed. {errors}");
+                throw new BadRequestException($"Role creation failed. {errors}");
             }
 
             return "Role created successfully.";
@@ -71,39 +63,33 @@ namespace UserManagement.Infrastructure.Services
         {
             if (string.IsNullOrWhiteSpace(roleId))
             {
-                throw new ArgumentException(
-                    "Role ID is required.");
+                throw new BadRequestException("Role ID is required.");
             }
 
             if (dto == null)
             {
-                throw new ArgumentException(
-                    "Role data is required.");
+                throw new BadRequestException("Role data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.RoleName))
             {
-                throw new ArgumentException(
-                    "Role name is required.");
+                throw new BadRequestException("Role name is required.");
             }
 
             var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
-                throw new InvalidOperationException(
-                    "Role not found.");
+                throw new NotFoundException("Role not found.");
             }
 
             var roleName = dto.RoleName.Trim();
 
             var existingRole = await _roleManager.FindByNameAsync(roleName);
 
-            if (existingRole != null &&
-                existingRole.Id != role.Id)
+            if (existingRole != null && existingRole.Id != role.Id)
             {
-                throw new InvalidOperationException(
-                    "Role name already exists.");
+                throw new BadRequestException("Role name already exists.");
             }
 
             role.Name = roleName;
@@ -118,8 +104,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"Role update failed. {errors}");
+                throw new BadRequestException($"Role update failed. {errors}");
             }
 
             return "Role updated successfully.";
@@ -129,16 +114,14 @@ namespace UserManagement.Infrastructure.Services
         {
             if (string.IsNullOrWhiteSpace(roleId))
             {
-                throw new ArgumentException(
-                    "Role ID is required.");
+                throw new BadRequestException("Role ID is required.");
             }
 
             var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
-                throw new InvalidOperationException(
-                    "Role not found.");
+                throw new NotFoundException("Role not found.");
             }
 
             var result = await _roleManager.DeleteAsync(role);
@@ -151,8 +134,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"Role deletion failed. {errors}");
+                throw new BadRequestException($"Role deletion failed. {errors}");
             }
 
             return "Role deleted successfully.";
