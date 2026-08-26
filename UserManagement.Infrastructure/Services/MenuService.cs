@@ -1,4 +1,5 @@
 ﻿using UserManagement.Application.Contracts;
+using UserManagement.Application.DTOs.Common;
 using UserManagement.Application.DTOs.Menu;
 using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
@@ -136,7 +137,7 @@ namespace UserManagement.Infrastructure.Services
                     "Menu name is required.");
             }
 
-            return await _repository.ExecuteNonQueryAsync(
+            var result = await _repository.ExecuteQueryAsync<OperationResultDto>(
                 StoredProcedure,
 
                 new StoredProcedureParameter
@@ -180,6 +181,22 @@ namespace UserManagement.Infrastructure.Services
                     Name = "@display_order",
                     Value = dto.DisplayOrder
                 });
+
+            var resultCode = result.FirstOrDefault()?.ResultCode;
+
+            if (resultCode == 0)
+            {
+                throw new NotFoundException(
+                    "Menu not found.");
+            }
+
+            if (resultCode == 2)
+            {
+                throw new BadRequestException(
+                    "Deleted menu cannot be updated.");
+            }
+
+            return 1;
         }
 
         public async Task<int> DeleteAsync(int id)
@@ -190,7 +207,7 @@ namespace UserManagement.Infrastructure.Services
                     "Menu ID must be greater than 0.");
             }
 
-            return await _repository.ExecuteNonQueryAsync(
+            var result = await _repository.ExecuteQueryAsync<OperationResultDto>(
                 StoredProcedure,
 
                 new StoredProcedureParameter
@@ -204,8 +221,23 @@ namespace UserManagement.Infrastructure.Services
                     Name = "@menu_id",
                     Value = id
                 });
-        }
 
+            var resultCode = result.FirstOrDefault()?.ResultCode;
+
+            if (resultCode == 0)
+            {
+                throw new NotFoundException(
+                    "Menu not found.");
+            }
+
+            if (resultCode == 2)
+            {
+                throw new BadRequestException(
+                    "Menu is already deleted.");
+            }
+
+            return 1;
+        }
         public async Task<int> RestoreAsync(int id)
         {
             if (id <= 0)
@@ -214,7 +246,7 @@ namespace UserManagement.Infrastructure.Services
                     "Menu ID must be greater than 0.");
             }
 
-            return await _repository.ExecuteNonQueryAsync(
+            var result = await _repository.ExecuteQueryAsync<OperationResultDto>(
                 StoredProcedure,
 
                 new StoredProcedureParameter
@@ -228,6 +260,22 @@ namespace UserManagement.Infrastructure.Services
                     Name = "@menu_id",
                     Value = id
                 });
+
+            var resultCode = result.FirstOrDefault()?.ResultCode;
+
+            if (resultCode == 0)
+            {
+                throw new NotFoundException(
+                    "Menu not found.");
+            }
+
+            if (resultCode == 2)
+            {
+                throw new BadRequestException(
+                    "Menu is already active.");
+            }
+
+            return 1;
         }
     }
 }

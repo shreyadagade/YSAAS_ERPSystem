@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using System.Text;
 using UserManagement.Application.DTOs.Branch;
+using UserManagement.Application.DTOs.Common;
 using UserManagement.Application.DTOs.Menu;
 using UserManagement.Application.DTOs.RoleMenu;
 using UserManagement.Domain.Entities;
@@ -36,6 +37,9 @@ namespace UserManagement.Infrastructure.Persistence.Context
             .HasNoKey();
 
             builder.Entity<EmployeeCodeResult>()
+            .HasNoKey();
+
+            builder.Entity<OperationResultDto>()
             .HasNoKey();
 
             builder.Entity<BranchResponseDto>(entity =>

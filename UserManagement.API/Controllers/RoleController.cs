@@ -19,63 +19,64 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("create-role")]
-        public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto dto)
+        public async Task<IActionResult> CreateRole(CreateRoleDto dto)
         {
-            var result =
-                await _roleService.CreateRoleAsync(dto);
+            var result = await _roleService.CreateRoleAsync(dto);
 
-            return Ok(new
-            {
-                message = result
-            });
+            return StatusCode(
+                StatusCodes.Status201Created,
+                new
+                {
+                    statusCode = StatusCodes.Status201Created,
+                    message = result
+                });
         }
 
         [HttpGet("get-roles")]
         public async Task<IActionResult> GetRoles()
         {
-            var roles =
-                await _roleService.GetRolesAsync();
+            var result = await _roleService.GetRolesAsync();
 
-            return Ok(roles);
+            return StatusCode(
+                StatusCodes.Status200OK,
+                new
+                {
+                    statusCode = StatusCodes.Status200OK,
+                    message = "Roles retrieved successfully.",
+                    data = result
+                });
         }
 
-
         [HttpPut("update-role/{roleId}")]
-        public async Task<IActionResult> UpdateRole(string roleId,[FromBody] UpdateRoleDto dto)
+        public async Task<IActionResult> UpdateRole(
+            string roleId,
+            UpdateRoleDto dto)
         {
-            if (string.IsNullOrWhiteSpace(roleId))
-            {
-                return BadRequest(new
+            var result =
+                await _roleService.UpdateRoleAsync(roleId, dto);
+
+            return StatusCode(
+                StatusCodes.Status200OK,
+                new
                 {
-                    message = "Role ID is required."
+                    statusCode = StatusCodes.Status200OK,
+                    message = result
                 });
-            }
-
-            var result = await _roleService.UpdateRoleAsync(roleId,dto);
-
-            return Ok(new
-            {
-                message = result
-            });
         }
 
         [HttpDelete("delete-role/{roleId}")]
         public async Task<IActionResult> DeleteRole(string roleId)
         {
-            if (string.IsNullOrWhiteSpace(roleId))
-            {
-                return BadRequest(new
+            var result =
+                await _roleService.DeleteRoleAsync(roleId);
+
+            return StatusCode(
+                StatusCodes.Status200OK,
+                new
                 {
-                    message = "Role ID is required."
+                    statusCode = StatusCodes.Status200OK,
+                    message = result
                 });
-            }
-
-            var result = await _roleService.DeleteRoleAsync(roleId);
-
-            return Ok(new
-            {
-                message = result
-            });
         }
     }
 }

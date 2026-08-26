@@ -20,7 +20,7 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("register-employee")]
-        public async Task<IActionResult> RegisterEmployee([FromBody] RegisterUserDto dto)
+        public async Task<IActionResult> RegisterEmployee(RegisterUserDto dto)
         {
             var result = await _authService.RegisterAsync(dto);
 
@@ -31,7 +31,7 @@ namespace UserManagement.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        public async Task<IActionResult> Login(LoginDto dto)
         {
             var result =
                 await _authService.LoginAsync(dto);
