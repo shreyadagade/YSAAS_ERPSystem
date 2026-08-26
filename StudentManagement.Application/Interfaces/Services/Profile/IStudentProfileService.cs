@@ -1,15 +1,31 @@
-﻿using StudentManagement.Application.DTOs.StudentProfile;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using StudentManagement.Application.DTOs.Profile;
+using StudentManagement.Application.DTOs.StudentProfile;
 
 namespace StudentManagement.Application.Interfaces.Services.StudentProfile
+{
+    public interface IStudentProfileService
     {
-        public interface IStudentProfileService
-        {
-            Task<StudentProfileDto?> GetMyProfileAsync(
-                int studentId);
-        }
-    }
+        // =====================================================
+        // GET MY PROFILE
+        // =====================================================
 
+        Task<StudentProfileDto?> GetMyProfileAsync(
+            int studentId);
+
+        // =====================================================
+        // CHANGE PROFILE
+        // =====================================================
+
+        Task<bool> ChangeProfileAsync(
+            int studentId,
+            ChangeProfileRequestDto request);
+
+        // =====================================================
+        // CHANGE PROFILE PHOTO
+        // =====================================================
+
+        Task<bool> ChangeProfilePhotoAsync(
+            int studentId,
+            string profilePhoto);
+    }
+}

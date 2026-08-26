@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Application.DTOs.Registration;
 using StudentManagement.Application.Interfaces.Services.Registration;
@@ -7,7 +8,8 @@ namespace StudentManagement.API.Controllers.Registration
     {
         [ApiController]
         [Route("api/[controller]")]
-        public class StudentRegistrationController : ControllerBase
+        [Authorize]
+    public class StudentRegistrationController : ControllerBase
         {
             private readonly IStudentRegistrationService _service;
 

@@ -52,10 +52,6 @@ namespace StudentManagement.Infrastructure.Repositories.Password
                 "@student_id",
                 studentId);
 
-            // =================================================
-            // DEBUG INFORMATION
-            // =================================================
-
             Console.WriteLine(
                 "======================================");
 
@@ -68,16 +64,8 @@ namespace StudentManagement.Infrastructure.Repositories.Password
             Console.WriteLine(
                 "Type: GetPassword");
 
-            // =================================================
-            // EXECUTE STORED PROCEDURE
-            // =================================================
-
             var result =
                 await command.ExecuteScalarAsync();
-
-            // =================================================
-            // DEBUG DATABASE RESULT
-            // =================================================
 
             Console.WriteLine(
                 $"Database password result: [{result}]");
@@ -87,10 +75,6 @@ namespace StudentManagement.Infrastructure.Repositories.Password
 
             Console.WriteLine(
                 "======================================");
-
-            // =================================================
-            // CHECK RESULT
-            // =================================================
 
             if (result == null ||
                 result == DBNull.Value)
@@ -142,10 +126,13 @@ namespace StudentManagement.Infrastructure.Repositories.Password
                 "@password",
                 passwordHash);
 
-            var rowsAffected =
-                await command.ExecuteNonQueryAsync();
+            // Execute the stored procedure.
+            // Do not use the returned row count because
+            // the stored procedure uses SET NOCOUNT ON.
 
-            return rowsAffected > 0;
+            await command.ExecuteNonQueryAsync();
+
+            return true;
         }
 
         // =====================================================

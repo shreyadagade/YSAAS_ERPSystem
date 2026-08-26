@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudentManagement.Application.DTOs;
+using StudentManagement.Application.DTOs.Profile;
 using StudentManagement.Application.DTOs.StudentProfile;
 using StudentManagement.Application.Interfaces.Repositories.Profile;
 using StudentManagement.Infrastructure.Data;
@@ -12,11 +12,14 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
     {
         private readonly AppDbContext _context;
 
-        public StudentProfileRepository(
-            AppDbContext context)
+        public StudentProfileRepository(AppDbContext context)
         {
             _context = context;
         }
+
+        // =====================================================
+        // GET PROFILE
+        // =====================================================
 
         public async Task<StudentProfileDto?> GetProfileByStudentIdAsync(
             int studentId)
@@ -59,20 +62,182 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             return MapProfile(reader);
         }
 
-        private static void AddParameter(
-            DbCommand command,
-            string parameterName,
-            object? value)
+        // =====================================================
+        // CHANGE PROFILE
+        // =====================================================
+
+        public async Task<bool> ChangeProfileAsync(
+            int studentId,
+            ChangeProfileRequestDto request)
         {
-            var parameter = command.CreateParameter();
+            var connection =
+                _context.Database.GetDbConnection();
 
-            parameter.ParameterName = parameterName;
+            if (connection.State != ConnectionState.Open)
+            {
+                await connection.OpenAsync();
+            }
 
-            parameter.Value =
-                value ?? DBNull.Value;
+            using var command =
+                connection.CreateCommand();
 
-            command.Parameters.Add(parameter);
+            command.CommandText =
+                "erpsystem.sp_tblstudent_details";
+
+            command.CommandType =
+                CommandType.StoredProcedure;
+
+            AddParameter(
+                command,
+                "@Type",
+                "Update");
+
+            AddParameter(
+                command,
+                "@student_id",
+                studentId);
+
+            AddParameter(
+                command,
+                "@student_name",
+                request.StudentName);
+
+            AddParameter(
+                command,
+                "@gender",
+                request.Gender);
+
+            AddParameter(
+                command,
+                "@mobile_number",
+                request.MobileNumber);
+
+            AddParameter(
+                command,
+                "@email_address",
+                request.EmailAddress);
+
+            AddParameter(
+                command,
+                "@birth_date",
+                request.BirthDate);
+
+            // =================================================
+            // IMPORTANT:
+            // ProfilePhoto is NOT updated here.
+            //
+            // Profile photo has a separate API:
+            // change-profile-photo
+            // =================================================
+
+            AddParameter(
+                command,
+                "@qualification",
+                request.Qualification);
+
+            AddParameter(
+                command,
+                "@parent_name",
+                request.ParentName);
+
+            AddParameter(
+                command,
+                "@parent_number",
+                request.ParentNumber);
+
+            AddParameter(
+                command,
+                "@last_name",
+                request.LastName);
+
+            AddParameter(
+                command,
+                "@whatsapp_number",
+                request.WhatsappNumber);
+
+            AddParameter(
+                command,
+                "@local_address",
+                request.LocalAddress);
+
+            AddParameter(
+                command,
+                "@permanent_address",
+                request.PermanentAddress);
+
+            AddParameter(
+                command,
+                "@permanent_identification_number",
+                request.PermanentIdentificationNumber);
+
+            AddParameter(
+                command,
+                "@aadhar_card_number",
+                request.AadharCardNumber);
+
+            AddParameter(
+                command,
+                "@aadhar_card_photo",
+                request.AadharCardPhoto);
+
+            AddParameter(
+                command,
+                "@branch_id",
+                request.BranchId);
+
+            await command.ExecuteNonQueryAsync();
+
+            return true;
         }
+
+        // =====================================================
+        // CHANGE PROFILE PHOTO
+        // =====================================================
+
+        public async Task<bool> ChangeProfilePhotoAsync(
+            int studentId,
+            string profilePhoto)
+        {
+            var connection =
+                _context.Database.GetDbConnection();
+
+            if (connection.State != ConnectionState.Open)
+            {
+                await connection.OpenAsync();
+            }
+
+            using var command =
+                connection.CreateCommand();
+
+            command.CommandText =
+                "erpsystem.sp_tblstudent_details";
+
+            command.CommandType =
+                CommandType.StoredProcedure;
+
+            AddParameter(
+                command,
+                "@Type",
+                "ChangeProfilePhoto");
+
+            AddParameter(
+                command,
+                "@student_id",
+                studentId);
+
+            AddParameter(
+                command,
+                "@profile_photo",
+                profilePhoto);
+
+            await command.ExecuteNonQueryAsync();
+
+            return true;
+        }
+
+        // =====================================================
+        // MAP PROFILE
+        // =====================================================
 
         private static StudentProfileDto MapProfile(
             DbDataReader reader)
@@ -80,7 +245,8 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             return new StudentProfileDto
             {
                 StudentId =
-                    Convert.ToInt32(reader["student_id"]),
+                    Convert.ToInt32(
+                        reader["student_id"]),
 
                 StudentCode =
                     reader["student_code"] == DBNull.Value
@@ -191,7 +357,9 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
                             reader["branch_id"]),
 
                 BranchName =
-                    HasColumn(reader, "branch_name") &&
+                    HasColumn(
+                        reader,
+                        "branch_name") &&
                     reader["branch_name"] != DBNull.Value
                         ? Convert.ToString(
                             reader["branch_name"])
@@ -199,24 +367,51 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             };
         }
 
+        // =====================================================
+        // CHECK COLUMN
+        // =====================================================
+
         private static bool HasColumn(
             DbDataReader reader,
             string columnName)
         {
-            for (int i = 0;
-                 i < reader.FieldCount;
-                 i++)
+            for (
+                int i = 0;
+                i < reader.FieldCount;
+                i++)
             {
-                if (reader.GetName(i)
-                    .Equals(
-                        columnName,
-                        StringComparison.OrdinalIgnoreCase))
+                if (
+                    reader.GetName(i)
+                        .Equals(
+                            columnName,
+                            StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
             }
 
             return false;
+        }
+
+        // =====================================================
+        // ADD SQL PARAMETER
+        // =====================================================
+
+        private static void AddParameter(
+            DbCommand command,
+            string parameterName,
+            object? value)
+        {
+            var parameter =
+                command.CreateParameter();
+
+            parameter.ParameterName =
+                parameterName;
+
+            parameter.Value =
+                value ?? DBNull.Value;
+
+            command.Parameters.Add(parameter);
         }
     }
 }

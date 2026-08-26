@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Application.DTOs.Payment;
 using StudentManagement.Application.Interfaces.Services.Payment;
@@ -7,7 +8,8 @@ namespace StudentManagement.API.Controllers.Payment
     {
         [ApiController]
         [Route("api/[controller]")]
-        public class StudentPaymentController : ControllerBase
+        [Authorize]
+    public class StudentPaymentController : ControllerBase
         {
             private readonly IStudentPaymentService _service;
 

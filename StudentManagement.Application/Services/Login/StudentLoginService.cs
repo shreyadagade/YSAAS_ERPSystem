@@ -20,6 +20,7 @@ namespace StudentManagement.Application.Services.Student
         // =====================================================
         // STUDENT LOGIN
         // =====================================================
+
         public async Task<StudentLoginResponseDto> LoginAsync(
             StudentLoginRequestDto request)
         {
@@ -46,7 +47,7 @@ namespace StudentManagement.Application.Services.Student
             }
 
             // =================================================
-            // FIND STUDENT BY STUDENT CODE
+            // FIND STUDENT
             // =================================================
 
             var student =
@@ -60,19 +61,59 @@ namespace StudentManagement.Application.Services.Student
             }
 
             // =================================================
-            // CHECK STORED PASSWORD HASH
+            // CHECK PASSWORD HASH
             // =================================================
 
             if (string.IsNullOrWhiteSpace(student.Password))
             {
                 throw new UnauthorizedAccessException(
-                    "Invalid student code or password.");
+                    "Student password hash is missing.");
             }
 
-            bool passwordValid =
-                BCrypt.Net.BCrypt.Verify(
-                    request.Password,
-                    student.Password);
+            Console.WriteLine(
+                "==========================================");
+
+            Console.WriteLine(
+                $"Student ID: {student.StudentId}");
+
+            Console.WriteLine(
+                $"Student Code: {student.StudentCode}");
+
+            Console.WriteLine(
+                $"Password Hash Exists: " +
+                $"{!string.IsNullOrWhiteSpace(student.Password)}");
+
+            Console.WriteLine(
+                $"Password Hash Length: " +
+                $"{student.Password.Length}");
+
+            // =================================================
+            // VERIFY PASSWORD
+            // =================================================
+
+            bool passwordValid;
+
+            try
+            {
+                passwordValid =
+                    BCrypt.Net.BCrypt.Verify(
+                        request.Password,
+                        student.Password);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(
+                    $"BCrypt Error: {ex.Message}");
+
+                throw new UnauthorizedAccessException(
+                    "Password verification failed.");
+            }
+
+            Console.WriteLine(
+                $"Password Valid: {passwordValid}");
+
+            Console.WriteLine(
+                "==========================================");
 
             if (!passwordValid)
             {

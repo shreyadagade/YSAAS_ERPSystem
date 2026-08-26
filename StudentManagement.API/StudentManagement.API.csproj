@@ -21,4 +21,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+    <Folder Include="wwwroot\uploads\profilephotos\" />
+  </ItemGroup>
+
 </Project>

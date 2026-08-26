@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Application.DTOs.Qualification;
 using StudentManagement.Application.Interfaces.Services.Qualification;
@@ -8,7 +9,8 @@ namespace StudentManagement.API.Controllers
     {
         [ApiController]
         [Route("api/[controller]")]
-        public class StudentQualificationController : ControllerBase
+        [Authorize]
+    public class StudentQualificationController : ControllerBase
         {
             private readonly IStudentQualificationService _service;
 

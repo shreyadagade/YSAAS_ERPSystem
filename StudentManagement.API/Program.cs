@@ -156,6 +156,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthentication();
 
 app.UseAuthorization();
