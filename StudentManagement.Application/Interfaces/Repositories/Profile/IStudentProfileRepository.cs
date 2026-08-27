@@ -5,27 +5,19 @@ namespace StudentManagement.Application.Interfaces.Repositories.Profile
 {
     public interface IStudentProfileRepository
     {
-        // =====================================================
-        // GET PROFILE
-        // =====================================================
-
         Task<StudentProfileDto?> GetProfileByStudentIdAsync(
             int studentId);
-
-        // =====================================================
-        // CHANGE PROFILE
-        // =====================================================
 
         Task<bool> ChangeProfileAsync(
             int studentId,
             ChangeProfileRequestDto request);
 
-        // =====================================================
-        // CHANGE PROFILE PHOTO
-        // =====================================================
-
         Task<bool> ChangeProfilePhotoAsync(
             int studentId,
             string profilePhoto);
+
+        Task<string?> CheckDuplicateAsync(
+            int studentId,
+            ChangeProfileRequestDto request);
     }
 }

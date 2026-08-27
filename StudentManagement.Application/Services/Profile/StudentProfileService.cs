@@ -1,18 +1,20 @@
-﻿using StudentManagement.Application.DTOs.Profile;
+﻿
+using StudentManagement.Application.DTOs.Profile;
 using StudentManagement.Application.DTOs.StudentProfile;
 using StudentManagement.Application.Interfaces.Repositories.Profile;
 using StudentManagement.Application.Interfaces.Services.StudentProfile;
 
 namespace StudentManagement.Application.Services.Profile
 {
-    public class StudentProfileService : IStudentProfileService
+    public class StudentProfileService
+        : IStudentProfileService
     {
-        private readonly IStudentProfileRepository _profileRepository;
+        private readonly IStudentProfileRepository _repository;
 
         public StudentProfileService(
-            IStudentProfileRepository profileRepository)
+            IStudentProfileRepository repository)
         {
-            _profileRepository = profileRepository;
+            _repository = repository;
         }
 
         // =====================================================
@@ -28,7 +30,7 @@ namespace StudentManagement.Application.Services.Profile
                     "Invalid student ID.");
             }
 
-            return await _profileRepository
+            return await _repository
                 .GetProfileByStudentIdAsync(studentId);
         }
 
@@ -52,7 +54,7 @@ namespace StudentManagement.Application.Services.Profile
                     "Profile data is required.");
             }
 
-            return await _profileRepository
+            return await _repository
                 .ChangeProfileAsync(
                     studentId,
                     request);
@@ -75,13 +77,14 @@ namespace StudentManagement.Application.Services.Profile
             if (string.IsNullOrWhiteSpace(profilePhoto))
             {
                 throw new ArgumentException(
-                    "Profile photo is required.");
+                    "Profile photo path is required.");
             }
 
-            return await _profileRepository
+            return await _repository
                 .ChangeProfilePhotoAsync(
                     studentId,
                     profilePhoto);
         }
     }
 }
+

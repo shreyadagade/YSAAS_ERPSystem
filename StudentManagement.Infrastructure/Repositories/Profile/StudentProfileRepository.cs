@@ -8,11 +8,13 @@ using System.Data.Common;
 
 namespace StudentManagement.Infrastructure.Repositories.Profile
 {
-    public class StudentProfileRepository : IStudentProfileRepository
+    public class StudentProfileRepository
+        : IStudentProfileRepository
     {
         private readonly AppDbContext _context;
 
-        public StudentProfileRepository(AppDbContext context)
+        public StudentProfileRepository(
+            AppDbContext context)
         {
             _context = context;
         }
@@ -21,8 +23,9 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
         // GET PROFILE
         // =====================================================
 
-        public async Task<StudentProfileDto?> GetProfileByStudentIdAsync(
-            int studentId)
+        public async Task<StudentProfileDto?>
+            GetProfileByStudentIdAsync(
+                int studentId)
         {
             var connection =
                 _context.Database.GetDbConnection();
@@ -62,13 +65,89 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             return MapProfile(reader);
         }
 
+
+        // =====================================================
+        // CHECK DUPLICATE
+        // =====================================================
+
+        public async Task<string?>
+            CheckDuplicateAsync(
+                int studentId,
+                ChangeProfileRequestDto request)
+        {
+            var connection =
+                _context.Database.GetDbConnection();
+
+            if (connection.State != ConnectionState.Open)
+            {
+                await connection.OpenAsync();
+            }
+
+            using var command =
+                connection.CreateCommand();
+
+            command.CommandText =
+                "erpsystem.sp_tblstudent_details";
+
+            command.CommandType =
+                CommandType.StoredProcedure;
+
+            AddParameter(
+                command,
+                "@Type",
+                "CheckDuplicate");
+
+            AddParameter(
+                command,
+                "@student_id",
+                studentId);
+
+            AddParameter(
+                command,
+                "@email_address",
+                request.EmailAddress);
+
+            AddParameter(
+                command,
+                "@aadhar_card_number",
+                request.AadharCardNumber);
+
+            AddParameter(
+                command,
+                "@permanent_identification_number",
+                request.PermanentIdentificationNumber);
+
+            AddParameter(
+                command,
+                "@whatsapp_number",
+                request.WhatsappNumber);
+
+            AddParameter(
+                command,
+                "@mobile_number",
+                request.MobileNumber);
+
+            var result =
+                await command.ExecuteScalarAsync();
+
+            if (result == null ||
+                result == DBNull.Value)
+            {
+                return null;
+            }
+
+            return result.ToString();
+        }
+
+
         // =====================================================
         // CHANGE PROFILE
         // =====================================================
 
-        public async Task<bool> ChangeProfileAsync(
-            int studentId,
-            ChangeProfileRequestDto request)
+        public async Task<bool>
+            ChangeProfileAsync(
+                int studentId,
+                ChangeProfileRequestDto request)
         {
             var connection =
                 _context.Database.GetDbConnection();
@@ -121,14 +200,6 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
                 command,
                 "@birth_date",
                 request.BirthDate);
-
-            // =================================================
-            // IMPORTANT:
-            // ProfilePhoto is NOT updated here.
-            //
-            // Profile photo has a separate API:
-            // change-profile-photo
-            // =================================================
 
             AddParameter(
                 command,
@@ -190,13 +261,15 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             return true;
         }
 
+
         // =====================================================
         // CHANGE PROFILE PHOTO
         // =====================================================
 
-        public async Task<bool> ChangeProfilePhotoAsync(
-            int studentId,
-            string profilePhoto)
+        public async Task<bool>
+            ChangeProfilePhotoAsync(
+                int studentId,
+                string profilePhoto)
         {
             var connection =
                 _context.Database.GetDbConnection();
@@ -235,12 +308,13 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             return true;
         }
 
+
         // =====================================================
         // MAP PROFILE
         // =====================================================
 
-        private static StudentProfileDto MapProfile(
-            DbDataReader reader)
+        private static StudentProfileDto
+            MapProfile(DbDataReader reader)
         {
             return new StudentProfileDto
             {
@@ -367,6 +441,7 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             };
         }
 
+
         // =====================================================
         // CHECK COLUMN
         // =====================================================
@@ -393,8 +468,9 @@ namespace StudentManagement.Infrastructure.Repositories.Profile
             return false;
         }
 
+
         // =====================================================
-        // ADD SQL PARAMETER
+        // ADD PARAMETER
         // =====================================================
 
         private static void AddParameter(
