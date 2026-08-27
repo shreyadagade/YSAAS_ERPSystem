@@ -98,7 +98,7 @@ namespace UserManagement.API.Middleware
                 await WriteResponseAsync(
                     context,
                     StatusCodes.Status500InternalServerError,
-                    "Something went wrong while processing your request. Please try again later.");
+                    ex.Message);
             }
         }
 
