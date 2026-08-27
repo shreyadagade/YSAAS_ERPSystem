@@ -27,7 +27,7 @@ namespace UserManagement.Infrastructure.Services
 
             if (existingRole)
             {
-                throw new BadRequestException("Role already exists.");
+                throw new InternalServerErrorException("Role already exists.");
             }
 
             var role = new IdentityRole(roleName);
@@ -89,7 +89,7 @@ namespace UserManagement.Infrastructure.Services
 
             if (existingRole != null && existingRole.Id != role.Id)
             {
-                throw new BadRequestException("Role name already exists.");
+                throw new InternalServerErrorException("Role name already exists.");
             }
 
             role.Name = roleName;
