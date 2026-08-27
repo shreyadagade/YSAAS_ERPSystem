@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using UserManagement.Application.DTOs.Role;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
 using UserManagement.Infrastructure.Persistence.Identity;
 
@@ -21,52 +22,47 @@ namespace UserManagement.Infrastructure.Services
 
         public async Task<string> AssignRoleAsync(AssignRoleDto dto)
         {
+            if (dto == null)
+            {
+                throw new BadRequestException("Role assignment data is required.");
+            }
+
             if (string.IsNullOrWhiteSpace(dto.UserId))
             {
-                throw new ArgumentException(
-                    "User ID is required.");
+                throw new BadRequestException("User ID is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.RoleId))
             {
-                throw new ArgumentException(
-                    "Role ID is required.");
+                throw new BadRequestException("Role ID is required.");
             }
 
-            var user =
-                await _userManager.FindByIdAsync(
-                    dto.UserId);
+            var user = await _userManager.FindByIdAsync(dto.UserId);
 
             if (user == null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     "User not found.");
             }
 
             if (!user.IsActive)
             {
-                throw new InvalidOperationException(
-                    "User account is deactivated.");
+                throw new NotFoundException(
+                    "User not found.");
             }
 
-            var role =
-                await _roleManager.FindByIdAsync(
-                    dto.RoleId);
+            var role = await _roleManager.FindByIdAsync(dto.RoleId);
 
             if (role == null)
             {
-                throw new InvalidOperationException(
-                    "Role not found.");
+                throw new NotFoundException("Role not found.");
             }
 
-            var alreadyAssigned =
-                await _userManager.IsInRoleAsync(
-                    user,
-                    role.Name!);
+            var alreadyAssigned = await _userManager.IsInRoleAsync(user,role.Name!);
 
             if (alreadyAssigned)
             {
-                throw new InvalidOperationException(
+                throw new InternalServerErrorException(
                     "Role is already assigned to the user.");
             }
 
@@ -83,8 +79,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"Role assignment failed. {errors}");
+                throw new BadRequestException($"Role assignment failed. {errors}");
             }
 
             return "Role assigned successfully.";
@@ -94,37 +89,38 @@ namespace UserManagement.Infrastructure.Services
         {
             if (string.IsNullOrWhiteSpace(userId))
             {
-                throw new ArgumentException(
-                    "User ID is required.");
+                throw new BadRequestException("User ID is required.");
             }
 
             if (string.IsNullOrWhiteSpace(roleId))
             {
-                throw new ArgumentException(
-                    "Role ID is required.");
+                throw new BadRequestException("Role ID is required.");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                throw new InvalidOperationException(
-                    "User not found.");
+                throw new NotFoundException("User not found.");
+            }
+
+            if (!user.IsActive)
+            {
+                throw new NotFoundException("User not found.");
             }
 
             var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
             {
-                throw new InvalidOperationException(
-                    "Role not found.");
+                throw new NotFoundException("Role not found.");
             }
 
             var isAssigned = await _userManager.IsInRoleAsync(user,role.Name!);
 
             if (!isAssigned)
             {
-                throw new InvalidOperationException(
+                throw new BadRequestException(
                     "Role is not assigned to the user.");
             }
 
@@ -138,8 +134,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"Role removal failed. {errors}");
+                throw new BadRequestException($"Role removal failed. {errors}");
             }
 
             return "Role removed successfully.";
@@ -147,24 +142,30 @@ namespace UserManagement.Infrastructure.Services
 
         public async Task<List<string>> GetUserRolesAsync(GetUserRolesDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.UserId))
+            if (dto == null)
             {
-                throw new ArgumentException(
-                    "User ID is required.");
+                throw new BadRequestException("User data is required.");
             }
 
-            var user =
-                await _userManager.FindByIdAsync(
-                    dto.UserId);
+            if (string.IsNullOrWhiteSpace(dto.UserId))
+            {
+                throw new BadRequestException("User ID is required.");
+            }
+
+            var user = await _userManager.FindByIdAsync(dto.UserId);
 
             if (user == null)
             {
-                throw new InvalidOperationException(
-                    "User not found.");
+                throw new NotFoundException("User not found.");
             }
 
-            var roles =
-                await _userManager.GetRolesAsync(user);
+            if (!user.IsActive)
+            {
+                throw new NotFoundException("User not found.");
+            }
+
+
+            var roles = await _userManager.GetRolesAsync(user);
 
             return roles.ToList();
         }

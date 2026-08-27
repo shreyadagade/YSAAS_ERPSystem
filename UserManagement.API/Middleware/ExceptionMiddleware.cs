@@ -59,7 +59,7 @@ namespace UserManagement.API.Middleware
                 await WriteResponseAsync(
                     context,
                     StatusCodes.Status500InternalServerError,
-                    "Unable to process your request due to a database error. Please try again later.");
+                    ex.Message);
             }
             catch (ArgumentException ex)
             {

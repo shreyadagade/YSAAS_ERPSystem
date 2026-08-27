@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using UserManagement.Application.Contracts;
 using UserManagement.Application.DTOs.User;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
 using UserManagement.Infrastructure.Persistence.Identity;
 using UserManagement.Infrastructure.Persistence.Models;
@@ -29,16 +30,14 @@ namespace UserManagement.Infrastructure.Services
         {
             if (string.IsNullOrWhiteSpace(dto.UserId))
             {
-                throw new ArgumentException(
-                    "User ID is required.");
+                throw new BadRequestException("User ID is required.");
             }
 
-            var user = await _userManager.FindByIdAsync(
-                    dto.UserId);
+            var user = await _userManager.FindByIdAsync(dto.UserId);
 
             if (user == null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     "User not found.");
             }
 
@@ -54,8 +53,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"User status update failed. {errors}");
+                throw new BadRequestException($"User status update failed. {errors}");
             }
 
             return dto.IsActive
@@ -87,6 +85,11 @@ namespace UserManagement.Infrastructure.Services
                     await _userManager.FindByIdAsync(employee.UserId);
 
                 if (user == null)
+                {
+                    continue;
+                }
+
+                if (!user.IsActive)
                 {
                     continue;
                 }
@@ -123,8 +126,12 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                throw new InvalidOperationException(
-                    "User not found.");
+                throw new NotFoundException("User not found.");
+            }
+
+            if (!user.IsActive)
+            {
+                throw new NotFoundException("User not found.");
             }
 
             var employees =
@@ -143,7 +150,7 @@ namespace UserManagement.Infrastructure.Services
 
             if (employee == null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     "Employee record not found.");
             }
 
@@ -200,7 +207,13 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
+                    "User not found.");
+            }
+
+            if (!user.IsActive)
+            {
+                throw new NotFoundException(
                     "User not found.");
             }
 
@@ -208,11 +221,9 @@ namespace UserManagement.Infrastructure.Services
                 await _userManager.FindByEmailAsync(
                     dto.EmailAddress.Trim());
 
-            if (existingUser != null &&
-                existingUser.Id != user.Id)
+            if (existingUser != null && existingUser.Id != user.Id)
             {
-                throw new InvalidOperationException(
-                    "Email address is already registered.");
+                throw new InternalServerErrorException("Email address is already registered.");
             }
 
             var existingMobile = await _userManager.Users.FirstOrDefaultAsync(u =>
@@ -221,9 +232,10 @@ namespace UserManagement.Infrastructure.Services
 
             if (existingMobile != null)
             {
-                throw new InvalidOperationException(
+                throw new InternalServerErrorException(
                     "A user with this mobile number already exists.");
             }
+
             user.Email = dto.EmailAddress.Trim();
             user.NormalizedEmail =
                 dto.EmailAddress.Trim().ToUpper();
@@ -242,8 +254,7 @@ namespace UserManagement.Infrastructure.Services
                         identityResult.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"User update failed. {errors}");
+                throw new BadRequestException($"User update failed. {errors}");
             }
 
             await _repository.ExecuteNonQueryAsync(StoredProcedure,
@@ -294,8 +305,12 @@ namespace UserManagement.Infrastructure.Services
 
             if (user == null)
             {
-                throw new InvalidOperationException(
-                    "User not found.");
+                throw new NotFoundException("User not found.");
+            }
+
+            if (!user.IsActive)
+            {
+                throw new NotFoundException("User not found.");
             }
 
             var employeeResult =
@@ -316,12 +331,11 @@ namespace UserManagement.Infrastructure.Services
 
             if (employeeResult <= 0)
             {
-                throw new InvalidOperationException(
+                throw new NotFoundException(
                     "Employee record not found.");
             }
 
-            var result =
-                await _userManager.DeleteAsync(user);
+            var result = await _userManager.DeleteAsync(user);
 
             if (!result.Succeeded)
             {
@@ -331,8 +345,7 @@ namespace UserManagement.Infrastructure.Services
                         result.Errors.Select(
                             e => e.Description));
 
-                throw new InvalidOperationException(
-                    $"User delete failed. {errors}");
+                throw new BadRequestException($"User delete failed. {errors}");
             }
 
             return true;

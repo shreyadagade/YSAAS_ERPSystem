@@ -86,7 +86,7 @@ namespace UserManagement.Infrastructure.Services
 
             if (existingUser != null)
             {
-                throw new ConflictException(
+                throw new InternalServerErrorException(
                     "A user with this email address already exists.");
             }
 
@@ -95,7 +95,7 @@ namespace UserManagement.Infrastructure.Services
 
             if (existingMobile != null)
             {
-                throw new ConflictException(
+                throw new InternalServerErrorException(
                     "A user with this mobile number already exists.");
             }
 

@@ -21,13 +21,13 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPut("change-status")]
-        public async Task<IActionResult> ChangeUserStatus([FromBody] ChangeUserStatusDto dto)
+        public async Task<IActionResult> ChangeUserStatus(ChangeUserStatusDto dto)
         {
-            var result =
-                await _userService.ChangeUserStatusAsync(dto);
+            var result = await _userService.ChangeUserStatusAsync(dto);
 
             return Ok(new
             {
+                statusCode = StatusCodes.Status200OK,
                 message = result
             });
         }
@@ -38,31 +38,36 @@ namespace UserManagement.API.Controllers
         {
             var result = await _userService.GetAllUsersAsync();
 
-            return Ok(result);
+            return Ok(new
+            {
+                statusCode = StatusCodes.Status200OK,
+                message = "Users retrieved successfully.",
+                data = result
+            });
         }
-
 
         [HttpGet("get-user/{userId}")]
         public async Task<IActionResult> GetUserById(string userId)
         {
             var result = await _userService.GetUserByIdAsync(userId);
 
-            return Ok(result);
+            return Ok(new
+            {
+                statusCode = StatusCodes.Status200OK,
+                message = "User retrieved successfully.",
+                data = result
+            });
         }
 
         [HttpPut("update-user/{userId}")]
-        public async Task<IActionResult> UpdateUser(string userId,[FromBody] UpdateUserDto dto)
+        public async Task<IActionResult> UpdateUser(string userId,UpdateUserDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return ValidationProblem(ModelState);
-            }
-
             var result = await _userService.UpdateUserAsync(userId, dto);
 
             return Ok(new
             {
-                message = "User updated successfully."
+                statusCode = StatusCodes.Status200OK,
+                message = result
             });
         }
 
@@ -70,19 +75,11 @@ namespace UserManagement.API.Controllers
         [HttpDelete("delete-user/{userId}")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
-            if (string.IsNullOrWhiteSpace(userId))
-            {
-                return BadRequest(new
-                {
-                    message = "User ID is required."
-                });
-            }
-
-            var result =
-                await _userService.DeleteUserAsync(userId);
+            var result = await _userService.DeleteUserAsync(userId);
 
             return Ok(new
             {
+                statusCode = StatusCodes.Status200OK,
                 message = "User deleted successfully."
             });
         }

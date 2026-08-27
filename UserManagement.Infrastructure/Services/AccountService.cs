@@ -25,37 +25,31 @@ namespace UserManagement.Infrastructure.Services
         {
             if (dto == null)
             {
-                throw new ArgumentException(
-                    "Request data is required.");
+                throw new BadRequestException("Request data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.UserId))
             {
-                throw new ArgumentException(
-                    "User ID is required.");
+                throw new BadRequestException("User ID is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.CurrentPassword))
             {
-                throw new ArgumentException(
-                    "Current password is required.");
+                throw new BadRequestException("Current password is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.NewPassword))
             {
-                throw new ArgumentException(
-                    "New password is required.");
+                throw new BadRequestException("New password is required.");
             }
 
             if (dto.CurrentPassword == dto.NewPassword)
             {
-                throw new ArgumentException(
-                    "New password must be different from current password.");
+                throw new BadRequestException(
+                      "New password must be different from current password.");
             }
 
-            var user =
-                await _userManager.FindByIdAsync(
-                    dto.UserId);
+            var user = await _userManager.FindByIdAsync(dto.UserId);
 
             if (user == null)
             {
@@ -94,20 +88,17 @@ namespace UserManagement.Infrastructure.Services
         {
             if (dto == null)
             {
-                throw new ArgumentException(
-                    "Request data is required.");
+                throw new BadRequestException("Request data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.EmailAddress))
             {
-                throw new ArgumentException(
-                    "Email address is required.");
+                throw new BadRequestException("Email address is required.");
             }
 
             var email = dto.EmailAddress.Trim();
 
-            var user =
-                await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -121,8 +112,7 @@ namespace UserManagement.Infrastructure.Services
                     "User account is deactivated.");
             }
 
-            var token =
-                await _userManager.GeneratePasswordResetTokenAsync(user);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             return token;
         }
@@ -131,42 +121,35 @@ namespace UserManagement.Infrastructure.Services
         {
             if (dto == null)
             {
-                throw new ArgumentException(
-                    "Request data is required.");
+                throw new BadRequestException("Request data is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.EmailAddress))
             {
-                throw new ArgumentException(
-                    "Email address is required.");
+                throw new BadRequestException("Email address is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.Token))
             {
-                throw new ArgumentException(
-                    "Reset token is required.");
+                throw new BadRequestException("Reset token is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.NewPassword))
             {
-                throw new ArgumentException(
-                    "New password is required.");
+                throw new BadRequestException("New password is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.ConfirmPassword))
             {
-                throw new ArgumentException(
-                    "Confirm password is required.");
+                throw new BadRequestException("Confirm password is required.");
             }
 
             if (dto.NewPassword != dto.ConfirmPassword)
             {
-                throw new ArgumentException(
-                    "New password and confirm password do not match.");
+                throw new BadRequestException("New password and confirm password do not match.");
             }
 
-            var user = await _userManager.FindByEmailAsync(
-                dto.EmailAddress.Trim());
+            var user = await _userManager.FindByEmailAsync(dto.EmailAddress.Trim());
 
             if (user == null)
             {

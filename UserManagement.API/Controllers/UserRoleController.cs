@@ -20,12 +20,13 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("assign-role")]
-        public async Task<IActionResult> AssignRole([FromBody] AssignRoleDto dto)
+        public async Task<IActionResult> AssignRole(AssignRoleDto dto)
         {
             var result = await _userRoleService.AssignRoleAsync(dto);
 
             return Ok(new
             {
+                statusCode = StatusCodes.Status200OK,
                 message = result
             });
         }
@@ -33,38 +34,28 @@ namespace UserManagement.API.Controllers
         [HttpDelete("remove-assigned-role/{userId}/{roleId}")]
         public async Task<IActionResult> RemoveRole(string userId,string roleId)
         {
-            if (string.IsNullOrWhiteSpace(userId))
-            {
-                return BadRequest(new
-                {
-                    message = "User ID is required."
-                });
-            }
-
-            if (string.IsNullOrWhiteSpace(roleId))
-            {
-                return BadRequest(new
-                {
-                    message = "Role ID is required."
-                });
-            }
-
             var result = await _userRoleService.RemoveRoleAsync(userId,roleId);
 
             return Ok(new
             {
+                statusCode = StatusCodes.Status200OK,
                 message = result
             });
         }
 
+
         [AllowAnonymous]
         [HttpPost("get-user-roles")]
-        public async Task<IActionResult> GetUserRoles([FromBody] GetUserRolesDto dto)
+        public async Task<IActionResult> GetUserRoles(GetUserRolesDto dto)
         {
-            var roles =
-                await _userRoleService.GetUserRolesAsync(dto);
+            var roles = await _userRoleService.GetUserRolesAsync(dto);
 
-            return Ok(roles);
+            return Ok(new
+            {
+                statusCode = StatusCodes.Status200OK,
+                message = "User roles retrieved successfully.",
+                data = roles
+            });
         }
     }
 }

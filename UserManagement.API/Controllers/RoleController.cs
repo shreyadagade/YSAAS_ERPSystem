@@ -48,12 +48,9 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPut("update-role/{roleId}")]
-        public async Task<IActionResult> UpdateRole(
-            string roleId,
-            UpdateRoleDto dto)
+        public async Task<IActionResult> UpdateRole(string roleId,UpdateRoleDto dto)
         {
-            var result =
-                await _roleService.UpdateRoleAsync(roleId, dto);
+            var result = await _roleService.UpdateRoleAsync(roleId, dto);
 
             return StatusCode(
                 StatusCodes.Status200OK,
@@ -67,8 +64,7 @@ namespace UserManagement.API.Controllers
         [HttpDelete("delete-role/{roleId}")]
         public async Task<IActionResult> DeleteRole(string roleId)
         {
-            var result =
-                await _roleService.DeleteRoleAsync(roleId);
+            var result = await _roleService.DeleteRoleAsync(roleId);
 
             return StatusCode(
                 StatusCodes.Status200OK,

@@ -92,7 +92,7 @@ namespace UserManagement.API.Controllers
         }
 
 
-        [HttpPost("restore/{id}")]
+        [HttpPut("restore/{id}")]
         public async Task<IActionResult> RestoreBranch(int id)
         {
             var result = await _branchService.RestoreAsync(id);

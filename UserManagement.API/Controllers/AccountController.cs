@@ -8,8 +8,6 @@ namespace UserManagement.API.Controllers
 {
     [ApiController]
     [Route("api/account")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Super User")]
-
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -20,37 +18,46 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpPost("change-password")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
         {
             var result = await _accountService.ChangePasswordAsync(dto);
 
-            return Ok(new
-            {
-                message = result
-            });
+            return StatusCode(
+               StatusCodes.Status200OK,
+               new
+               {
+                   statusCode = StatusCodes.Status200OK,
+                   message = result
+               });
         }
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
             var token = await _accountService.ForgotPasswordAsync(dto);
 
-            return Ok(new
-            {
-                message = "Password reset token generated successfully.",
-                token = token
-            });
+            return StatusCode(
+                 StatusCodes.Status200OK,
+                 new
+                 {
+                     statusCode = StatusCodes.Status200OK,
+                     message = "Password reset token generated successfully.",
+                     token = token
+                 });
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
         {
             var result = await _accountService.ResetPasswordAsync(dto);
 
-            return Ok(new
-            {
-                message = result
-            });
+            return StatusCode(
+               StatusCodes.Status200OK,
+               new
+               {
+                   statusCode = StatusCodes.Status200OK,
+                   message = result
+               });
         }
 
     }
