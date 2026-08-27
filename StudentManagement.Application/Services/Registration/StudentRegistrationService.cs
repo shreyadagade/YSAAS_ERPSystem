@@ -1,8 +1,8 @@
 ﻿using StudentManagement.Application.DTOs.Registration;
 using StudentManagement.Application.Interfaces.Repositories.Registration;
 using StudentManagement.Application.Interfaces.Repositories.Student;
+using StudentManagement.Application.Interfaces.Services.Email;
 using StudentManagement.Application.Interfaces.Services.Registration;
-using StudentManagement.Application.Interfaces.Services.Student;
 using StudentManagement.Domain.Entities.Registration;
 using System.Xml.Linq;
 

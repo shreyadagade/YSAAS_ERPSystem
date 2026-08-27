@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using StudentManagement.API.Middleware;
 using StudentManagement.Application.Interfaces.Repositories;
+using StudentManagement.Application.Interfaces.Repositories.ForgotPassword;
 using StudentManagement.Application.Interfaces.Repositories.Password;
 using StudentManagement.Application.Interfaces.Repositories.Payment;
 using StudentManagement.Application.Interfaces.Repositories.Profile;
@@ -11,6 +12,8 @@ using StudentManagement.Application.Interfaces.Repositories.Qualification;
 using StudentManagement.Application.Interfaces.Repositories.Registration;
 using StudentManagement.Application.Interfaces.Repositories.Student;
 using StudentManagement.Application.Interfaces.Services;
+using StudentManagement.Application.Interfaces.Services.Email;
+using StudentManagement.Application.Interfaces.Services.ForgotPassword;
 using StudentManagement.Application.Interfaces.Services.Login;
 using StudentManagement.Application.Interfaces.Services.Password;
 using StudentManagement.Application.Interfaces.Services.Payment;
@@ -19,7 +22,9 @@ using StudentManagement.Application.Interfaces.Services.Registration;
 using StudentManagement.Application.Interfaces.Services.Student;
 using StudentManagement.Application.Interfaces.Services.StudentProfile;
 using StudentManagement.Application.Services;
+using StudentManagement.Application.Services.ForgotPassword;
 using StudentManagement.Application.Services.Login;
+using StudentManagement.Application.Services.Password;
 using StudentManagement.Application.Services.Payment;
 using StudentManagement.Application.Services.Profile;
 using StudentManagement.Application.Services.Qualification;
@@ -28,14 +33,14 @@ using StudentManagement.Application.Services.Student;
 using StudentManagement.Infrastructure.Data;
 using StudentManagement.Infrastructure.Email;
 using StudentManagement.Infrastructure.Repositories;
+using StudentManagement.Infrastructure.Repositories.ForgotPassword;
+using StudentManagement.Infrastructure.Repositories.Password;
 using StudentManagement.Infrastructure.Repositories.Payment;
 using StudentManagement.Infrastructure.Repositories.Profile;
 using StudentManagement.Infrastructure.Repositories.Qualification;
 using StudentManagement.Infrastructure.Repositories.Registration;
 using StudentManagement.Infrastructure.Repositories.Student;
 using System.Text;
-using StudentManagement.Application.Services.Password;
-using StudentManagement.Infrastructure.Repositories.Password;
 
 
 
@@ -96,6 +101,7 @@ builder.Services.AddScoped<IStudentQualificationRepository, StudentQualification
 builder.Services.AddScoped< IStudentDetailsRepository,StudentDetailsRepository>();
 builder.Services.AddScoped<IStudentProfileRepository, StudentProfileRepository>();
 builder.Services.AddScoped<IStudentPasswordRepository, StudentPasswordRepository>();
+builder.Services.AddScoped<IForgotPasswordRepository,ForgotPasswordRepository>();
 
 
 //Service
@@ -106,6 +112,7 @@ builder.Services.AddScoped<IStudentQualificationService, StudentQualificationSer
 builder.Services.AddScoped<IStudentLoginService, StudentLoginService>();
 builder.Services.AddScoped< IStudentProfileService,StudentProfileService>();
 builder.Services.AddScoped<IStudentPasswordService,StudentPasswordService>();
+builder.Services.AddScoped<IForgotPasswordService,ForgotPasswordService>();
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 

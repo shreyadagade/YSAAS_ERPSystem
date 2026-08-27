@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Options;
-using StudentManagement.Application.Interfaces.Services.Student;
+using StudentManagement.Application.Interfaces.Services.Email;
 
 namespace StudentManagement.Infrastructure.Email
 {

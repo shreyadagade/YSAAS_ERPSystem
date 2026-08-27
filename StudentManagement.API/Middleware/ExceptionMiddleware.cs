@@ -6,76 +6,54 @@ namespace StudentManagement.API.Middleware
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
 
         public ExceptionMiddleware(
-            RequestDelegate next,
-            ILogger<ExceptionMiddleware> logger)
+            RequestDelegate next)
         {
             _next = next;
-            _logger = logger;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(
+            HttpContext context)
         {
             try
             {
                 await _next(context);
             }
-            catch (ArgumentException ex)
-            {
-                _logger.LogWarning(ex, "Validation error.");
-
-                await WriteResponse(
-                    context,
-                    HttpStatusCode.BadRequest,
-                    ex.Message);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                _logger.LogWarning(ex, "Resource not found.");
-
-                await WriteResponse(
-                    context,
-                    HttpStatusCode.NotFound,
-                    ex.Message);
-            }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogWarning(ex, "Conflict/duplicate data.");
-
-                await WriteResponse(
-                    context,
-                    HttpStatusCode.Conflict,
-                    ex.Message);
-            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception.");
-
-                await WriteResponse(
+                await HandleExceptionAsync(
                     context,
-                    HttpStatusCode.InternalServerError,
-                    "An unexpected error occurred.");
+                    ex);
             }
         }
 
-        private static async Task WriteResponse(
-            HttpContext context,
-            HttpStatusCode statusCode,
-            string message)
-        {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)statusCode;
 
-            var response = new
-            {
-                statusCode = (int)statusCode,
-                message = message
-            };
+        private static async Task
+            HandleExceptionAsync(
+                HttpContext context,
+                Exception exception)
+        {
+            context.Response.ContentType =
+                "application/json";
+
+            context.Response.StatusCode =
+                (int)HttpStatusCode.InternalServerError;
+
+
+            var response =
+                new
+                {
+                    statusCode = 500,
+
+                    message =
+                        exception.Message
+                };
+
 
             await context.Response.WriteAsync(
-                JsonSerializer.Serialize(response));
+                JsonSerializer.Serialize(
+                    response));
         }
     }
 }

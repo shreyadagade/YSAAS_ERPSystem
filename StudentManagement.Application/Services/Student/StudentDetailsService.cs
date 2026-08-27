@@ -1,12 +1,14 @@
 ﻿using StudentManagement.Application.DTOs.Student;
 using StudentManagement.Application.Helpers;
 using StudentManagement.Application.Interfaces.Repositories.Student;
+using StudentManagement.Application.Interfaces.Services.Email;
 using StudentManagement.Application.Interfaces.Services.Student;
 using StudentManagement.Domain.Entities.Student;
 
 namespace StudentManagement.Application.Services.Student
 {
-    public class StudentDetailsService : IStudentDetailsService
+    public class StudentDetailsService
+        : IStudentDetailsService
     {
         private readonly IStudentDetailsRepository _repository;
         private readonly IEmailService _emailService;
@@ -22,8 +24,9 @@ namespace StudentManagement.Application.Services.Student
         // =====================================================
         // GET BY ID
         // =====================================================
-        public async Task<StudentDetailsResponseDto?> GetByIdAsync(
-            int studentId)
+
+        public async Task<StudentDetailsResponseDto?>
+            GetByIdAsync(int studentId)
         {
             if (studentId <= 0)
             {
@@ -32,7 +35,8 @@ namespace StudentManagement.Application.Services.Student
             }
 
             var student =
-                await _repository.GetByIdAsync(studentId);
+                await _repository.GetByIdAsync(
+                    studentId);
 
             if (student == null)
             {
@@ -45,21 +49,25 @@ namespace StudentManagement.Application.Services.Student
         // =====================================================
         // GET ALL
         // =====================================================
-        public async Task<IEnumerable<StudentDetailsResponseDto>>
+
+        public async Task<
+            IEnumerable<StudentDetailsResponseDto>>
             GetAllAsync()
         {
             var students =
                 await _repository.GetAllAsync();
 
-            return students.Select(MapToResponse);
+            return students.Select(
+                MapToResponse);
         }
 
         // =====================================================
         // CREATE STUDENT
         // =====================================================
- 
-public async Task<StudentDetailsResponseDto> AddAsync(
-    StudentDetailsRequestDto request)
+
+        public async Task<StudentDetailsResponseDto>
+            AddAsync(
+                StudentDetailsRequestDto request)
         {
             if (request == null)
             {
@@ -69,89 +77,99 @@ public async Task<StudentDetailsResponseDto> AddAsync(
 
             ValidateStudent(request);
 
-            // =====================================================
-            // STEP 1: GENERATE PASSWORD
-            // =====================================================
+            // =================================================
+            // DUPLICATE VALIDATION
+            // =================================================
+
+            await ValidateDuplicatesAsync(
+                request);
+
+            // =================================================
+            // GENERATE PASSWORD
+            // =================================================
 
             var generatedPassword =
                 PasswordGenerator.GeneratePassword();
 
-            // =====================================================
-            // STEP 2: HASH PASSWORD
-            // =====================================================
+            // =================================================
+            // HASH PASSWORD
+            // =================================================
 
             var hashedPassword =
                 BCrypt.Net.BCrypt.HashPassword(
                     generatedPassword);
 
-            // =====================================================
-            // STEP 3: CREATE STUDENT ENTITY
-            // =====================================================
+            // =================================================
+            // CREATE ENTITY
+            // =================================================
 
-            var student = new StudentDetails
-            {
-                StudentName =
-                    request.StudentName,
+            var student =
+                new StudentDetails
+                {
+                    StudentName =
+                        request.StudentName?.Trim(),
 
-                Gender =
-                    request.Gender,
+                    Gender =
+                        request.Gender?.Trim(),
 
-                MobileNumber =
-                    request.MobileNumber,
+                    MobileNumber =
+                        request.MobileNumber?.Trim(),
 
-                EmailAddress =
-                    request.EmailAddress,
+                    EmailAddress =
+                        request.EmailAddress?.Trim(),
 
-                // Store HASHED password in database
-                Password =
-                    hashedPassword,
+                    Password =
+                        hashedPassword,
 
-                BirthDate =
-                    request.BirthDate,
+                    BirthDate =
+                        request.BirthDate,
 
-                ProfilePhoto =
-                    request.ProfilePhoto,
+                    ProfilePhoto =
+                        request.ProfilePhoto,
 
-                Qualification =
-                    request.Qualification,
+                    Qualification =
+                        request.Qualification?.Trim(),
 
-                ParentName =
-                    request.ParentName,
+                    ParentName =
+                        request.ParentName?.Trim(),
 
-                ParentNumber =
-                    request.ParentNumber,
+                    ParentNumber =
+                        request.ParentNumber?.Trim(),
 
-                LastName =
-                    request.LastName,
+                    LastName =
+                        request.LastName?.Trim(),
 
-                WhatsappNumber =
-                    request.WhatsappNumber,
+                    WhatsappNumber =
+                        request.WhatsappNumber?.Trim(),
 
-                LocalAddress =
-                    request.LocalAddress,
+                    LocalAddress =
+                        request.LocalAddress?.Trim(),
 
-                PermanentAddress =
-                    request.PermanentAddress,
+                    PermanentAddress =
+                        request.PermanentAddress?.Trim(),
 
-                PermanentIdentificationNumber =
-                    request.PermanentIdentificationNumber,
+                    PermanentIdentificationNumber =
+                        request
+                            .PermanentIdentificationNumber
+                            ?.Trim(),
 
-                AadharCardNumber =
-                    request.AadharCardNumber,
+                    AadharCardNumber =
+                        request.AadharCardNumber?.Trim(),
 
-                AadharCardPhoto =
-                    request.AadharCardPhoto,
+                    AadharCardPhoto =
+                        request.AadharCardPhoto,
 
-                BranchId =
-                    request.BranchId
-            };
+                    BranchId =
+                        request.BranchId
+                };
 
-            // =====================================================
-            // STEP 4: INSERT STUDENT
-            // =====================================================
+            // =================================================
+            // INSERT
+            // =================================================
 
             var result =
-                await _repository.AddAsync(student);
+                await _repository.AddAsync(
+                    student);
 
             if (result.StudentId <= 0)
             {
@@ -159,24 +177,25 @@ public async Task<StudentDetailsResponseDto> AddAsync(
                     "Student was created but StudentId was not generated.");
             }
 
-            // =====================================================
-            // STEP 5: GENERATE STUDENT CODE
-            // =====================================================
+            // =================================================
+            // GENERATE STUDENT CODE
+            // =================================================
 
             result.StudentCode =
-                StudentCodeGenerator.GenerateStudentCode(
-                    result.StudentId);
+                StudentCodeGenerator
+                    .GenerateStudentCode(
+                        result.StudentId);
 
+            // =================================================
+            // SAVE STUDENT CODE
+            // =================================================
 
-            // =====================================================
-            // STEP 6: UPDATE STUDENT CODE
-            // =====================================================
+            await _repository.UpdateAsync(
+                result);
 
-            await _repository.UpdateAsync(result);
-
-            // =====================================================
-            // STEP 7: SEND LOGIN CREDENTIALS
-            // =====================================================
+            // =================================================
+            // SEND LOGIN CREDENTIALS
+            // =================================================
 
             if (string.IsNullOrWhiteSpace(
                 result.EmailAddress))
@@ -203,16 +222,118 @@ public async Task<StudentDetailsResponseDto> AddAsync(
                 emailSubject,
                 emailBody);
 
-            // =====================================================
-            // STEP 8: RETURN RESPONSE
-            // =====================================================
+            // =================================================
+            // RETURN RESPONSE
+            // =================================================
 
             return MapToResponse(result);
         }
 
         // =====================================================
+        // DUPLICATE VALIDATION
+        // =====================================================
+
+        private async Task ValidateDuplicatesAsync(
+            StudentDetailsRequestDto request)
+        {
+            // -------------------------------------------------
+            // EMAIL
+            // -------------------------------------------------
+
+            if (!string.IsNullOrWhiteSpace(
+                request.EmailAddress))
+            {
+                var exists =
+                    await _repository.ExistsByEmailAsync(
+                        request.EmailAddress.Trim());
+
+                if (exists)
+                {
+                    throw new ArgumentException(
+                        "Student with this email address already exists.");
+                }
+            }
+
+            // -------------------------------------------------
+            // MOBILE NUMBER
+            // -------------------------------------------------
+
+            if (!string.IsNullOrWhiteSpace(
+                request.MobileNumber))
+            {
+                var exists =
+                    await _repository.ExistsByMobileNumberAsync(
+                        request.MobileNumber.Trim());
+
+                if (exists)
+                {
+                    throw new ArgumentException(
+                        "Student with this mobile number already exists.");
+                }
+            }
+
+            // -------------------------------------------------
+            // WHATSAPP NUMBER
+            // -------------------------------------------------
+
+            if (!string.IsNullOrWhiteSpace(
+                request.WhatsappNumber))
+            {
+                var exists =
+                    await _repository.ExistsByWhatsappNumberAsync(
+                        request.WhatsappNumber.Trim());
+
+                if (exists)
+                {
+                    throw new ArgumentException(
+                        "Student with this WhatsApp number already exists.");
+                }
+            }
+
+            // -------------------------------------------------
+            // PERMANENT IDENTIFICATION NUMBER
+            // -------------------------------------------------
+
+            if (!string.IsNullOrWhiteSpace(
+                request.PermanentIdentificationNumber))
+            {
+                var exists =
+                    await _repository
+                        .ExistsByPermanentIdentificationNumberAsync(
+                            request
+                                .PermanentIdentificationNumber
+                                .Trim());
+
+                if (exists)
+                {
+                    throw new ArgumentException(
+                        "Student with this permanent identification number already exists.");
+                }
+            }
+
+            // -------------------------------------------------
+            // AADHAAR CARD NUMBER
+            // -------------------------------------------------
+
+            if (!string.IsNullOrWhiteSpace(
+                request.AadharCardNumber))
+            {
+                var exists =
+                    await _repository.ExistsByAadharAsync(
+                        request.AadharCardNumber.Trim());
+
+                if (exists)
+                {
+                    throw new ArgumentException(
+                        "Student with this Aadhaar card number already exists.");
+                }
+            }
+        }
+
+        // =====================================================
         // UPDATE
         // =====================================================
+
         public async Task UpdateAsync(
             int studentId,
             StudentDetailsRequestDto request)
@@ -232,7 +353,8 @@ public async Task<StudentDetailsResponseDto> AddAsync(
             ValidateStudent(request);
 
             var existing =
-                await _repository.GetByIdAsync(studentId);
+                await _repository.GetByIdAsync(
+                    studentId);
 
             if (existing == null)
             {
@@ -240,17 +362,116 @@ public async Task<StudentDetailsResponseDto> AddAsync(
                     "Student not found.");
             }
 
+            // =================================================
+            // DUPLICATE VALIDATION FOR UPDATE
+            // =================================================
+
+            if (!string.Equals(
+                existing.EmailAddress,
+                request.EmailAddress,
+                StringComparison.OrdinalIgnoreCase))
+            {
+                var emailExists =
+                    await _repository.ExistsByEmailAsync(
+                        request.EmailAddress.Trim());
+
+                if (emailExists)
+                {
+                    throw new ArgumentException(
+                        "Student with this email address already exists.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(
+                request.MobileNumber) &&
+                !string.Equals(
+                    existing.MobileNumber,
+                    request.MobileNumber,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                var mobileExists =
+                    await _repository.ExistsByMobileNumberAsync(
+                        request.MobileNumber.Trim());
+
+                if (mobileExists)
+                {
+                    throw new ArgumentException(
+                        "Student with this mobile number already exists.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(
+                request.WhatsappNumber) &&
+                !string.Equals(
+                    existing.WhatsappNumber,
+                    request.WhatsappNumber,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                var whatsappExists =
+                    await _repository.ExistsByWhatsappNumberAsync(
+                        request.WhatsappNumber.Trim());
+
+                if (whatsappExists)
+                {
+                    throw new ArgumentException(
+                        "Student with this WhatsApp number already exists.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(
+                request.PermanentIdentificationNumber) &&
+                !string.Equals(
+                    existing.PermanentIdentificationNumber,
+                    request.PermanentIdentificationNumber,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                var permanentIdExists =
+                    await _repository
+                        .ExistsByPermanentIdentificationNumberAsync(
+                            request
+                                .PermanentIdentificationNumber
+                                .Trim());
+
+                if (permanentIdExists)
+                {
+                    throw new ArgumentException(
+                        "Student with this permanent identification number already exists.");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(
+                request.AadharCardNumber) &&
+                !string.Equals(
+                    existing.AadharCardNumber,
+                    request.AadharCardNumber,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                var aadharExists =
+                    await _repository.ExistsByAadharAsync(
+                        request.AadharCardNumber.Trim());
+
+                if (aadharExists)
+                {
+                    throw new ArgumentException(
+                        "Student with this Aadhaar card number already exists.");
+                }
+            }
+
+            // =================================================
+            // UPDATE FIELDS
+            // =================================================
+
             existing.StudentName =
-                request.StudentName;
+                request.StudentName?.Trim();
 
             existing.Gender =
-                request.Gender;
+                request.Gender?.Trim();
 
             existing.MobileNumber =
-                request.MobileNumber;
+                request.MobileNumber?.Trim();
 
             existing.EmailAddress =
-                request.EmailAddress;
+                request.EmailAddress?.Trim();
 
             existing.BirthDate =
                 request.BirthDate;
@@ -259,31 +480,33 @@ public async Task<StudentDetailsResponseDto> AddAsync(
                 request.ProfilePhoto;
 
             existing.Qualification =
-                request.Qualification;
+                request.Qualification?.Trim();
 
             existing.ParentName =
-                request.ParentName;
+                request.ParentName?.Trim();
 
             existing.ParentNumber =
-                request.ParentNumber;
+                request.ParentNumber?.Trim();
 
             existing.LastName =
-                request.LastName;
+                request.LastName?.Trim();
 
             existing.WhatsappNumber =
-                request.WhatsappNumber;
+                request.WhatsappNumber?.Trim();
 
             existing.LocalAddress =
-                request.LocalAddress;
+                request.LocalAddress?.Trim();
 
             existing.PermanentAddress =
-                request.PermanentAddress;
+                request.PermanentAddress?.Trim();
 
             existing.PermanentIdentificationNumber =
-                request.PermanentIdentificationNumber;
+                request
+                    .PermanentIdentificationNumber
+                    ?.Trim();
 
             existing.AadharCardNumber =
-                request.AadharCardNumber;
+                request.AadharCardNumber?.Trim();
 
             existing.AadharCardPhoto =
                 request.AadharCardPhoto;
@@ -291,16 +514,18 @@ public async Task<StudentDetailsResponseDto> AddAsync(
             existing.BranchId =
                 request.BranchId;
 
-            // Do NOT change the existing password
-            // during normal student update.
+            // Password is intentionally not changed.
 
-            await _repository.UpdateAsync(existing);
+            await _repository.UpdateAsync(
+                existing);
         }
 
         // =====================================================
         // DELETE
         // =====================================================
-        public async Task DeleteAsync(int studentId)
+
+        public async Task DeleteAsync(
+            int studentId)
         {
             if (studentId <= 0)
             {
@@ -309,7 +534,8 @@ public async Task<StudentDetailsResponseDto> AddAsync(
             }
 
             var existing =
-                await _repository.GetByIdAsync(studentId);
+                await _repository.GetByIdAsync(
+                    studentId);
 
             if (existing == null)
             {
@@ -317,13 +543,16 @@ public async Task<StudentDetailsResponseDto> AddAsync(
                     "Student not found.");
             }
 
-            await _repository.DeleteAsync(studentId);
+            await _repository.DeleteAsync(
+                studentId);
         }
 
         // =====================================================
         // RESTORE
         // =====================================================
-        public async Task RestoreAsync(int studentId)
+
+        public async Task RestoreAsync(
+            int studentId)
         {
             if (studentId <= 0)
             {
@@ -331,17 +560,19 @@ public async Task<StudentDetailsResponseDto> AddAsync(
                     "StudentId must be greater than 0.");
             }
 
-            await _repository.RestoreAsync(studentId);
+            await _repository.RestoreAsync(
+                studentId);
         }
 
         // =====================================================
         // VALIDATION
         // =====================================================
+
         private static void ValidateStudent(
             StudentDetailsRequestDto request)
         {
             // -------------------------------------------------
-            // Student Name
+            // STUDENT NAME
             // -------------------------------------------------
 
             if (string.IsNullOrWhiteSpace(
@@ -358,7 +589,7 @@ public async Task<StudentDetailsResponseDto> AddAsync(
             }
 
             // -------------------------------------------------
-            // Email
+            // EMAIL
             // -------------------------------------------------
 
             if (string.IsNullOrWhiteSpace(
@@ -381,7 +612,7 @@ public async Task<StudentDetailsResponseDto> AddAsync(
             }
 
             // -------------------------------------------------
-            // Mobile Number
+            // MOBILE
             // -------------------------------------------------
 
             if (!string.IsNullOrWhiteSpace(
@@ -393,7 +624,7 @@ public async Task<StudentDetailsResponseDto> AddAsync(
             }
 
             // -------------------------------------------------
-            // Gender
+            // GENDER
             // -------------------------------------------------
 
             if (!string.IsNullOrWhiteSpace(
@@ -405,7 +636,7 @@ public async Task<StudentDetailsResponseDto> AddAsync(
             }
 
             // -------------------------------------------------
-            // Permanent Identification Number
+            // PERMANENT IDENTIFICATION NUMBER
             // -------------------------------------------------
 
             if (string.IsNullOrWhiteSpace(
@@ -415,14 +646,40 @@ public async Task<StudentDetailsResponseDto> AddAsync(
                     "Permanent identification number is required.");
             }
 
-            if (request.PermanentIdentificationNumber.Length > 15)
+            if (request
+                .PermanentIdentificationNumber
+                .Length > 15)
             {
                 throw new ArgumentException(
                     "Permanent identification number cannot exceed 15 characters.");
             }
 
             // -------------------------------------------------
-            // Branch
+            // AADHAAR
+            // -------------------------------------------------
+
+            if (!string.IsNullOrWhiteSpace(
+                request.AadharCardNumber) &&
+                request.AadharCardNumber.Length > 100)
+            {
+                throw new ArgumentException(
+                    "Aadhaar card number cannot exceed 100 characters.");
+            }
+
+            // -------------------------------------------------
+            // WHATSAPP
+            // -------------------------------------------------
+
+            if (!string.IsNullOrWhiteSpace(
+                request.WhatsappNumber) &&
+                request.WhatsappNumber.Length > 15)
+            {
+                throw new ArgumentException(
+                    "WhatsApp number cannot exceed 15 characters.");
+            }
+
+            // -------------------------------------------------
+            // BRANCH
             // -------------------------------------------------
 
             if (request.BranchId.HasValue &&
@@ -436,8 +693,10 @@ public async Task<StudentDetailsResponseDto> AddAsync(
         // =====================================================
         // ENTITY → RESPONSE DTO
         // =====================================================
-        private static StudentDetailsResponseDto MapToResponse(
-            StudentDetails student)
+
+        private static StudentDetailsResponseDto
+            MapToResponse(
+                StudentDetails student)
         {
             return new StudentDetailsResponseDto
             {

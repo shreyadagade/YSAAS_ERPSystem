@@ -1,4 +1,4 @@
-﻿namespace StudentManagement.Application.Interfaces.Services.Student
+﻿namespace StudentManagement.Application.Interfaces.Services.Email
 {
     public interface IEmailService
     {
