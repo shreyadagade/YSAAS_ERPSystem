@@ -18,6 +18,8 @@ namespace UserManagement.Application.DTOs.User
 
         public int BranchId { get; set; }
 
+        public string? BranchName { get; set; }
+
         public bool IsActive { get; set; }
 
         public List<string> Roles { get; set; } = new();
