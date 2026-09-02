@@ -21,6 +21,7 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
         // =====================================================
         // GET BY ID
         // =====================================================
+
         public async Task<StudentRegistration?> GetByIdAsync(
             int registrationId)
         {
@@ -54,20 +55,24 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             using var reader =
                 await command.ExecuteReaderAsync();
 
-            if (!await reader.ReadAsync())
+            if (await reader.ReadAsync())
             {
-                return null;
+                return MapRegistration(reader);
             }
 
-            return MapRegistration(reader);
+            return null;
         }
 
         // =====================================================
         // GET ALL
         // =====================================================
+
         public async Task<IEnumerable<StudentRegistration>>
             GetAllAsync()
         {
+            var registrations =
+                new List<StudentRegistration>();
+
             var connection =
                 _context.Database.GetDbConnection();
 
@@ -93,9 +98,6 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
             using var reader =
                 await command.ExecuteReaderAsync();
 
-            var registrations =
-                new List<StudentRegistration>();
-
             while (await reader.ReadAsync())
             {
                 registrations.Add(
@@ -108,6 +110,7 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
         // =====================================================
         // INSERT
         // =====================================================
+
         public async Task<StudentRegistration> AddAsync(
             StudentRegistration registration)
         {
@@ -119,11 +122,12 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                 await connection.OpenAsync();
             }
 
-            int registrationId;
+            int registrationId = 0;
 
-            // -------------------------------------------------
-            // INSERT
-            // -------------------------------------------------
+            // =================================================
+            // INSERT REGISTRATION
+            // =================================================
+
             using (var command =
                 connection.CreateCommand())
             {
@@ -163,45 +167,47 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                     "@current_status",
                     registration.CurrentStatus);
 
-                /*
-                 * The INSERT stored procedure returns:
-                 *
-                 * registration_id
-                 * Message
-                 *
-                 * We read registration_id first.
-                 */
+                // =============================================
+                // Execute INSERT
+                // =============================================
 
                 using (var reader =
                     await command.ExecuteReaderAsync())
                 {
-                    if (!await reader.ReadAsync())
+                    if (await reader.ReadAsync())
                     {
-                        throw new Exception(
-                            "Registration was created but registration ID was not returned.");
+                        registrationId =
+                            Convert.ToInt32(
+                                reader["registration_id"]);
                     }
-
-                    registrationId =
-                        Convert.ToInt32(
-                            reader["registration_id"]);
                 }
+
+                // IMPORTANT:
+                // Reader is completely disposed here
+                // before GetByIdAsync() is called.
             }
 
-            /*
-             * IMPORTANT:
-             *
-             * The DataReader is now CLOSED.
-             *
-             * Therefore we can safely call GetByIdAsync()
-             * using the same database connection.
-             */
+            // =================================================
+            // CHECK INSERT RESULT
+            // =================================================
+
+            if (registrationId <= 0)
+            {
+                throw new InvalidOperationException(
+                    "Registration could not be created.");
+            }
+
+            // =================================================
+            // GET CREATED REGISTRATION
+            // =================================================
 
             var createdRegistration =
-                await GetByIdAsync(registrationId);
+                await GetByIdAsync(
+                    registrationId);
 
             if (createdRegistration == null)
             {
-                throw new Exception(
+                throw new InvalidOperationException(
                     "Registration was created but could not be retrieved.");
             }
 
@@ -211,6 +217,7 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
         // =====================================================
         // UPDATE
         // =====================================================
+
         public async Task UpdateAsync(
             StudentRegistration registration)
         {
@@ -272,6 +279,7 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
         // =====================================================
         // DELETE
         // =====================================================
+
         public async Task DeleteAsync(
             int registrationId)
         {
@@ -308,7 +316,8 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
         // =====================================================
         // RESTORE
         // =====================================================
-        public async Task RestoreAsync(
+
+        public async Task<bool> RestoreAsync(
             int registrationId)
         {
             var connection =
@@ -338,86 +347,99 @@ namespace StudentManagement.Infrastructure.Repositories.Registration
                 "@registration_id",
                 registrationId);
 
-            await command.ExecuteNonQueryAsync();
+            using var reader =
+                await command.ExecuteReaderAsync();
+
+            if (await reader.ReadAsync())
+            {
+                var success =
+                    reader["Success"];
+
+                return Convert.ToInt32(success) == 1;
+            }
+
+            return false;
         }
 
         // =====================================================
-        // MAP DATABASE RESULT TO ENTITY
+        // MAP DATABASE RESULT
         // =====================================================
-        private static StudentRegistration MapRegistration(
-            DbDataReader reader)
+
+        private static StudentRegistration
+            MapRegistration(
+                DbDataReader reader)
         {
             return new StudentRegistration
             {
                 RegistrationId =
-                    Convert.ToInt32(
-                        reader["registration_id"]),
+                    reader["registration_id"] != DBNull.Value
+                        ? Convert.ToInt32(
+                            reader["registration_id"])
+                        : 0,
 
                 StudentId =
-                    reader["student_id"] == DBNull.Value
-                        ? null
-                        : Convert.ToInt32(
-                            reader["student_id"]),
+                    reader["student_id"] != DBNull.Value
+                        ? Convert.ToInt32(
+                            reader["student_id"])
+                        : null,
 
                 StudentName =
-                    reader["student_name"] == DBNull.Value
-                        ? null
-                        : Convert.ToString(
-                            reader["student_name"]),
+                    reader["student_name"] != DBNull.Value
+                        ? reader["student_name"].ToString()
+                        : null,
 
                 RegistrationDate =
-                    reader["registration_date"] == DBNull.Value
-                        ? null
-                        : Convert.ToDateTime(
-                            reader["registration_date"]),
+                    reader["registration_date"] != DBNull.Value
+                        ? Convert.ToDateTime(
+                            reader["registration_date"])
+                        : null,
 
                 Discount =
-                    reader["discount"] == DBNull.Value
-                        ? null
-                        : Convert.ToDouble(
-                            reader["discount"]),
+                    reader["discount"] != DBNull.Value
+                        ? Convert.ToDouble(
+                            reader["discount"])
+                        : null,
 
                 CourseId =
-                    reader["course_id"] == DBNull.Value
-                        ? null
-                        : Convert.ToInt32(
-                            reader["course_id"]),
+                    reader["course_id"] != DBNull.Value
+                        ? Convert.ToInt32(
+                            reader["course_id"])
+                        : null,
 
                 CourseName =
-                    reader["course_name"] == DBNull.Value
-                        ? null
-                        : Convert.ToString(
-                            reader["course_name"]),
+                    reader["course_name"] != DBNull.Value
+                        ? reader["course_name"].ToString()
+                        : null,
 
                 FeesAmount =
-                    reader["fees_amount"] == DBNull.Value
-                        ? null
-                        : Convert.ToDouble(
-                            reader["fees_amount"]),
+                    reader["fees_amount"] != DBNull.Value
+                        ? Convert.ToDouble(
+                            reader["fees_amount"])
+                        : null,
 
                 FeesChangeDate =
-                    reader["fees_change_date"] == DBNull.Value
-                        ? null
-                        : Convert.ToDateTime(
-                            reader["fees_change_date"]),
+                    reader["fees_change_date"] != DBNull.Value
+                        ? Convert.ToDateTime(
+                            reader["fees_change_date"])
+                        : null,
 
                 InstallmentPercentage =
-                    reader["installment_percentage"] == DBNull.Value
-                        ? null
-                        : Convert.ToDouble(
-                            reader["installment_percentage"]),
+                    reader["installment_percentage"] != DBNull.Value
+                        ? Convert.ToDouble(
+                            reader["installment_percentage"])
+                        : null,
 
                 CurrentStatus =
-                    reader["current_status"] == DBNull.Value
-                        ? null
-                        : Convert.ToString(
-                            reader["current_status"])
+                    reader["current_status"] != DBNull.Value
+                        ? reader["current_status"].ToString()
+                        : null
             };
         }
 
         // =====================================================
         // ADD SQL PARAMETER
         // =====================================================
+
         private static void AddParameter(
             DbCommand command,
             string parameterName,

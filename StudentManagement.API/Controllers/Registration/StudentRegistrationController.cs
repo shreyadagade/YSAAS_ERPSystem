@@ -1,139 +1,157 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Application.DTOs.Registration;
 using StudentManagement.Application.Interfaces.Services.Registration;
 
 namespace StudentManagement.API.Controllers.Registration
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class StudentRegistrationController
+        : ControllerBase
     {
-        [ApiController]
-        [Route("api/[controller]")]
-        [Authorize]
-    public class StudentRegistrationController : ControllerBase
+        private readonly IStudentRegistrationService _service;
+
+        public StudentRegistrationController(
+            IStudentRegistrationService service)
         {
-            private readonly IStudentRegistrationService _service;
+            _service = service;
+        }
 
-            public StudentRegistrationController(
-                IStudentRegistrationService service)
+        // GET: api/StudentRegistration
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var registrations =
+                await _service.GetAllAsync();
+
+            return Ok(registrations);
+        }
+
+        // GET: api/StudentRegistration/23
+        [HttpGet("{registrationId}")]
+        public async Task<IActionResult> GetById(
+            int registrationId)
+        {
+            if (registrationId <= 0)
             {
-                _service = service;
-            }
-
-            // =====================================================
-            // 1. GET ALL
-            // GET: api/StudentRegistration
-            // =====================================================
-            [HttpGet]
-            public async Task<IActionResult> GetAll()
-            {
-                var registrations =
-                    await _service.GetAllAsync();
-
-                return Ok(registrations);
-            }
-
-            // =====================================================
-            // 2. GET BY ID
-            // GET: api/StudentRegistration/{registrationId}
-            // =====================================================
-            [HttpGet("{registrationId}")]
-            public async Task<IActionResult> GetById(
-                int registrationId)
-            {
-                var registration =
-                    await _service.GetByIdAsync(registrationId);
-
-                if (registration == null)
-                {
-                    return NotFound(new
-                    {
-                        message = "Registration not found."
-                    });
-                }
-
-                return Ok(registration);
-            }
-
-            // =====================================================
-            // 3. CREATE
-            // POST: api/StudentRegistration
-            // =====================================================
-            [HttpPost]
-            public async Task<IActionResult> Create(
-                StudentRegistrationRequestDto request)
-            {
-                var result =
-                    await _service.AddAsync(request);
-
-                return CreatedAtAction(
-                    nameof(GetById),
-                    new
-                    {
-                        registrationId =
-                            result.RegistrationId
-                    },
-                    new
-                    {
-                        message =
-                            "Student registration created successfully.",
-                        data = result
-                    });
-            }
-
-            // =====================================================
-            // 4. UPDATE
-            // PUT: api/StudentRegistration/{registrationId}
-            // =====================================================
-            [HttpPut("{registrationId}")]
-            public async Task<IActionResult> Update(
-                int registrationId,
-                StudentRegistrationRequestDto request)
-            {
-                await _service.UpdateAsync(
-                    registrationId,
-                    request);
-
-                return Ok(new
+                return BadRequest(new
                 {
                     message =
-                        "Student registration updated successfully."
+                        "RegistrationId must be greater than 0."
                 });
             }
 
-            // =====================================================
-            // 5. DELETE
-            // DELETE: api/StudentRegistration/{registrationId}
-            // =====================================================
-            [HttpDelete("{registrationId}")]
-            public async Task<IActionResult> Delete(
-                int registrationId)
-            {
-                await _service.DeleteAsync(
+            var registration =
+                await _service.GetByIdAsync(
                     registrationId);
 
-                return Ok(new
+            if (registration == null)
+            {
+                return NotFound(new
                 {
                     message =
-                        "Student registration deleted successfully."
+                        "Registration not found."
                 });
             }
 
-            // =====================================================
-            // 6. RESTORE
-            // POST: api/StudentRegistration/restore/{registrationId}
-            // =====================================================
-            [HttpPost("restore/{registrationId}")]
-            public async Task<IActionResult> Restore(
-                int registrationId)
+            return Ok(registration);
+        }
+
+        // POST: api/StudentRegistration
+        [HttpPost]
+        public async Task<IActionResult> Create(
+            [FromBody] StudentRegistrationRequestDto request)
+        {
+            var registration =
+                await _service.AddAsync(
+                    request);
+
+            return Ok(registration);
+        }
+
+        // PUT: api/StudentRegistration/23
+        [HttpPut("{registrationId}")]
+        public async Task<IActionResult> Update(
+            int registrationId,
+            [FromBody] StudentRegistrationRequestDto request)
+        {
+            if (registrationId <= 0)
             {
+                return BadRequest(new
+                {
+                    message =
+                        "RegistrationId must be greater than 0."
+                });
+            }
+
+            await _service.UpdateAsync(
+                registrationId,
+                request);
+
+            return Ok(new
+            {
+                message =
+                    "Student registration updated successfully."
+            });
+        }
+
+        // DELETE: api/StudentRegistration/23
+        [HttpDelete("{registrationId}")]
+        public async Task<IActionResult> Delete(
+            int registrationId)
+        {
+            if (registrationId <= 0)
+            {
+                return BadRequest(new
+                {
+                    message =
+                        "RegistrationId must be greater than 0."
+                });
+            }
+
+            await _service.DeleteAsync(
+                registrationId);
+
+            return Ok(new
+            {
+                message =
+                    "Student registration deleted successfully."
+            });
+        }
+
+        // POST: api/StudentRegistration/restore/23
+        [HttpPost("restore/{registrationId}")]
+        public async Task<IActionResult> Restore(
+            int registrationId)
+        {
+            if (registrationId <= 0)
+            {
+                return BadRequest(new
+                {
+                    message =
+                        "RegistrationId must be greater than 0."
+                });
+            }
+
+            var restored =
                 await _service.RestoreAsync(
                     registrationId);
 
-                return Ok(new
+            if (!restored)
+            {
+                return NotFound(new
                 {
                     message =
-                        "Student registration restored successfully."
+                        "Registration not found or already restored."
                 });
             }
+
+            return Ok(new
+            {
+                message =
+                    "Student registration restored successfully."
+            });
         }
     }
+}

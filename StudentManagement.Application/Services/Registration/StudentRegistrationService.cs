@@ -1,10 +1,9 @@
-﻿using StudentManagement.Application.DTOs.Registration;
+﻿
+using StudentManagement.Application.DTOs.Registration;
 using StudentManagement.Application.Interfaces.Repositories.Registration;
 using StudentManagement.Application.Interfaces.Repositories.Student;
-using StudentManagement.Application.Interfaces.Services.Email;
 using StudentManagement.Application.Interfaces.Services.Registration;
 using StudentManagement.Domain.Entities.Registration;
-using System.Xml.Linq;
 
 namespace StudentManagement.Application.Services.Registration
 {
@@ -13,23 +12,21 @@ namespace StudentManagement.Application.Services.Registration
     {
         private readonly IStudentRegistrationRepository _repository;
         private readonly IStudentDetailsRepository _studentRepository;
-        private readonly IEmailService _emailService;
 
         public StudentRegistrationService(
             IStudentRegistrationRepository repository,
-            IStudentDetailsRepository studentRepository,
-            IEmailService emailService)
+            IStudentDetailsRepository studentRepository)
         {
             _repository = repository;
             _studentRepository = studentRepository;
-            _emailService = emailService;
         }
 
         // =====================================================
         // GET BY ID
         // =====================================================
-        public async Task<StudentRegistrationResponseDto?>
-            GetByIdAsync(int registrationId)
+
+        public async Task<StudentRegistrationResponseDto?> GetByIdAsync(
+            int registrationId)
         {
             if (registrationId <= 0)
             {
@@ -38,55 +35,62 @@ namespace StudentManagement.Application.Services.Registration
             }
 
             var registration =
-                await _repository.GetByIdAsync(registrationId);
+                await _repository.GetByIdAsync(
+                    registrationId);
 
             if (registration == null)
             {
                 return null;
             }
 
-            return MapToResponse(registration);
+            return MapToResponseDto(
+                registration);
         }
 
         // =====================================================
         // GET ALL
         // =====================================================
+
         public async Task<IEnumerable<StudentRegistrationResponseDto>>
             GetAllAsync()
         {
             var registrations =
                 await _repository.GetAllAsync();
 
-            return registrations.Select(MapToResponse);
+            return registrations.Select(
+                MapToResponseDto);
         }
 
         // =====================================================
-        // CREATE REGISTRATION
+        // ADD
         // =====================================================
+
         public async Task<StudentRegistrationResponseDto>
-            AddAsync(StudentRegistrationRequestDto request)
+            AddAsync(
+                StudentRegistrationRequestDto request)
         {
             if (request == null)
             {
-                throw new ArgumentException(
-                    "Registration data is required.");
+                throw new ArgumentNullException(
+                    nameof(request));
             }
 
-            ValidateRegistration(request);
-
-            // =================================================
-            // CHECK STUDENT
-            // =================================================
-
-            if (!request.StudentId.HasValue)
+            // StudentId is nullable (int?)
+            // So validate it first.
+            if (!request.StudentId.HasValue ||
+                request.StudentId.Value <= 0)
             {
                 throw new ArgumentException(
-                    "StudentId is required.");
+                    "StudentId must be greater than 0.");
             }
+
+            // Convert int? to int using .Value
+            var studentId =
+                request.StudentId.Value;
 
             var student =
                 await _studentRepository.GetByIdAsync(
-                    request.StudentId.Value);
+                    studentId);
 
             if (student == null)
             {
@@ -94,86 +98,44 @@ namespace StudentManagement.Application.Services.Registration
                     "Student not found.");
             }
 
-            if (string.IsNullOrWhiteSpace(student.EmailAddress))
+            if (string.IsNullOrWhiteSpace(
+                student.EmailAddress))
             {
-                throw new ArgumentException(
-                    "Student email address is not available.");
+                throw new InvalidOperationException(
+                    "Student email is not available.");
             }
 
-            // =================================================
-            // CREATE REGISTRATION ENTITY
-            // =================================================
+            var registration =
+                new StudentRegistration
+                {
+                    StudentId =
+                        studentId,
 
-            var registration = new StudentRegistration
-            {
-                StudentId =
-                    request.StudentId,
+                    RegistrationDate =
+                        request.RegistrationDate,
 
-                RegistrationDate =
-                    request.RegistrationDate,
+                    Discount =
+                        request.Discount,
 
-                Discount =
-                    request.Discount,
+                    CourseId =
+                        request.CourseId,
 
-                CourseId =
-                    request.CourseId,
+                    CurrentStatus =
+                        request.CurrentStatus
+                };
 
-                CurrentStatus =
-                    request.CurrentStatus
-            };
+            var createdRegistration =
+                await _repository.AddAsync(
+                    registration);
 
-            // =================================================
-            // INSERT REGISTRATION
-            // =================================================
-
-            var result =
-                await _repository.AddAsync(registration);
-
-            // =================================================
-            // SEND REGISTRATION EMAIL
-            // =================================================
-            // Student Code is included for identification.
-            // Password is NOT included because it was already
-            // sent when the student account was created.
-
-            var emailSubject =
-                "Student Registration Successful";
-
-            var emailBody =
-                $"Dear {student.StudentName},\n\n" +
-
-                $"Your registration has been completed successfully.\n\n" +
-
-                $"Student Details\n" +
-                $"-------------------------\n" +
-                $"Student Name: {student.StudentName}\n" +
-                $"Student Code: {student.StudentCode}\n\n" +
-
-                $"Registration Details\n" +
-                $"-------------------------\n" +
-                $"Registration ID: {result.RegistrationId}\n" +
-                $"Course: {result.CourseName}\n" +
-                $"Registration Date: {result.RegistrationDate:dd-MM-yyyy}\n" +
-                $"Discount: {result.Discount}\n" +
-                $"Status: {result.CurrentStatus}\n\n" +
-
-                $"Your login credentials were sent separately " +
-                $"when your student account was created.\n\n" +
-
-                $"Regards,\n" +
-                $"Student Management Team";
-
-            await _emailService.SendEmailAsync(
-                student.EmailAddress,
-                emailSubject,
-                emailBody);
-
-            return MapToResponse(result);
+            return MapToResponseDto(
+                createdRegistration);
         }
 
         // =====================================================
         // UPDATE
         // =====================================================
+
         public async Task UpdateAsync(
             int registrationId,
             StudentRegistrationRequestDto request)
@@ -186,11 +148,17 @@ namespace StudentManagement.Application.Services.Registration
 
             if (request == null)
             {
-                throw new ArgumentException(
-                    "Registration data is required.");
+                throw new ArgumentNullException(
+                    nameof(request));
             }
 
-            ValidateRegistration(request);
+            // StudentId is nullable (int?)
+            if (!request.StudentId.HasValue ||
+                request.StudentId.Value <= 0)
+            {
+                throw new ArgumentException(
+                    "StudentId must be greater than 0.");
+            }
 
             var existing =
                 await _repository.GetByIdAsync(
@@ -203,7 +171,7 @@ namespace StudentManagement.Application.Services.Registration
             }
 
             existing.StudentId =
-                request.StudentId;
+                request.StudentId.Value;
 
             existing.RegistrationDate =
                 request.RegistrationDate;
@@ -217,12 +185,14 @@ namespace StudentManagement.Application.Services.Registration
             existing.CurrentStatus =
                 request.CurrentStatus;
 
-            await _repository.UpdateAsync(existing);
+            await _repository.UpdateAsync(
+                existing);
         }
 
         // =====================================================
         // DELETE
         // =====================================================
+
         public async Task DeleteAsync(
             int registrationId)
         {
@@ -249,7 +219,8 @@ namespace StudentManagement.Application.Services.Registration
         // =====================================================
         // RESTORE
         // =====================================================
-        public async Task RestoreAsync(
+
+        public async Task<bool> RestoreAsync(
             int registrationId)
         {
             if (registrationId <= 0)
@@ -258,66 +229,19 @@ namespace StudentManagement.Application.Services.Registration
                     "RegistrationId must be greater than 0.");
             }
 
-            var existing =
-                await _repository.GetByIdAsync(
+            var restored =
+                await _repository.RestoreAsync(
                     registrationId);
 
-            if (existing == null)
-            {
-                throw new KeyNotFoundException(
-                    "Registration not found.");
-            }
-
-            await _repository.RestoreAsync(
-                registrationId);
+            return restored;
         }
 
         // =====================================================
-        // VALIDATION
+        // MAP RESPONSE DTO
         // =====================================================
-        private static void ValidateRegistration(
-            StudentRegistrationRequestDto request)
-        {
-            if (!request.StudentId.HasValue ||
-                request.StudentId.Value <= 0)
-            {
-                throw new ArgumentException(
-                    "StudentId must be greater than 0.");
-            }
 
-            if (request.CourseId <= 0)
-            {
-                throw new ArgumentException(
-                    "CourseId must be greater than 0.");
-            }
-
-            if (!request.RegistrationDate.HasValue)
-            {
-                throw new ArgumentException(
-                    "Registration date is required.");
-            }
-
-            if (request.Discount.HasValue &&
-                request.Discount.Value < 0)
-            {
-                throw new ArgumentException(
-                    "Discount cannot be negative.");
-            }
-
-            if (!string.IsNullOrWhiteSpace(
-                request.CurrentStatus) &&
-                request.CurrentStatus.Length > 20)
-            {
-                throw new ArgumentException(
-                    "Current status cannot exceed 20 characters.");
-            }
-        }
-
-        // =====================================================
-        // ENTITY → RESPONSE DTO
-        // =====================================================
         private static StudentRegistrationResponseDto
-            MapToResponse(
+            MapToResponseDto(
                 StudentRegistration registration)
         {
             return new StudentRegistrationResponseDto
@@ -358,5 +282,3 @@ namespace StudentManagement.Application.Services.Registration
         }
     }
 }
-
-

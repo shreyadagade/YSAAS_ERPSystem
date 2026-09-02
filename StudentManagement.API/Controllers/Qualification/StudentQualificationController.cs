@@ -65,7 +65,7 @@ namespace StudentManagement.API.Controllers
             // =====================================================
             // CREATE
             // =====================================================
-            [HttpPost]
+            [HttpPost("Create")]
             public async Task<IActionResult> Create(
                 StudentQualificationRequestDto request)
             {
@@ -82,7 +82,7 @@ namespace StudentManagement.API.Controllers
             // =====================================================
             // UPDATE
             // =====================================================
-            [HttpPut("{qualificationId}")]
+            [HttpPut("Update/{qualificationId}")]
             public async Task<IActionResult> Update(
                 int qualificationId,
                 StudentQualificationRequestDto request)
@@ -100,7 +100,7 @@ namespace StudentManagement.API.Controllers
             // =====================================================
             // DELETE
             // =====================================================
-            [HttpDelete("{qualificationId}")]
+            [HttpDelete("Delete/{qualificationId}")]
             public async Task<IActionResult> Delete(
                 int qualificationId)
             {

@@ -77,7 +77,7 @@ namespace StudentManagement.Application.Interfaces.Repositories.Student
         // RESTORE
         // =====================================================
 
-        Task RestoreAsync(
+        Task<bool> RestoreAsync(
             int studentId);
 
         // =====================================================
