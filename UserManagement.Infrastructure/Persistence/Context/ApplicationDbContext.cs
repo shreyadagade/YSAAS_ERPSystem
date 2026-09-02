@@ -106,6 +106,9 @@ namespace UserManagement.Infrastructure.Persistence.Context
                 entity.Property(x => x.BranchId)
                     .HasColumnName("branch_id");
 
+                entity.Property(x => x.BranchName)
+                    .HasColumnName("branch_name");
+
                 entity.Property(x => x.AadharCardNumber)
                     .HasColumnName("aadhar_card_number");
 

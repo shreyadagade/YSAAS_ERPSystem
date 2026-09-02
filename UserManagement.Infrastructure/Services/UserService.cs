@@ -105,6 +105,7 @@ namespace UserManagement.Infrastructure.Services
                     EmailAddress = employee.EmailAddress,
                     MobileNumber = employee.MobileNumber,
                     BranchId = employee.BranchId,
+                    BranchName = employee.BranchName,
                     IsActive = user.IsActive,
                     Roles = roles.ToList()
                 });
@@ -165,6 +166,7 @@ namespace UserManagement.Infrastructure.Services
                 EmailAddress = employee.EmailAddress,
                 MobileNumber = employee.MobileNumber,
                 BranchId = employee.BranchId,
+                BranchName = employee.BranchName,   
                 IsActive = user.IsActive,
                 Roles = roles.ToList()
             };
