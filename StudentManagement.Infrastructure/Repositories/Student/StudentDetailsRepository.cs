@@ -538,7 +538,7 @@ namespace StudentManagement.Infrastructure.Repositories.Student
         // RESTORE
         // =====================================================
 
-        public async Task RestoreAsync(
+        public async Task<bool> RestoreAsync(
             int studentId)
         {
             var connection =
@@ -568,7 +568,10 @@ namespace StudentManagement.Infrastructure.Repositories.Student
                 "@student_id",
                 studentId);
 
-            await command.ExecuteNonQueryAsync();
+            var affectedRows =
+                await command.ExecuteNonQueryAsync();
+
+            return affectedRows > 0;
         }
 
         // =====================================================

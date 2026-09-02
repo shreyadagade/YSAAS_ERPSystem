@@ -5,7 +5,8 @@ namespace StudentManagement.Application.Interfaces.Services.Student
     public interface IStudentDetailsService
     {
         // Get student by ID
-        Task<StudentDetailsResponseDto?> GetByIdAsync(int studentId);
+        Task<StudentDetailsResponseDto?> GetByIdAsync(
+            int studentId);
 
         // Get all students
         Task<IEnumerable<StudentDetailsResponseDto>> GetAllAsync();
@@ -20,9 +21,11 @@ namespace StudentManagement.Application.Interfaces.Services.Student
             StudentDetailsRequestDto request);
 
         // Soft delete student
-        Task DeleteAsync(int studentId);
+        Task DeleteAsync(
+            int studentId);
 
         // Restore student
-        Task RestoreAsync(int studentId);
+        Task<bool> RestoreAsync(
+            int studentId);
     }
 }

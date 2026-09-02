@@ -551,7 +551,7 @@ namespace StudentManagement.Application.Services.Student
         // RESTORE
         // =====================================================
 
-        public async Task RestoreAsync(
+        public async Task<bool> RestoreAsync(
             int studentId)
         {
             if (studentId <= 0)
@@ -560,7 +560,7 @@ namespace StudentManagement.Application.Services.Student
                     "StudentId must be greater than 0.");
             }
 
-            await _repository.RestoreAsync(
+            return await _repository.RestoreAsync(
                 studentId);
         }
 

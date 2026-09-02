@@ -24,9 +24,21 @@ namespace StudentManagement.API.Controllers.Student
         public async Task<IActionResult> GetById(
             int studentId)
         {
+            // CHANGE 1:
+            // Validate StudentId
+            if (studentId <= 0)
+            {
+                return BadRequest(new
+                {
+                    message = "StudentId must be greater than 0."
+                });
+            }
+
             var student =
                 await _service.GetByIdAsync(studentId);
 
+            // CHANGE 2:
+            // StudentId is valid, but student does not exist
             if (student == null)
             {
                 return NotFound(new
@@ -55,11 +67,12 @@ namespace StudentManagement.API.Controllers.Student
         // 3. CREATE
         // POST: api/StudentDetails
         // =====================================================
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(
-     StudentDetailsRequestDto request)
+            StudentDetailsRequestDto request)
         {
-            var result = await _service.AddAsync(request);
+            var result =
+                await _service.AddAsync(request);
 
             return CreatedAtAction(
                 nameof(GetById),
@@ -69,7 +82,6 @@ namespace StudentManagement.API.Controllers.Student
                 },
                 new
                 {
-                    
                     data = result,
                     message = "Student created successfully."
                 });
@@ -79,7 +91,7 @@ namespace StudentManagement.API.Controllers.Student
         // 4. UPDATE
         // PUT: api/StudentDetails/{studentId}
         // =====================================================
-        [HttpPut("{studentId}")]
+        [HttpPut("Update/{studentId}")]
         public async Task<IActionResult> Update(
             int studentId,
             StudentDetailsRequestDto request)
@@ -98,7 +110,7 @@ namespace StudentManagement.API.Controllers.Student
         // 5. DELETE
         // DELETE: api/StudentDetails/{studentId}
         // =====================================================
-        [HttpDelete("{studentId}")]
+        [HttpDelete("Delete/{studentId}")]
         public async Task<IActionResult> Delete(
             int studentId)
         {
@@ -115,10 +127,28 @@ namespace StudentManagement.API.Controllers.Student
         // POST: api/StudentDetails/restore/{studentId}
         // =====================================================
         [HttpPost("restore/{studentId}")]
+       
         public async Task<IActionResult> Restore(
-            int studentId)
+    int studentId)
         {
-            await _service.RestoreAsync(studentId);
+            if (studentId <= 0)
+            {
+                return BadRequest(new
+                {
+                    message = "StudentId must be greater than 0."
+                });
+            }
+
+            var restored =
+                await _service.RestoreAsync(studentId);
+
+            if (!restored)
+            {
+                return NotFound(new
+                {
+                    message = "Student not found or already restored."
+                });
+            }
 
             return Ok(new
             {
@@ -127,4 +157,3 @@ namespace StudentManagement.API.Controllers.Student
         }
     }
 }
-

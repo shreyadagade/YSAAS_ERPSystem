@@ -72,7 +72,7 @@ namespace StudentManagement.API.Controllers.Payment
             // =====================================================
             // CREATE PAYMENT
             // =====================================================
-            [HttpPost]
+            [HttpPost("Create")]
             public async Task<IActionResult> Create(
                 StudentPaymentRequestDto request)
             {
@@ -97,7 +97,7 @@ namespace StudentManagement.API.Controllers.Payment
             // =====================================================
             // UPDATE PAYMENT
             // =====================================================
-            [HttpPut("{paymentId:int}")]
+            [HttpPut("Update/{paymentId:int}")]
             public async Task<IActionResult> Update(
                 int paymentId,
                 StudentPaymentRequestDto request)
@@ -117,7 +117,7 @@ namespace StudentManagement.API.Controllers.Payment
             // =====================================================
             // DELETE PAYMENT
             // =====================================================
-            [HttpDelete("{paymentId:int}")]
+            [HttpDelete("Delete/{paymentId:int}")]
             public async Task<IActionResult> Delete(
                 int paymentId)
             {
