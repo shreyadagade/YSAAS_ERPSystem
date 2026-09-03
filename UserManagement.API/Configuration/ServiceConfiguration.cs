@@ -37,6 +37,8 @@ namespace UserManagement.API.Configuration
 
             services.AddScoped<IRoleMenuService, RoleMenuService>();
 
+            services.AddScoped<IUserProfileService, UserProfileService>();
+
             return services;
         }
     }

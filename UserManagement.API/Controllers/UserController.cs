@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using UserManagement.Application.DTOs.User;
 using UserManagement.Application.Interfaces;
 using UserManagement.Infrastructure.Services;
@@ -83,6 +84,8 @@ namespace UserManagement.API.Controllers
                 message = "User deleted successfully."
             });
         }
+
+        
 
     }
 }

@@ -12,5 +12,6 @@ namespace UserManagement.Application.Interfaces
         Task<UserDto> GetUserByIdAsync(string userId);
         Task<string> UpdateUserAsync(string userId,UpdateUserDto dto);
         Task<bool> DeleteUserAsync(string userId);
+        
     }
 }
