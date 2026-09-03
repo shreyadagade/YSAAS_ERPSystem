@@ -1,5 +1,6 @@
-﻿using LeadManagement.Application.DTOs;
+﻿using LeadManagement.Application.DTOs.TrainingCourse;
 using LeadManagement.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,8 @@ namespace LeadManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
- 
+    [Authorize(Roles = "Counsellor, Super User")]
+
     public class TrainingCourseController : ControllerBase
     {
         private readonly ITrainingCourseService _courseService;
@@ -39,7 +41,7 @@ namespace LeadManagement.API.Controllers
         }
 
         // POST: api/TrainingCourse
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(
             [FromBody] TrainingCourseDto course)
         {
@@ -53,7 +55,7 @@ namespace LeadManagement.API.Controllers
         }
 
         // PUT: api/TrainingCourse/1
-        [HttpPut("{id:int}")]
+        [HttpPut("Update/{id:int}")]
         public async Task<IActionResult> Update(
             int id,
             [FromBody] TrainingCourseDto course)
@@ -69,7 +71,7 @@ namespace LeadManagement.API.Controllers
         }
 
         // DELETE: api/TrainingCourse/1
-        [HttpDelete("{id:int}")]
+        [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _courseService.DeleteAsync(id);

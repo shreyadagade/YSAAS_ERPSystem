@@ -1,6 +1,5 @@
-﻿
-using LeadManagement.Application.DTOs;
-using LeadManagement.Application.Interfaces.Repositories;
+﻿using LeadManagement.Application.DTOs.TrainingCourse;
+using LeadManagement.Application.Interfaces.Repositories.TrainingCourse;
 using LeadManagement.Application.Interfaces.Services;
 using LeadManagement.Domain.Entities;
 using Microsoft.Extensions.Logging;

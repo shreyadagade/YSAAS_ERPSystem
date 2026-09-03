@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using StudentManagement.API.Middleware;
 using StudentManagement.Application.Interfaces.Repositories;
+using StudentManagement.Application.Interfaces.Repositories.Course;
 using StudentManagement.Application.Interfaces.Repositories.ForgotPassword;
 using StudentManagement.Application.Interfaces.Repositories.Password;
 using StudentManagement.Application.Interfaces.Repositories.Payment;
@@ -33,6 +34,7 @@ using StudentManagement.Application.Services.Student;
 using StudentManagement.Infrastructure.Data;
 using StudentManagement.Infrastructure.Email;
 using StudentManagement.Infrastructure.Repositories;
+using StudentManagement.Infrastructure.Repositories.Course;
 using StudentManagement.Infrastructure.Repositories.ForgotPassword;
 using StudentManagement.Infrastructure.Repositories.Password;
 using StudentManagement.Infrastructure.Repositories.Payment;
@@ -102,6 +104,7 @@ builder.Services.AddScoped< IStudentDetailsRepository,StudentDetailsRepository>(
 builder.Services.AddScoped<IStudentProfileRepository, StudentProfileRepository>();
 builder.Services.AddScoped<IStudentPasswordRepository, StudentPasswordRepository>();
 builder.Services.AddScoped<IForgotPasswordRepository,ForgotPasswordRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
 
 //Service

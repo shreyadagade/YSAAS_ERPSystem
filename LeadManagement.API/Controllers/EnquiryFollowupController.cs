@@ -1,5 +1,6 @@
-﻿using LeadManagement.Application.DTOs;
+﻿using LeadManagement.Application.DTOs.EnquiryFollowup;
 using LeadManagement.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,8 @@ namespace LeadManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  
+    [Authorize(Roles = "Counsellor, Super User")]
+
     public class EnquiryFollowupController : ControllerBase
     {
         private readonly IEnquiryFollowupService _followupService;
@@ -40,7 +42,7 @@ namespace LeadManagement.API.Controllers
         }
 
         // POST: api/EnquiryFollowup
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(
             [FromBody] EnquiryFollowupDto followup)
         {
@@ -54,7 +56,7 @@ namespace LeadManagement.API.Controllers
         }
 
         // PUT: api/EnquiryFollowup/1
-        [HttpPut("{id:int}")]
+        [HttpPut("Update/{id:int}")]
         public async Task<IActionResult> Update(
             int id,
             [FromBody] EnquiryFollowupDto followup)
@@ -70,7 +72,7 @@ namespace LeadManagement.API.Controllers
         }
 
         // DELETE: api/EnquiryFollowup/1
-        [HttpDelete("{id:int}")]
+        [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _followupService.DeleteAsync(id);

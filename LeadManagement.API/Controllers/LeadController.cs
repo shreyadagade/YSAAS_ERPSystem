@@ -1,13 +1,13 @@
-﻿using LeadManagement.Application.DTOs;
+﻿using LeadManagement.Application.DTOs.Lead;
 using LeadManagement.Application.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LeadManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize(Roles = "Counsellor, Super User")]
     public class LeadController : ControllerBase
     {
         private readonly ILeadService _leadService;
@@ -39,10 +39,12 @@ namespace LeadManagement.API.Controllers
         }
 
         // POST: api/Lead
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] LeadDto lead)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(
+            [FromBody] LeadDto lead)
         {
-            var leadId = await _leadService.CreateAsync(lead);
+            var leadId =
+                await _leadService.CreateAsync(lead);
 
             return Ok(new
             {
@@ -52,14 +54,15 @@ namespace LeadManagement.API.Controllers
         }
 
         // PUT: api/Lead/1
-        [HttpPut("{id:int}")]
+        [HttpPut("Update/{id:int}")]
         public async Task<IActionResult> Update(
             int id,
             [FromBody] LeadDto lead)
         {
             lead.LeadId = id;
 
-            var result = await _leadService.UpdateAsync(lead);
+            var result =
+                await _leadService.UpdateAsync(lead);
 
             return Ok(new
             {
@@ -68,7 +71,7 @@ namespace LeadManagement.API.Controllers
         }
 
         // DELETE: api/Lead/1
-        [HttpDelete("{id:int}")]
+        [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _leadService.DeleteAsync(id);

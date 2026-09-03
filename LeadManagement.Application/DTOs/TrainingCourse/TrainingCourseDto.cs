@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeadManagement.Application.DTOs
+namespace LeadManagement.Application.DTOs.TrainingCourse
 {
  
 

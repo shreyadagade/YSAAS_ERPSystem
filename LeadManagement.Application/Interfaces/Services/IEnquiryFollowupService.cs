@@ -1,4 +1,4 @@
-﻿using LeadManagement.Application.DTOs;
+﻿using LeadManagement.Application.DTOs.EnquiryFollowup;
 using System;
 using System.Collections.Generic;
 using System.Text;

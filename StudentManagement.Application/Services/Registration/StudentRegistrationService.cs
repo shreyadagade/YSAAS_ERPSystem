@@ -1,5 +1,6 @@
 ﻿
 using StudentManagement.Application.DTOs.Registration;
+using StudentManagement.Application.Interfaces.Repositories.Course;
 using StudentManagement.Application.Interfaces.Repositories.Registration;
 using StudentManagement.Application.Interfaces.Repositories.Student;
 using StudentManagement.Application.Interfaces.Services.Registration;
@@ -12,13 +13,16 @@ namespace StudentManagement.Application.Services.Registration
     {
         private readonly IStudentRegistrationRepository _repository;
         private readonly IStudentDetailsRepository _studentRepository;
+        private readonly ICourseRepository _courseRepository;
 
         public StudentRegistrationService(
             IStudentRegistrationRepository repository,
-            IStudentDetailsRepository studentRepository)
+            IStudentDetailsRepository studentRepository,
+            ICourseRepository courseRepository)
         {
             _repository = repository;
             _studentRepository = studentRepository;
+            _courseRepository = courseRepository;
         }
 
         // =====================================================
@@ -43,8 +47,7 @@ namespace StudentManagement.Application.Services.Registration
                 return null;
             }
 
-            return MapToResponseDto(
-                registration);
+            return MapToResponseDto(registration);
         }
 
         // =====================================================
@@ -75,8 +78,10 @@ namespace StudentManagement.Application.Services.Registration
                     nameof(request));
             }
 
-            // StudentId is nullable (int?)
-            // So validate it first.
+            // =================================================
+            // VALIDATE STUDENT ID
+            // =================================================
+
             if (!request.StudentId.HasValue ||
                 request.StudentId.Value <= 0)
             {
@@ -84,7 +89,6 @@ namespace StudentManagement.Application.Services.Registration
                     "StudentId must be greater than 0.");
             }
 
-            // Convert int? to int using .Value
             var studentId =
                 request.StudentId.Value;
 
@@ -98,12 +102,29 @@ namespace StudentManagement.Application.Services.Registration
                     "Student not found.");
             }
 
-            if (string.IsNullOrWhiteSpace(
-                student.EmailAddress))
+            // =================================================
+            // VALIDATE COURSE ID
+            // =================================================
+
+            if (request.CourseId <= 0)
             {
-                throw new InvalidOperationException(
-                    "Student email is not available.");
+                throw new ArgumentException(
+                    "CourseId must be greater than 0.");
             }
+
+            var courseExists =
+                await _courseRepository.CourseExistsAsync(
+                    request.CourseId.Value);
+
+            if (!courseExists)
+            {
+                throw new KeyNotFoundException(
+                    "Course not found.");
+            }
+
+            // =================================================
+            // CREATE REGISTRATION
+            // =================================================
 
             var registration =
                 new StudentRegistration
@@ -152,13 +173,50 @@ namespace StudentManagement.Application.Services.Registration
                     nameof(request));
             }
 
-            // StudentId is nullable (int?)
+            // =================================================
+            // VALIDATE STUDENT ID
+            // =================================================
+
             if (!request.StudentId.HasValue ||
                 request.StudentId.Value <= 0)
             {
                 throw new ArgumentException(
                     "StudentId must be greater than 0.");
             }
+
+            var student =
+                await _studentRepository.GetByIdAsync(
+                    request.StudentId.Value);
+
+            if (student == null)
+            {
+                throw new KeyNotFoundException(
+                    "Student not found.");
+            }
+
+            // =================================================
+            // VALIDATE COURSE ID
+            // =================================================
+
+            if (request.CourseId <= 0)
+            {
+                throw new ArgumentException(
+                    "CourseId must be greater than 0.");
+            }
+
+            var courseExists =
+                await _courseRepository.CourseExistsAsync(
+                    request.CourseId.Value);
+
+            if (!courseExists)
+            {
+                throw new KeyNotFoundException(
+                    "Course not found.");
+            }
+
+            // =================================================
+            // GET EXISTING REGISTRATION
+            // =================================================
 
             var existing =
                 await _repository.GetByIdAsync(
@@ -169,6 +227,10 @@ namespace StudentManagement.Application.Services.Registration
                 throw new KeyNotFoundException(
                     "Registration not found.");
             }
+
+            // =================================================
+            // UPDATE
+            // =================================================
 
             existing.StudentId =
                 request.StudentId.Value;
@@ -229,11 +291,8 @@ namespace StudentManagement.Application.Services.Registration
                     "RegistrationId must be greater than 0.");
             }
 
-            var restored =
-                await _repository.RestoreAsync(
-                    registrationId);
-
-            return restored;
+            return await _repository.RestoreAsync(
+                registrationId);
         }
 
         // =====================================================

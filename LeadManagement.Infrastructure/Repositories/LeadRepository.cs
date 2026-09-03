@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using LeadManagement.Application.Interfaces.Repositories;
+using LeadManagement.Application.Interfaces.Repositories.Lead;
 using LeadManagement.Domain.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
