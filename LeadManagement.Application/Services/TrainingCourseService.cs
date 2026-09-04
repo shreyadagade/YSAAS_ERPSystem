@@ -51,7 +51,7 @@ namespace LeadManagement.Application.Services
                     "Course creation failed: Duplicate course name {CourseName}",
                     course.CourseName);
 
-                throw new ArgumentException(
+                throw new Exception(
                     "A course with this name already exists.");
             }
 
@@ -95,16 +95,15 @@ namespace LeadManagement.Application.Services
                     "Course name cannot exceed 100 characters.");
 
             // 4. Duplicate course name validation
-            if (await _courseRepository.CourseNameExistsAsync(
-                course.CourseName,
-                course.CourseId))
+         
+            if (await _courseRepository.CourseNameExistsAsync(course.CourseName))
             {
                 _logger.LogWarning(
-                    "Course update failed: Duplicate course name. CourseId: {CourseId}",
-                    course.CourseId);
+                    "Course creation failed: Duplicate course name {CourseName}",
+                    course.CourseName);
 
-                throw new ArgumentException(
-                    "Another course with this name already exists.");
+                throw new Exception(
+                    "A course with this name already exists.");
             }
 
             var entity = new TblTrainingCourse

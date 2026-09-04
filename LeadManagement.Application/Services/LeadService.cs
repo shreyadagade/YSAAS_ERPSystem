@@ -291,10 +291,7 @@ namespace LeadManagement.Application.Services
                 TrainingType = entity.TrainingType,
                 Description = entity.Description,
                 LeadDate = entity.LeadDate,
-                //CreatedAt = entity.CreatedAt,
-                //UpdatedAt = entity.UpdatedAt,
-                //DeletedAt = entity.DeletedAt,
-                //RestoredAt = entity.RestoredAt
+              
             };
         }
 
@@ -317,10 +314,7 @@ namespace LeadManagement.Application.Services
                 TrainingType = entity.TrainingType,
                 Description = entity.Description,
                 LeadDate = entity.LeadDate,
-                //CreatedAt = entity.CreatedAt,
-                //UpdatedAt = entity.UpdatedAt,
-                //DeletedAt = entity.DeletedAt,
-                //RestoredAt = entity.RestoredAt
+               
             });
         }
 

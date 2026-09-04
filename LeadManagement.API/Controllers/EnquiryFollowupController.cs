@@ -8,7 +8,7 @@ namespace LeadManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Counsellor, Super User")]
+    //[Authorize(Roles = "Counsellor, Super User")]
 
     public class EnquiryFollowupController : ControllerBase
     {

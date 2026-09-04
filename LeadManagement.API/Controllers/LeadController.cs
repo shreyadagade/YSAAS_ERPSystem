@@ -7,7 +7,7 @@ namespace LeadManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Counsellor, Super User")]
+    //[Authorize(Roles = "Counsellor, Super User")]
     public class LeadController : ControllerBase
     {
         private readonly ILeadService _leadService;

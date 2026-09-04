@@ -7,17 +7,17 @@ namespace LeadManagement.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LoginController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly ILoginService _loginService;
 
-        public LoginController(
+        public AuthController(
             ILoginService loginService)
         {
             _loginService = loginService;
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(
             [FromBody] LoginRequestDto request)
         {
