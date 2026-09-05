@@ -1,14 +1,16 @@
 using LeadManagement.API.Middleware;
 using LeadManagement.Application.Interfaces.Repositories;
+using LeadManagement.Application.Interfaces.Repositories.Enquiry;
 using LeadManagement.Application.Interfaces.Repositories.EnquiryFollowup;
 using LeadManagement.Application.Interfaces.Repositories.Lead;
-using LeadManagement.Application.Interfaces.Repositories.Login;
 using LeadManagement.Application.Interfaces.Repositories.TrainingCourse;
 using LeadManagement.Application.Interfaces.Services;
-using LeadManagement.Application.Interfaces.Services.Login;
+using LeadManagement.Application.Interfaces.Services.Enquiry;
 using LeadManagement.Application.Services;
+using LeadManagement.Application.Services.Enquiry;
 using LeadManagement.Application.Settings;
 using LeadManagement.Infrastructure.Repositories;
+using LeadManagement.Infrastructure.Repositories.Enquiry;
 using LeadManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -79,9 +81,6 @@ builder.Services.AddScoped<
     IEnquiryFollowupRepository,
     EnquiryFollowupRepository>();
 
-builder.Services.AddScoped<
-    ILoginRepository,
-    LoginRepository>();
 
 
 // =========================
@@ -98,9 +97,7 @@ builder.Services.AddScoped<
     IEnquiryFollowupService,
     EnquiryFollowupService>();
 
-builder.Services.AddScoped<
-    ILoginService,
-    LoginService>();
+
 
 
 // =========================
