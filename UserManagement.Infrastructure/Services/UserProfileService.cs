@@ -193,6 +193,18 @@ namespace UserManagement.Infrastructure.Services
                     },
 
                     new StoredProcedureParameter
+                    { 
+                        Name = "@joining_date",
+                        Value = dto.JoiningDate 
+                    },
+
+                    new StoredProcedureParameter 
+                    { 
+                        Name = "@salary", 
+                        Value = dto.Salary 
+                    },
+
+                    new StoredProcedureParameter
                     {
                         Name = "@gender",
                         Value = dto.Gender

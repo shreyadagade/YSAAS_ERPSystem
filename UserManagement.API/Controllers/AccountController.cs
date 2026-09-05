@@ -17,7 +17,7 @@ namespace UserManagement.API.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("change-password")]
+        [HttpPost("change-password")]                             
         public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
         {
             var result = await _accountService.ChangePasswordAsync(dto);
