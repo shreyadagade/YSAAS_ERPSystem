@@ -13,6 +13,11 @@ namespace LeadManagement.Domain.Entities
         public string CourseName { get; set; } = string.Empty;
 
         public int? Flag { get; set; }
+        public double? FeesAmount { get; set; }
+
+        public DateTime? FeesChangeDate { get; set; }
+
+        public double? InstallmentPercentage { get; set; }
 
         public DateTime? InsertedAt { get; set; }
 

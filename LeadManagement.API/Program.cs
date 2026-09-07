@@ -3,6 +3,7 @@ using LeadManagement.Application.Interfaces.Repositories;
 using LeadManagement.Application.Interfaces.Repositories.Enquiry;
 using LeadManagement.Application.Interfaces.Repositories.EnquiryFollowup;
 using LeadManagement.Application.Interfaces.Repositories.Lead;
+using LeadManagement.Application.Interfaces.Repositories.LeadFollowup;
 using LeadManagement.Application.Interfaces.Repositories.TrainingCourse;
 using LeadManagement.Application.Interfaces.Services;
 using LeadManagement.Application.Interfaces.Services.Enquiry;
@@ -80,6 +81,8 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
     IEnquiryFollowupRepository,
     EnquiryFollowupRepository>();
+builder.Services.AddScoped<IEnquiryRepository, EnquiryRepository>();
+builder.Services.AddScoped<ILeadFollowupRepository,LeadFollowupRepository>();
 
 
 
@@ -96,6 +99,9 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
     IEnquiryFollowupService,
     EnquiryFollowupService>();
+
+builder.Services.AddScoped<IEnquiryService, EnquiryService>();
+builder.Services.AddScoped<ILeadFollowupService,LeadFollowupService>();
 
 
 

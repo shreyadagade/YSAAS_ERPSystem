@@ -208,6 +208,9 @@ namespace LeadManagement.Application.Services
             {
                 CourseId = entity.CourseId,
                 CourseName = entity.CourseName,
+                FeesAmount = entity.FeesAmount,
+                FeesChangeDate = entity.FeesChangeDate,
+                InstallmentPercentage = entity.InstallmentPercentage
                 //Flag = entity.Flag,
                 //InsertedAt = entity.InsertedAt,
                 //UpdatedAt = entity.UpdatedAt,
@@ -231,6 +234,9 @@ namespace LeadManagement.Application.Services
             {
                 CourseId = entity.CourseId,
                 CourseName = entity.CourseName,
+                FeesAmount = entity.FeesAmount,
+                FeesChangeDate = entity.FeesChangeDate,
+                InstallmentPercentage = entity.InstallmentPercentage
                 //Flag = entity.Flag,
                 //InsertedAt = entity.InsertedAt,
                 //UpdatedAt = entity.UpdatedAt,

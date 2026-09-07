@@ -55,17 +55,27 @@ namespace LeadManagement.API.Controllers
 
         // PUT: api/Lead/1
         [HttpPut("Update/{id:int}")]
+     
         public async Task<IActionResult> Update(
-            int id,
-            [FromBody] LeadDto lead)
+    int id,
+    [FromBody] LeadDto lead)
         {
             lead.LeadId = id;
 
-            var result =
-                await _leadService.UpdateAsync(lead);
+            var result = await _leadService.UpdateAsync(lead);
+
+            if (!result)
+            {
+                return NotFound(new
+                {
+                    statusCode = 404,
+                    message = "Lead not found."
+                });
+            }
 
             return Ok(new
             {
+                statusCode = 200,
                 message = "Lead Updated Successfully"
             });
         }
@@ -74,10 +84,20 @@ namespace LeadManagement.API.Controllers
         [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _leadService.DeleteAsync(id);
+            var result = await _leadService.DeleteAsync(id);
+
+            if (!result)
+            {
+                return NotFound(new
+                {
+                    statusCode = 404,
+                    message = "Lead not found."
+                });
+            }
 
             return Ok(new
             {
+                statusCode = 200,
                 message = "Lead Deleted Successfully"
             });
         }
@@ -86,10 +106,20 @@ namespace LeadManagement.API.Controllers
         [HttpPut("restore/{id:int}")]
         public async Task<IActionResult> Restore(int id)
         {
-            await _leadService.RestoreAsync(id);
+            var result = await _leadService.RestoreAsync(id);
+
+            if (!result)
+            {
+                return NotFound(new
+                {
+                    statusCode = 404,
+                    message = "Lead not found or lead is already active."
+                });
+            }
 
             return Ok(new
             {
+                statusCode = 200,
                 message = "Lead Restored Successfully"
             });
         }

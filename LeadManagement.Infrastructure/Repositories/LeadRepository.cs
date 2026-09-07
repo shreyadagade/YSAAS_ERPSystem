@@ -3,15 +3,10 @@ using LeadManagement.Application.Interfaces.Repositories.Lead;
 using LeadManagement.Domain.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
 
 namespace LeadManagement.Infrastructure.Repositories
 {
-   
-
     public class LeadRepository : ILeadRepository
     {
         private readonly IConfiguration _configuration;
@@ -20,7 +15,6 @@ namespace LeadManagement.Infrastructure.Repositories
         {
             _configuration = configuration;
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-
         }
 
         private SqlConnection CreateConnection()
@@ -41,6 +35,7 @@ namespace LeadManagement.Infrastructure.Repositories
             parameters.Add("@mobile_number", lead.MobileNumber);
             parameters.Add("@training_type", lead.TrainingType);
             parameters.Add("@description", lead.Description);
+            parameters.Add("@status", lead.Status);
             parameters.Add("@lead_date", lead.LeadDate);
 
             var result = await connection.QuerySingleAsync<dynamic>(
@@ -64,14 +59,13 @@ namespace LeadManagement.Infrastructure.Repositories
             parameters.Add("@mobile_number", lead.MobileNumber);
             parameters.Add("@training_type", lead.TrainingType);
             parameters.Add("@description", lead.Description);
+            parameters.Add("@status", lead.Status);
             parameters.Add("@lead_date", lead.LeadDate);
 
-            await connection.QueryFirstOrDefaultAsync(
+            return await connection.QuerySingleAsync<bool>(
                 "erpsystem.sp_tblleads",
                 parameters,
                 commandType: CommandType.StoredProcedure);
-
-            return true;
         }
 
         public async Task<bool> DeleteAsync(int leadId)
@@ -83,12 +77,10 @@ namespace LeadManagement.Infrastructure.Repositories
             parameters.Add("@Action", "DELETE");
             parameters.Add("@lead_id", leadId);
 
-            await connection.QueryFirstOrDefaultAsync(
+            return await connection.QuerySingleAsync<bool>(
                 "erpsystem.sp_tblleads",
                 parameters,
                 commandType: CommandType.StoredProcedure);
-
-            return true;
         }
 
         public async Task<bool> RestoreAsync(int leadId)
@@ -100,12 +92,10 @@ namespace LeadManagement.Infrastructure.Repositories
             parameters.Add("@Action", "RESTORE");
             parameters.Add("@lead_id", leadId);
 
-            await connection.QueryFirstOrDefaultAsync(
+            return await connection.QuerySingleAsync<bool>(
                 "erpsystem.sp_tblleads",
                 parameters,
                 commandType: CommandType.StoredProcedure);
-
-            return true;
         }
 
         public async Task<TblLead?> GetByIdAsync(int leadId)
@@ -136,7 +126,10 @@ namespace LeadManagement.Infrastructure.Repositories
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }
-        public async Task<bool> EmailExistsAsync(string email, int? leadId = null)
+
+        public async Task<bool> EmailExistsAsync(
+            string email,
+            int? leadId = null)
         {
             using var connection = CreateConnection();
 
@@ -152,7 +145,9 @@ namespace LeadManagement.Infrastructure.Repositories
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<bool> MobileExistsAsync(string mobile, int? leadId = null)
+        public async Task<bool> MobileExistsAsync(
+            string mobile,
+            int? leadId = null)
         {
             using var connection = CreateConnection();
 
@@ -169,4 +164,3 @@ namespace LeadManagement.Infrastructure.Repositories
         }
     }
 }
-

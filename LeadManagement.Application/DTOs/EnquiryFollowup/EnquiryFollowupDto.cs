@@ -8,8 +8,10 @@ namespace LeadManagement.Application.DTOs.EnquiryFollowup
 
     public class EnquiryFollowupDto
     {
+        public int leadId { get; set; }
+        public string? CandidateName { get; set; }
         public int FollowupId { get; set; }
-        public int? EnquiryId { get; set; }
+       // public int? EnquiryId { get; set; }
         public DateTime? FollowUpDate { get; set; }
         public string? FollowUpBy { get; set; }
         public string? Description { get; set; }

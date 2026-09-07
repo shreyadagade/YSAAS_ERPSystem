@@ -14,6 +14,7 @@ namespace LeadManagement.Application.DTOs.Lead
         public string? MobileNumber { get; set; }
         public string? TrainingType { get; set; }
         public string? Description { get; set; }
+        public string? Status { get; set; }
         public DateTime? LeadDate { get; set; }
         //public DateTime CreatedAt { get; set; }
         //public DateTime? UpdatedAt { get; set; }
