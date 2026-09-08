@@ -21,14 +21,14 @@ namespace UserManagement.Infrastructure.Services
             _emailService = emailService;
         }
 
-        public async Task<string> ChangePasswordAsync(ChangePasswordDto dto)
+        public async Task<string> ChangePasswordAsync(string userId,ChangePasswordDto dto)
         {
             if (dto == null)
             {
                 throw new BadRequestException("Request data is required.");
             }
 
-            if (string.IsNullOrWhiteSpace(dto.UserId))
+            if (string.IsNullOrWhiteSpace(userId))
             {
                 throw new BadRequestException("User ID is required.");
             }
@@ -46,10 +46,10 @@ namespace UserManagement.Infrastructure.Services
             if (dto.CurrentPassword == dto.NewPassword)
             {
                 throw new BadRequestException(
-                      "New password must be different from current password.");
+                    "New password must be different from current password.");
             }
 
-            var user = await _userManager.FindByIdAsync(dto.UserId);
+            var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
@@ -124,11 +124,6 @@ namespace UserManagement.Infrastructure.Services
                 throw new BadRequestException("Request data is required.");
             }
 
-            if (string.IsNullOrWhiteSpace(dto.EmailAddress))
-            {
-                throw new BadRequestException("Email address is required.");
-            }
-
             if (string.IsNullOrWhiteSpace(dto.Token))
             {
                 throw new BadRequestException("Reset token is required.");
@@ -137,16 +132,6 @@ namespace UserManagement.Infrastructure.Services
             if (string.IsNullOrWhiteSpace(dto.NewPassword))
             {
                 throw new BadRequestException("New password is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(dto.ConfirmPassword))
-            {
-                throw new BadRequestException("Confirm password is required.");
-            }
-
-            if (dto.NewPassword != dto.ConfirmPassword)
-            {
-                throw new BadRequestException("New password and confirm password do not match.");
             }
 
             var user = await _userManager.FindByEmailAsync(dto.EmailAddress.Trim());
@@ -162,7 +147,6 @@ namespace UserManagement.Infrastructure.Services
                 throw new ForbiddenException(
                     "User account is deactivated.");
             }
-
 
             var result = await _userManager.ResetPasswordAsync(
                 user,

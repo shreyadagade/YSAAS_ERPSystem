@@ -5,7 +5,7 @@ namespace UserManagement.Application.Interfaces
 {
     public interface IAccountService
     {
-        Task<string> ChangePasswordAsync(ChangePasswordDto dto);
+        Task<string> ChangePasswordAsync(string userId, ChangePasswordDto dto);
 
         Task<string> ForgotPasswordAsync(ForgotPasswordDto dto);
 

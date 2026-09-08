@@ -35,6 +35,7 @@ namespace UserManagement.API.Controllers
 
 
         [HttpGet("get-all-users")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _userService.GetAllUsersAsync();
@@ -48,6 +49,7 @@ namespace UserManagement.API.Controllers
         }
 
         [HttpGet("get-user/{userId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUserById(string userId)
         {
             var result = await _userService.GetUserByIdAsync(userId);

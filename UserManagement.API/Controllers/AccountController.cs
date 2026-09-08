@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using UserManagement.Application.DTOs.Account;
 using UserManagement.Application.Interfaces;
 
@@ -17,10 +18,22 @@ namespace UserManagement.API.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("change-password")]                             
+        [HttpPost("change-password")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
         {
-            var result = await _accountService.ChangePasswordAsync(dto);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return Unauthorized(new
+                {
+                    statusCode = StatusCodes.Status401Unauthorized,
+                    message = "User is not authenticated."
+                });
+            }
+
+            var result = await _accountService.ChangePasswordAsync(userId, dto);
 
             return StatusCode(
                StatusCodes.Status200OK,
