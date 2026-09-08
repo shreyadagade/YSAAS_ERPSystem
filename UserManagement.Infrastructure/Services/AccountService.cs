@@ -114,7 +114,9 @@ namespace UserManagement.Infrastructure.Services
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            return token;
+            var resetToken = $"{user.Id}|{token}";
+
+            return resetToken;
         }
 
         public async Task<string> ResetPasswordAsync(ResetPasswordDto dto)
@@ -134,12 +136,21 @@ namespace UserManagement.Infrastructure.Services
                 throw new BadRequestException("New password is required.");
             }
 
-            var user = await _userManager.FindByEmailAsync(dto.EmailAddress.Trim());
+            var tokenParts = dto.Token.Split('|', 2);
+
+            if (tokenParts.Length != 2)
+            {
+                throw new BadRequestException("Invalid reset token.");
+            }
+
+            var userId = tokenParts[0];
+            var resetToken = tokenParts[1];
+
+            var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                throw new NotFoundException(
-                    "User not found.");
+                throw new NotFoundException("User not found.");
             }
 
             if (!user.IsActive)
@@ -150,7 +161,7 @@ namespace UserManagement.Infrastructure.Services
 
             var result = await _userManager.ResetPasswordAsync(
                 user,
-                dto.Token,
+                resetToken,
                 dto.NewPassword);
 
             if (!result.Succeeded)
@@ -160,13 +171,13 @@ namespace UserManagement.Infrastructure.Services
                     result.Errors.Select(e => e.Description));
 
                 throw new BadRequestException(
-                     $"Password reset failed. {errors}");
+                    $"Password reset failed. {errors}");
             }
 
             return "Password reset successfully.";
         }
 
-        
+
     }
 }
 
