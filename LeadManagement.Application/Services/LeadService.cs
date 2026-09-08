@@ -1,5 +1,4 @@
-﻿
-using LeadManagement.Application.DTOs.Lead;
+﻿using LeadManagement.Application.DTOs.Lead;
 using LeadManagement.Application.Interfaces.Repositories.Lead;
 using LeadManagement.Application.Interfaces.Services;
 using LeadManagement.Domain.Entities;
@@ -24,122 +23,70 @@ namespace LeadManagement.Application.Services
         public async Task<int> CreateAsync(LeadDto lead)
         {
             _logger.LogInformation(
-                "Creating new lead. Email: {Email}, Mobile: {Mobile}",
+                "Creating new lead. Email: {Email}, Mobile: {Mobile}, SourceId: {SourceId}",
                 lead.EmailAddress,
-                lead.MobileNumber);
+                lead.MobileNumber,
+                lead.SourceId);
 
-            // Candidate Name validation
             if (string.IsNullOrWhiteSpace(lead.CandidateName))
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Candidate name is required.");
-
-                throw new ArgumentException(
-                    "Candidate name is required.");
-            }
+                throw new ArgumentException("Candidate name is required.");
 
             if (lead.CandidateName.Length > 100)
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Candidate name exceeds 100 characters.");
-
                 throw new ArgumentException(
                     "Candidate name cannot exceed 100 characters.");
-            }
 
-            // Email validation
             if (string.IsNullOrWhiteSpace(lead.EmailAddress))
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Email address is required.");
-
                 throw new ArgumentException(
                     "Email address is required.");
-            }
 
             if (!IsValidEmail(lead.EmailAddress))
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Invalid email address {Email}",
-                    lead.EmailAddress);
-
                 throw new ArgumentException(
                     "Please enter a valid email address.");
-            }
 
-            // Mobile validation
             if (string.IsNullOrWhiteSpace(lead.MobileNumber))
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Mobile number is required.");
-
                 throw new ArgumentException(
                     "Mobile number is required.");
-            }
 
             if (!IsValidMobile(lead.MobileNumber))
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Invalid mobile number.");
-
                 throw new ArgumentException(
                     "Mobile number must contain exactly 10 digits.");
-            }
 
-            // Training Type validation
             if (string.IsNullOrWhiteSpace(lead.TrainingType))
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Training type is required.");
-
                 throw new ArgumentException(
                     "Training type is required.");
-            }
 
             if (lead.TrainingType.Length > 20)
-            {
-                _logger.LogWarning(
-                    "Lead creation failed: Training type exceeds 20 characters.");
-
                 throw new ArgumentException(
                     "Training type cannot exceed 20 characters.");
-            }
 
-            // Status validation
             if (!string.IsNullOrWhiteSpace(lead.Status) &&
                 lead.Status.Length > 20)
             {
-                _logger.LogWarning(
-                    "Lead creation failed: Status exceeds 20 characters.");
-
                 throw new ArgumentException(
                     "Status cannot exceed 20 characters.");
             }
 
-            // Duplicate Email check
+            if (lead.SourceId.HasValue &&
+                lead.SourceId <= 0)
+            {
+                throw new ArgumentException(
+                    "SourceId must be greater than 0.");
+            }
+
             if (await _leadRepository.EmailExistsAsync(
                 lead.EmailAddress.Trim()))
             {
-                _logger.LogWarning(
-                    "Lead creation failed: Duplicate email {Email}",
-                    lead.EmailAddress);
-
                 throw new ArgumentException(
                     "A lead with this email address already exists.");
             }
 
-            // Duplicate Mobile check
             if (await _leadRepository.MobileExistsAsync(
                 lead.MobileNumber.Trim()))
             {
-                _logger.LogWarning(
-                    "Lead creation failed: Duplicate mobile number.");
-
                 throw new ArgumentException(
                     "A lead with this mobile number already exists.");
             }
 
-            // Map DTO → Entity
             var entity = new TblLead
             {
                 CandidateName = lead.CandidateName.Trim(),
@@ -148,15 +95,16 @@ namespace LeadManagement.Application.Services
                 TrainingType = lead.TrainingType.Trim(),
                 Description = lead.Description?.Trim(),
                 Status = lead.Status?.Trim(),
-                LeadDate = lead.LeadDate
+                LeadDate = lead.LeadDate,
+                SourceId = lead.SourceId
             };
 
-            // Insert lead
             var leadId = await _leadRepository.InsertAsync(entity);
 
             _logger.LogInformation(
-                "Lead created successfully. LeadId: {LeadId}",
-                leadId);
+                "Lead created successfully. LeadId: {LeadId}, SourceId: {SourceId}",
+                leadId,
+                lead.SourceId);
 
             return leadId;
         }
@@ -164,69 +112,45 @@ namespace LeadManagement.Application.Services
         public async Task<bool> UpdateAsync(LeadDto lead)
         {
             _logger.LogInformation(
-                "Updating lead. LeadId: {LeadId}",
-                lead.LeadId);
+                "Updating lead. LeadId: {LeadId}, SourceId: {SourceId}",
+                lead.LeadId,
+                lead.SourceId);
 
-            // Lead ID validation
             if (lead.LeadId <= 0)
-            {
-                throw new ArgumentException(
-                    "Invalid lead ID.");
-            }
+                throw new ArgumentException("Invalid lead ID.");
 
-            // Candidate Name validation
             if (string.IsNullOrWhiteSpace(lead.CandidateName))
-            {
                 throw new ArgumentException(
                     "Candidate name is required.");
-            }
 
             if (lead.CandidateName.Length > 100)
-            {
                 throw new ArgumentException(
                     "Candidate name cannot exceed 100 characters.");
-            }
 
-            // Email validation
             if (string.IsNullOrWhiteSpace(lead.EmailAddress))
-            {
                 throw new ArgumentException(
                     "Email address is required.");
-            }
 
             if (!IsValidEmail(lead.EmailAddress))
-            {
                 throw new ArgumentException(
                     "Please enter a valid email address.");
-            }
 
-            // Mobile validation
             if (string.IsNullOrWhiteSpace(lead.MobileNumber))
-            {
                 throw new ArgumentException(
                     "Mobile number is required.");
-            }
 
             if (!IsValidMobile(lead.MobileNumber))
-            {
                 throw new ArgumentException(
                     "Mobile number must contain exactly 10 digits.");
-            }
 
-            // Training Type validation
             if (string.IsNullOrWhiteSpace(lead.TrainingType))
-            {
                 throw new ArgumentException(
                     "Training type is required.");
-            }
 
             if (lead.TrainingType.Length > 20)
-            {
                 throw new ArgumentException(
                     "Training type cannot exceed 20 characters.");
-            }
 
-            // Status validation
             if (!string.IsNullOrWhiteSpace(lead.Status) &&
                 lead.Status.Length > 20)
             {
@@ -234,7 +158,13 @@ namespace LeadManagement.Application.Services
                     "Status cannot exceed 20 characters.");
             }
 
-            // Duplicate Email check
+            if (lead.SourceId.HasValue &&
+                lead.SourceId <= 0)
+            {
+                throw new ArgumentException(
+                    "SourceId must be greater than 0.");
+            }
+
             if (await _leadRepository.EmailExistsAsync(
                 lead.EmailAddress.Trim(),
                 lead.LeadId))
@@ -243,7 +173,6 @@ namespace LeadManagement.Application.Services
                     "Another lead with this email address already exists.");
             }
 
-            // Duplicate Mobile check
             if (await _leadRepository.MobileExistsAsync(
                 lead.MobileNumber.Trim(),
                 lead.LeadId))
@@ -252,7 +181,6 @@ namespace LeadManagement.Application.Services
                     "Another lead with this mobile number already exists.");
             }
 
-            // Map DTO → Entity
             var entity = new TblLead
             {
                 LeadId = lead.LeadId,
@@ -262,10 +190,10 @@ namespace LeadManagement.Application.Services
                 TrainingType = lead.TrainingType.Trim(),
                 Description = lead.Description?.Trim(),
                 Status = lead.Status?.Trim(),
-                LeadDate = lead.LeadDate
+                LeadDate = lead.LeadDate,
+                SourceId = lead.SourceId
             };
 
-            // Update lead
             var result = await _leadRepository.UpdateAsync(entity);
 
             if (result)
@@ -291,12 +219,11 @@ namespace LeadManagement.Application.Services
                 leadId);
 
             if (leadId <= 0)
-            {
                 throw new ArgumentException(
                     "Invalid lead ID.");
-            }
 
-            var result = await _leadRepository.DeleteAsync(leadId);
+            var result =
+                await _leadRepository.DeleteAsync(leadId);
 
             if (result)
             {
@@ -321,12 +248,11 @@ namespace LeadManagement.Application.Services
                 leadId);
 
             if (leadId <= 0)
-            {
                 throw new ArgumentException(
                     "Invalid lead ID.");
-            }
 
-            var result = await _leadRepository.RestoreAsync(leadId);
+            var result =
+                await _leadRepository.RestoreAsync(leadId);
 
             if (result)
             {
@@ -351,12 +277,11 @@ namespace LeadManagement.Application.Services
                 leadId);
 
             if (leadId <= 0)
-            {
                 throw new ArgumentException(
                     "Invalid lead ID.");
-            }
 
-            var entity = await _leadRepository.GetByIdAsync(leadId);
+            var entity =
+                await _leadRepository.GetByIdAsync(leadId);
 
             if (entity == null)
             {
@@ -376,7 +301,8 @@ namespace LeadManagement.Application.Services
                 TrainingType = entity.TrainingType,
                 Description = entity.Description,
                 Status = entity.Status,
-                LeadDate = entity.LeadDate
+                LeadDate = entity.LeadDate,
+                SourceId = entity.SourceId
             };
         }
 
@@ -385,7 +311,8 @@ namespace LeadManagement.Application.Services
             _logger.LogInformation(
                 "Getting all active leads.");
 
-            var entities = await _leadRepository.GetAllAsync();
+            var entities =
+                await _leadRepository.GetAllAsync();
 
             _logger.LogInformation(
                 "Retrieved {Count} leads.",
@@ -400,7 +327,41 @@ namespace LeadManagement.Application.Services
                 TrainingType = entity.TrainingType,
                 Description = entity.Description,
                 Status = entity.Status,
-                LeadDate = entity.LeadDate
+                LeadDate = entity.LeadDate,
+                SourceId = entity.SourceId
+            });
+        }
+
+        public async Task<IEnumerable<LeadDto>> GetBySourceIdAsync(
+            int sourceId)
+        {
+            _logger.LogInformation(
+                "Getting leads by SourceId. SourceId: {SourceId}",
+                sourceId);
+
+            if (sourceId <= 0)
+                throw new ArgumentException(
+                    "Invalid source ID.");
+
+            var entities =
+                await _leadRepository.GetBySourceIdAsync(sourceId);
+
+            _logger.LogInformation(
+                "Retrieved {Count} leads for SourceId: {SourceId}",
+                entities.Count(),
+                sourceId);
+
+            return entities.Select(entity => new LeadDto
+            {
+                LeadId = entity.LeadId,
+                CandidateName = entity.CandidateName,
+                EmailAddress = entity.EmailAddress,
+                MobileNumber = entity.MobileNumber,
+                TrainingType = entity.TrainingType,
+                Description = entity.Description,
+                Status = entity.Status,
+                LeadDate = entity.LeadDate,
+                SourceId = entity.SourceId
             });
         }
 
@@ -427,4 +388,3 @@ namespace LeadManagement.Application.Services
         }
     }
 }
-

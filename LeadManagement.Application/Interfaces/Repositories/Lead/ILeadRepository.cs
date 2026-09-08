@@ -20,6 +20,7 @@ namespace LeadManagement.Application.Interfaces.Repositories.Lead
         Task<TblLead?> GetByIdAsync(int leadId);
 
         Task<IEnumerable<TblLead>> GetAllAsync();
+        Task<IEnumerable<TblLead>> GetBySourceIdAsync(int sourceId);
         Task<bool> EmailExistsAsync(string email, int? leadId = null);
         Task<bool> MobileExistsAsync(string mobile, int? leadId = null);
     }

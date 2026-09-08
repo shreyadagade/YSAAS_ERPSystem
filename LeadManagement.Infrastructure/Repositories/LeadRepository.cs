@@ -14,6 +14,7 @@ namespace LeadManagement.Infrastructure.Repositories
         public LeadRepository(IConfiguration configuration)
         {
             _configuration = configuration;
+
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
 
@@ -37,6 +38,7 @@ namespace LeadManagement.Infrastructure.Repositories
             parameters.Add("@description", lead.Description);
             parameters.Add("@status", lead.Status);
             parameters.Add("@lead_date", lead.LeadDate);
+            parameters.Add("@source_id", lead.SourceId);
 
             var result = await connection.QuerySingleAsync<dynamic>(
                 "erpsystem.sp_tblleads",
@@ -61,6 +63,7 @@ namespace LeadManagement.Infrastructure.Repositories
             parameters.Add("@description", lead.Description);
             parameters.Add("@status", lead.Status);
             parameters.Add("@lead_date", lead.LeadDate);
+            parameters.Add("@source_id", lead.SourceId);
 
             return await connection.QuerySingleAsync<bool>(
                 "erpsystem.sp_tblleads",
@@ -120,6 +123,21 @@ namespace LeadManagement.Infrastructure.Repositories
             var parameters = new DynamicParameters();
 
             parameters.Add("@Action", "GETALL");
+
+            return await connection.QueryAsync<TblLead>(
+                "erpsystem.sp_tblleads",
+                parameters,
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<TblLead>> GetBySourceIdAsync(int sourceId)
+        {
+            using var connection = CreateConnection();
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Action", "GETBYSOURCEID");
+            parameters.Add("@source_id", sourceId);
 
             return await connection.QueryAsync<TblLead>(
                 "erpsystem.sp_tblleads",

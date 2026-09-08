@@ -19,6 +19,7 @@ namespace LeadManagement.Domain.Entities
 
         public string? Description { get; set; }
         public string? Status { get; set; }
+        public int? SourceId { get; set; }
 
         public DateTime? LeadDate { get; set; }
 

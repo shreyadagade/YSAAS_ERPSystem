@@ -16,6 +16,7 @@ namespace LeadManagement.Application.DTOs.Lead
         public string? Description { get; set; }
         public string? Status { get; set; }
         public DateTime? LeadDate { get; set; }
+        public int? SourceId { get; set; }
         //public DateTime CreatedAt { get; set; }
         //public DateTime? UpdatedAt { get; set; }
         //public DateTime? DeletedAt { get; set; }

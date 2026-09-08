@@ -1,6 +1,5 @@
 ﻿using LeadManagement.Application.DTOs.Lead;
 using LeadManagement.Application.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LeadManagement.API.Controllers
@@ -17,7 +16,6 @@ namespace LeadManagement.API.Controllers
             _leadService = leadService;
         }
 
-        // GET: api/Lead
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -26,7 +24,6 @@ namespace LeadManagement.API.Controllers
             return Ok(leads);
         }
 
-        // GET: api/Lead/1
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -38,7 +35,16 @@ namespace LeadManagement.API.Controllers
             return Ok(lead);
         }
 
-        // POST: api/Lead
+        [HttpGet("source/{sourceId:int}")]
+        public async Task<IActionResult> GetBySourceId(
+            int sourceId)
+        {
+            var leads =
+                await _leadService.GetBySourceIdAsync(sourceId);
+
+            return Ok(leads);
+        }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create(
             [FromBody] LeadDto lead)
@@ -53,16 +59,15 @@ namespace LeadManagement.API.Controllers
             });
         }
 
-        // PUT: api/Lead/1
         [HttpPut("Update/{id:int}")]
-     
         public async Task<IActionResult> Update(
-    int id,
-    [FromBody] LeadDto lead)
+            int id,
+            [FromBody] LeadDto lead)
         {
             lead.LeadId = id;
 
-            var result = await _leadService.UpdateAsync(lead);
+            var result =
+                await _leadService.UpdateAsync(lead);
 
             if (!result)
             {
@@ -80,11 +85,11 @@ namespace LeadManagement.API.Controllers
             });
         }
 
-        // DELETE: api/Lead/1
         [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _leadService.DeleteAsync(id);
+            var result =
+                await _leadService.DeleteAsync(id);
 
             if (!result)
             {
@@ -102,11 +107,11 @@ namespace LeadManagement.API.Controllers
             });
         }
 
-        // PUT: api/Lead/restore/1
         [HttpPut("restore/{id:int}")]
         public async Task<IActionResult> Restore(int id)
         {
-            var result = await _leadService.RestoreAsync(id);
+            var result =
+                await _leadService.RestoreAsync(id);
 
             if (!result)
             {
@@ -125,4 +130,3 @@ namespace LeadManagement.API.Controllers
         }
     }
 }
-

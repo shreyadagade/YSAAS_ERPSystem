@@ -1,12 +1,7 @@
 ﻿using LeadManagement.Application.DTOs.Lead;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LeadManagement.Application.Interfaces.Services
 {
-
-
     public interface ILeadService
     {
         Task<int> CreateAsync(LeadDto lead);
@@ -20,6 +15,7 @@ namespace LeadManagement.Application.Interfaces.Services
         Task<LeadDto?> GetByIdAsync(int leadId);
 
         Task<IEnumerable<LeadDto>> GetAllAsync();
+
+        Task<IEnumerable<LeadDto>> GetBySourceIdAsync(int sourceId);
     }
 }
-
