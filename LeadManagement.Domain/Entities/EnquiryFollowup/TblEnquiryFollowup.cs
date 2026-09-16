@@ -1,12 +1,18 @@
 ﻿using System;
 
-namespace LeadManagement.Domain.Entities
+namespace LeadManagement.Domain.Entities.EnquiryFollowup
 {
-    public class TblLeadFollowup
+    public class TblEnquiryFollowup
     {
-        public int LeadFollowupId { get; set; }
+        public int FollowupId { get; set; }
 
-        public int? LeadId { get; set; }
+        public int? EnquiryId { get; set; }
+
+        public int? SourceId { get; set; }
+
+        public string? SourceName { get; set; }
+
+        public string? CandidateName { get; set; }
 
         public DateTime? FollowUpDate { get; set; }
 
@@ -25,8 +31,6 @@ namespace LeadManagement.Domain.Entities
         public DateTime? DeletedAt { get; set; }
 
         public DateTime? RestoredAt { get; set; }
-
-        // For displaying Lead information
-        public string? CandidateName { get; set; }
     }
 }
+

@@ -1,12 +1,10 @@
-﻿using LeadManagement.Application.DTOs.EnquiryFollowup;
-using System;
+﻿
+using LeadManagement.Application.DTOs.EnquiryFollowup;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace LeadManagement.Application.Interfaces.Services
 {
-   
-
     public interface IEnquiryFollowupService
     {
         Task<int> CreateAsync(EnquiryFollowupDto followup);
@@ -20,6 +18,9 @@ namespace LeadManagement.Application.Interfaces.Services
         Task<EnquiryFollowupDto?> GetByIdAsync(int followupId);
 
         Task<IEnumerable<EnquiryFollowupDto>> GetAllAsync();
+
+        // Get all follow-ups for a specific enquiry
+        Task<IEnumerable<EnquiryFollowupDto>> GetByEnquiryIdAsync(int enquiryId);
     }
 }
 

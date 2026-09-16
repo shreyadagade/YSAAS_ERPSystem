@@ -1,17 +1,14 @@
-﻿using Dapper;
+﻿
+using Dapper;
 using LeadManagement.Application.Interfaces.Repositories.TrainingCourse;
-using LeadManagement.Domain.Entities;
+using LeadManagement.Domain.Entities.TrainingCourse;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 
-namespace LeadManagement.Infrastructure.Repositories
+namespace LeadManagement.Infrastructure.Repositories.TrainingCourse
 {
-
-
     public class TrainingCourseRepository : ITrainingCourseRepository
     {
         private readonly IConfiguration _configuration;
@@ -20,7 +17,6 @@ namespace LeadManagement.Infrastructure.Repositories
         {
             _configuration = configuration;
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
-
         }
 
         private SqlConnection CreateConnection()
@@ -28,6 +24,10 @@ namespace LeadManagement.Infrastructure.Repositories
             return new SqlConnection(
                 _configuration.GetConnectionString("DefaultConnection"));
         }
+
+        // =====================================================
+        // INSERT
+        // =====================================================
 
         public async Task<int> InsertAsync(TblTrainingCourse course)
         {
@@ -37,6 +37,9 @@ namespace LeadManagement.Infrastructure.Repositories
 
             parameters.Add("@Type", "Insert");
             parameters.Add("@course_name", course.CourseName);
+            parameters.Add("@fees_amount", course.FeesAmount);
+            parameters.Add("@fees_change_date", course.FeesChangeDate);
+            parameters.Add("@installment_percentage", course.InstallmentPercentage);
 
             var result = await connection.QuerySingleAsync<dynamic>(
                 "erpsystem.sp_tbltraining_courses",
@@ -45,6 +48,10 @@ namespace LeadManagement.Infrastructure.Repositories
 
             return (int)result.course_id;
         }
+
+        // =====================================================
+        // UPDATE
+        // =====================================================
 
         public async Task<bool> UpdateAsync(TblTrainingCourse course)
         {
@@ -55,6 +62,9 @@ namespace LeadManagement.Infrastructure.Repositories
             parameters.Add("@Type", "Update");
             parameters.Add("@course_id", course.CourseId);
             parameters.Add("@course_name", course.CourseName);
+            parameters.Add("@fees_amount", course.FeesAmount);
+            parameters.Add("@fees_change_date", course.FeesChangeDate);
+            parameters.Add("@installment_percentage", course.InstallmentPercentage);
 
             await connection.QueryFirstOrDefaultAsync(
                 "erpsystem.sp_tbltraining_courses",
@@ -63,6 +73,10 @@ namespace LeadManagement.Infrastructure.Repositories
 
             return true;
         }
+
+        // =====================================================
+        // DELETE
+        // =====================================================
 
         public async Task<bool> DeleteAsync(int courseId)
         {
@@ -81,6 +95,10 @@ namespace LeadManagement.Infrastructure.Repositories
             return true;
         }
 
+        // =====================================================
+        // RESTORE
+        // =====================================================
+
         public async Task<bool> RestoreAsync(int courseId)
         {
             using var connection = CreateConnection();
@@ -98,6 +116,10 @@ namespace LeadManagement.Infrastructure.Repositories
             return true;
         }
 
+        // =====================================================
+        // GET BY ID
+        // =====================================================
+
         public async Task<TblTrainingCourse?> GetByIdAsync(int courseId)
         {
             using var connection = CreateConnection();
@@ -113,6 +135,10 @@ namespace LeadManagement.Infrastructure.Repositories
                 commandType: CommandType.StoredProcedure);
         }
 
+        // =====================================================
+        // GET ALL
+        // =====================================================
+
         public async Task<IEnumerable<TblTrainingCourse>> GetAllAsync()
         {
             using var connection = CreateConnection();
@@ -126,9 +152,14 @@ namespace LeadManagement.Infrastructure.Repositories
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }
+
+        // =====================================================
+        // CHECK COURSE NAME
+        // =====================================================
+
         public async Task<bool> CourseNameExistsAsync(
-    string courseName,
-    int? courseId = null)
+            string courseName,
+            int? courseId = null)
         {
             using var connection = CreateConnection();
 

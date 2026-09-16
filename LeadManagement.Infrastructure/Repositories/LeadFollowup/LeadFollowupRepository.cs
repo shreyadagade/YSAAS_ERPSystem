@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using LeadManagement.Application.Interfaces.Repositories.LeadFollowup;
-using LeadManagement.Domain.Entities;
+using LeadManagement.Domain.Entities.LeadFollowup;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
@@ -137,5 +137,27 @@ namespace LeadManagement.Infrastructure.Repositories
                 parameters,
                 commandType: CommandType.StoredProcedure);
         }
+       
+// =====================================================
+// GET BY LEAD ID
+// =====================================================
+
+public async Task<IEnumerable<TblLeadFollowup>> GetByLeadIdAsync(int leadId)
+        {
+            using var connection =
+                new SqlConnection(_connectionString);
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Type", "GetByLeadId");
+            parameters.Add("@lead_id", leadId);
+
+            return await connection.QueryAsync<TblLeadFollowup>(
+                "erpsystem.sp_tbllead_followups",
+                parameters,
+                commandType: CommandType.StoredProcedure);
+        }
+
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿using LeadManagement.Application.DTOs.Lead;
 
-namespace LeadManagement.Application.Interfaces.Services
+namespace LeadManagement.Application.Interfaces.Services.Lead
 {
     public interface ILeadService
     {

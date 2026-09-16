@@ -1,11 +1,12 @@
 ﻿using LeadManagement.Application.DTOs.Lead;
 using LeadManagement.Application.Interfaces.Repositories.Lead;
-using LeadManagement.Application.Interfaces.Services;
+using LeadManagement.Application.Interfaces.Services.Lead;
 using LeadManagement.Domain.Entities;
+using LeadManagement.Domain.Entities.Lead;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
 
-namespace LeadManagement.Application.Services
+namespace LeadManagement.Application.Services.Lead
 {
     public class LeadService : ILeadService
     {
@@ -20,6 +21,10 @@ namespace LeadManagement.Application.Services
             _logger = logger;
         }
 
+        // =====================================================
+        // CREATE
+        // =====================================================
+
         public async Task<int> CreateAsync(LeadDto lead)
         {
             _logger.LogInformation(
@@ -29,7 +34,8 @@ namespace LeadManagement.Application.Services
                 lead.SourceId);
 
             if (string.IsNullOrWhiteSpace(lead.CandidateName))
-                throw new ArgumentException("Candidate name is required.");
+                throw new ArgumentException(
+                    "Candidate name is required.");
 
             if (lead.CandidateName.Length > 100)
                 throw new ArgumentException(
@@ -99,7 +105,8 @@ namespace LeadManagement.Application.Services
                 SourceId = lead.SourceId
             };
 
-            var leadId = await _leadRepository.InsertAsync(entity);
+            var leadId =
+                await _leadRepository.InsertAsync(entity);
 
             _logger.LogInformation(
                 "Lead created successfully. LeadId: {LeadId}, SourceId: {SourceId}",
@@ -109,6 +116,10 @@ namespace LeadManagement.Application.Services
             return leadId;
         }
 
+        // =====================================================
+        // UPDATE
+        // =====================================================
+
         public async Task<bool> UpdateAsync(LeadDto lead)
         {
             _logger.LogInformation(
@@ -117,7 +128,8 @@ namespace LeadManagement.Application.Services
                 lead.SourceId);
 
             if (lead.LeadId <= 0)
-                throw new ArgumentException("Invalid lead ID.");
+                throw new ArgumentException(
+                    "Invalid lead ID.");
 
             if (string.IsNullOrWhiteSpace(lead.CandidateName))
                 throw new ArgumentException(
@@ -194,7 +206,8 @@ namespace LeadManagement.Application.Services
                 SourceId = lead.SourceId
             };
 
-            var result = await _leadRepository.UpdateAsync(entity);
+            var result =
+                await _leadRepository.UpdateAsync(entity);
 
             if (result)
             {
@@ -211,6 +224,10 @@ namespace LeadManagement.Application.Services
 
             return result;
         }
+
+        // =====================================================
+        // DELETE
+        // =====================================================
 
         public async Task<bool> DeleteAsync(int leadId)
         {
@@ -241,6 +258,10 @@ namespace LeadManagement.Application.Services
             return result;
         }
 
+        // =====================================================
+        // RESTORE
+        // =====================================================
+
         public async Task<bool> RestoreAsync(int leadId)
         {
             _logger.LogInformation(
@@ -269,6 +290,10 @@ namespace LeadManagement.Application.Services
 
             return result;
         }
+
+        // =====================================================
+        // GET BY ID
+        // =====================================================
 
         public async Task<LeadDto?> GetByIdAsync(int leadId)
         {
@@ -302,9 +327,14 @@ namespace LeadManagement.Application.Services
                 Description = entity.Description,
                 Status = entity.Status,
                 LeadDate = entity.LeadDate,
-                SourceId = entity.SourceId
+                SourceId = entity.SourceId,
+                SourceName = entity.SourceName
             };
         }
+
+        // =====================================================
+        // GET ALL
+        // =====================================================
 
         public async Task<IEnumerable<LeadDto>> GetAllAsync()
         {
@@ -328,9 +358,14 @@ namespace LeadManagement.Application.Services
                 Description = entity.Description,
                 Status = entity.Status,
                 LeadDate = entity.LeadDate,
-                SourceId = entity.SourceId
+                SourceId = entity.SourceId,
+                SourceName = entity.SourceName
             });
         }
+
+        // =====================================================
+        // GET BY SOURCE ID
+        // =====================================================
 
         public async Task<IEnumerable<LeadDto>> GetBySourceIdAsync(
             int sourceId)
@@ -361,9 +396,14 @@ namespace LeadManagement.Application.Services
                 Description = entity.Description,
                 Status = entity.Status,
                 LeadDate = entity.LeadDate,
-                SourceId = entity.SourceId
+                SourceId = entity.SourceId,
+                SourceName = entity.SourceName
             });
         }
+
+        // =====================================================
+        // EMAIL VALIDATION
+        // =====================================================
 
         private bool IsValidEmail(string email)
         {
@@ -380,6 +420,10 @@ namespace LeadManagement.Application.Services
                 return false;
             }
         }
+
+        // =====================================================
+        // MOBILE VALIDATION
+        // =====================================================
 
         private bool IsValidMobile(string mobile)
         {

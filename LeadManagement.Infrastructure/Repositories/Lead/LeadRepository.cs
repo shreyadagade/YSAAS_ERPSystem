@@ -1,11 +1,11 @@
 ﻿using Dapper;
 using LeadManagement.Application.Interfaces.Repositories.Lead;
-using LeadManagement.Domain.Entities;
+using LeadManagement.Domain.Entities.Lead;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 
-namespace LeadManagement.Infrastructure.Repositories
+namespace LeadManagement.Infrastructure.Repositories.Lead
 {
     public class LeadRepository : ILeadRepository
     {

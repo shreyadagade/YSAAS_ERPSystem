@@ -16,6 +16,6 @@ namespace LeadManagement.Application.Interfaces.Repositories.Enquiry
 
         Task<bool> RestoreAsync(int enquiryId);
 
-        Task<IEnumerable<CandidateDropdownDto>> GetCandidatesAsync();
+        Task<IEnumerable<EnquiryDto>> GetCandidatesAsync();
     }
 }

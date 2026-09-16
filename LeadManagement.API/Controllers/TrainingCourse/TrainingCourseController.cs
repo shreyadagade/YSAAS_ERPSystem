@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LeadManagement.API.Controllers
+namespace LeadManagement.API.Controllers.TrainingCourse
 {
     [Route("api/[controller]")]
     [ApiController]

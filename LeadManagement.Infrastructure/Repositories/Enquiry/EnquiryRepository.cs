@@ -40,8 +40,15 @@ namespace LeadManagement.Infrastructure.Repositories.Enquiry
             parameters.Add("@email_address", enquiry.EmailAddress);
             parameters.Add("@mobile_number", enquiry.MobileNumber);
             parameters.Add("@birth_date", enquiry.BirthDate);
-            parameters.Add("@qualification", enquiry.Qualification);
-            parameters.Add("@lead_sources", enquiry.LeadSources);
+
+            // Qualification
+            parameters.Add("@qualification_id", enquiry.QualificationID);
+            //parameters.Add("@qualification", enquiry.Qualification);
+
+            // Lead Source
+            parameters.Add("@source_id", enquiry.SourceId);
+            //parameters.Add("@lead_sources", enquiry.LeadSources);
+
             parameters.Add("@enquiry_fors", enquiry.EnquiryFors);
             parameters.Add("@interested_topics", enquiry.InterestedTopics);
             parameters.Add("@status", enquiry.Status);
@@ -64,7 +71,7 @@ namespace LeadManagement.Infrastructure.Repositories.Enquiry
             var parameters = new DynamicParameters();
 
             parameters.Add("@Action", "UPDATE");
-            //parameters.Add("@enquiry_id", enquiry.EnquiryId);
+            parameters.Add("@enquiry_id", enquiry.EnquiryId);
             parameters.Add("@enquiry_date", enquiry.EnquiryDate);
             parameters.Add("@candidate_name", enquiry.CandidateName);
             parameters.Add("@gender", enquiry.Gender);
@@ -72,8 +79,15 @@ namespace LeadManagement.Infrastructure.Repositories.Enquiry
             parameters.Add("@email_address", enquiry.EmailAddress);
             parameters.Add("@mobile_number", enquiry.MobileNumber);
             parameters.Add("@birth_date", enquiry.BirthDate);
-            parameters.Add("@qualification", enquiry.Qualification);
-            parameters.Add("@lead_sources", enquiry.LeadSources);
+
+            // Qualification
+            parameters.Add("@qualification_id", enquiry.QualificationID);
+            //parameters.Add("@qualification", enquiry.Qualification);
+
+            // Lead Source
+            parameters.Add("@source_id", enquiry.SourceId);
+            //parameters.Add("@lead_sources", enquiry.LeadSources);
+
             parameters.Add("@enquiry_fors", enquiry.EnquiryFors);
             parameters.Add("@interested_topics", enquiry.InterestedTopics);
             parameters.Add("@status", enquiry.Status);
@@ -170,7 +184,7 @@ namespace LeadManagement.Infrastructure.Repositories.Enquiry
         // GET CANDIDATES
         // =====================================================
 
-        public async Task<IEnumerable<CandidateDropdownDto>> GetCandidatesAsync()
+        public async Task<IEnumerable<EnquiryDto>> GetCandidatesAsync()
         {
             using var connection = CreateConnection();
 
@@ -178,7 +192,7 @@ namespace LeadManagement.Infrastructure.Repositories.Enquiry
 
             parameters.Add("@Action", "GETCANDIDATES");
 
-            return await connection.QueryAsync<CandidateDropdownDto>(
+            return await connection.QueryAsync<EnquiryDto>(
                 "erpsystem.sp_tblenquiries",
                 parameters,
                 commandType: CommandType.StoredProcedure);

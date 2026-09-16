@@ -125,5 +125,25 @@ namespace LeadManagement.API.Controllers
 
             return Ok(followups);
         }
+       
+// GET: api/LeadFollowup/lead/1
+[HttpGet("lead/{leadId:int}")]
+public async Task<IActionResult> GetByLeadId(int leadId)
+        {
+            var followups =
+                await _service.GetByLeadIdAsync(leadId);
+
+            if (followups == null || !followups.Any())
+            {
+                return NotFound(new
+                {
+                    message = "No follow-ups found for this lead."
+                });
+            }
+
+            return Ok(followups);
+        }
+
+
     }
 }

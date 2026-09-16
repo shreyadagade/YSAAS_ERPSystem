@@ -1,7 +1,8 @@
-﻿using LeadManagement.Application.DTOs.TrainingCourse;
+﻿
+using LeadManagement.Application.DTOs.TrainingCourse;
 using LeadManagement.Application.Interfaces.Repositories.TrainingCourse;
 using LeadManagement.Application.Interfaces.Services;
-using LeadManagement.Domain.Entities;
+using LeadManagement.Domain.Entities.TrainingCourse;
 using Microsoft.Extensions.Logging;
 
 namespace LeadManagement.Application.Services
@@ -18,6 +19,10 @@ namespace LeadManagement.Application.Services
             _courseRepository = courseRepository;
             _logger = logger;
         }
+
+        // =====================================================
+        // CREATE
+        // =====================================================
 
         public async Task<int> CreateAsync(TrainingCourseDto course)
         {
@@ -45,7 +50,8 @@ namespace LeadManagement.Application.Services
             }
 
             // 3. Duplicate course name validation
-            if (await _courseRepository.CourseNameExistsAsync(course.CourseName))
+            if (await _courseRepository.CourseNameExistsAsync(
+                    course.CourseName))
             {
                 _logger.LogWarning(
                     "Course creation failed: Duplicate course name {CourseName}",
@@ -55,12 +61,16 @@ namespace LeadManagement.Application.Services
                     "A course with this name already exists.");
             }
 
+            // 4. DTO -> Entity
             var entity = new TblTrainingCourse
             {
-                CourseName = course.CourseName.Trim()
+                CourseName = course.CourseName.Trim(),
+                FeesAmount = course.FeesAmount,
+                FeesChangeDate = course.FeesChangeDate,
+                InstallmentPercentage = course.InstallmentPercentage
             };
 
-            // 4. Save
+            // 5. Save
             var courseId = await _courseRepository.InsertAsync(entity);
 
             _logger.LogInformation(
@@ -69,6 +79,10 @@ namespace LeadManagement.Application.Services
 
             return courseId;
         }
+
+        // =====================================================
+        // UPDATE
+        // =====================================================
 
         public async Task<bool> UpdateAsync(TrainingCourseDto course)
         {
@@ -87,31 +101,43 @@ namespace LeadManagement.Application.Services
 
             // 2. Course name validation
             if (string.IsNullOrWhiteSpace(course.CourseName))
-                throw new ArgumentException("Course name is required.");
+            {
+                throw new ArgumentException(
+                    "Course name is required.");
+            }
 
             // 3. Maximum length validation
             if (course.CourseName.Length > 100)
+            {
                 throw new ArgumentException(
                     "Course name cannot exceed 100 characters.");
+            }
 
             // 4. Duplicate course name validation
-         
-            if (await _courseRepository.CourseNameExistsAsync(course.CourseName))
+            // Exclude the current course ID
+            if (await _courseRepository.CourseNameExistsAsync(
+                    course.CourseName,
+                    course.CourseId))
             {
                 _logger.LogWarning(
-                    "Course creation failed: Duplicate course name {CourseName}",
+                    "Course update failed: Duplicate course name {CourseName}",
                     course.CourseName);
 
                 throw new Exception(
                     "A course with this name already exists.");
             }
 
+            // 5. DTO -> Entity
             var entity = new TblTrainingCourse
             {
                 CourseId = course.CourseId,
-                CourseName = course.CourseName.Trim()
+                CourseName = course.CourseName.Trim(),
+                FeesAmount = course.FeesAmount,
+                FeesChangeDate = course.FeesChangeDate,
+                InstallmentPercentage = course.InstallmentPercentage
             };
 
+            // 6. Update
             var result = await _courseRepository.UpdateAsync(entity);
 
             if (result)
@@ -130,6 +156,10 @@ namespace LeadManagement.Application.Services
             return result;
         }
 
+        // =====================================================
+        // DELETE
+        // =====================================================
+
         public async Task<bool> DeleteAsync(int courseId)
         {
             _logger.LogInformation(
@@ -139,7 +169,8 @@ namespace LeadManagement.Application.Services
             if (courseId <= 0)
                 throw new ArgumentException("Invalid course ID.");
 
-            var result = await _courseRepository.DeleteAsync(courseId);
+            var result =
+                await _courseRepository.DeleteAsync(courseId);
 
             if (result)
             {
@@ -157,6 +188,10 @@ namespace LeadManagement.Application.Services
             return result;
         }
 
+        // =====================================================
+        // RESTORE
+        // =====================================================
+
         public async Task<bool> RestoreAsync(int courseId)
         {
             _logger.LogInformation(
@@ -166,7 +201,8 @@ namespace LeadManagement.Application.Services
             if (courseId <= 0)
                 throw new ArgumentException("Invalid course ID.");
 
-            var result = await _courseRepository.RestoreAsync(courseId);
+            var result =
+                await _courseRepository.RestoreAsync(courseId);
 
             if (result)
             {
@@ -184,6 +220,10 @@ namespace LeadManagement.Application.Services
             return result;
         }
 
+        // =====================================================
+        // GET BY ID
+        // =====================================================
+
         public async Task<TrainingCourseDto?> GetByIdAsync(int courseId)
         {
             _logger.LogInformation(
@@ -193,7 +233,8 @@ namespace LeadManagement.Application.Services
             if (courseId <= 0)
                 throw new ArgumentException("Invalid course ID.");
 
-            var entity = await _courseRepository.GetByIdAsync(courseId);
+            var entity =
+                await _courseRepository.GetByIdAsync(courseId);
 
             if (entity == null)
             {
@@ -211,20 +252,20 @@ namespace LeadManagement.Application.Services
                 FeesAmount = entity.FeesAmount,
                 FeesChangeDate = entity.FeesChangeDate,
                 InstallmentPercentage = entity.InstallmentPercentage
-                //Flag = entity.Flag,
-                //InsertedAt = entity.InsertedAt,
-                //UpdatedAt = entity.UpdatedAt,
-                //DeletedAt = entity.DeletedAt,
-                //RestoredAt = entity.RestoredAt
             };
         }
+
+        // =====================================================
+        // GET ALL
+        // =====================================================
 
         public async Task<IEnumerable<TrainingCourseDto>> GetAllAsync()
         {
             _logger.LogInformation(
                 "Getting all active training courses.");
 
-            var entities = await _courseRepository.GetAllAsync();
+            var entities =
+                await _courseRepository.GetAllAsync();
 
             _logger.LogInformation(
                 "Retrieved {Count} training courses.",
@@ -236,12 +277,8 @@ namespace LeadManagement.Application.Services
                 CourseName = entity.CourseName,
                 FeesAmount = entity.FeesAmount,
                 FeesChangeDate = entity.FeesChangeDate,
-                InstallmentPercentage = entity.InstallmentPercentage
-                //Flag = entity.Flag,
-                //InsertedAt = entity.InsertedAt,
-                //UpdatedAt = entity.UpdatedAt,
-                //DeletedAt = entity.DeletedAt,
-                //RestoredAt = entity.RestoredAt
+                InstallmentPercentage =
+                    entity.InstallmentPercentage
             });
         }
     }

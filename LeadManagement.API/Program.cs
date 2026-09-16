@@ -4,20 +4,29 @@ using LeadManagement.Application.Interfaces.Repositories.Enquiry;
 using LeadManagement.Application.Interfaces.Repositories.EnquiryFollowup;
 using LeadManagement.Application.Interfaces.Repositories.Lead;
 using LeadManagement.Application.Interfaces.Repositories.LeadFollowup;
+using LeadManagement.Application.Interfaces.Repositories.LeadSource;
+using LeadManagement.Application.Interfaces.Repositories.Qualification;
 using LeadManagement.Application.Interfaces.Repositories.TrainingCourse;
 using LeadManagement.Application.Interfaces.Services;
 using LeadManagement.Application.Interfaces.Services.Enquiry;
+using LeadManagement.Application.Interfaces.Services.Lead;
 using LeadManagement.Application.Services;
 using LeadManagement.Application.Services.Enquiry;
+using LeadManagement.Application.Services.Lead;
 using LeadManagement.Application.Settings;
 using LeadManagement.Infrastructure.Repositories;
 using LeadManagement.Infrastructure.Repositories.Enquiry;
+using LeadManagement.Infrastructure.Repositories.EnquiryFollowup;
+using LeadManagement.Infrastructure.Repositories.Lead;
+using LeadManagement.Infrastructure.Repositories.LeadSource;
+using LeadManagement.Infrastructure.Repositories.TrainingCourse;
 using LeadManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Serilog;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,16 +82,13 @@ builder.Services.AddSwaggerGen(options =>
 // =========================
 
 builder.Services.AddScoped<ILeadRepository, LeadRepository>();
-
-builder.Services.AddScoped<
-    ITrainingCourseRepository,
-    TrainingCourseRepository>();
-
-builder.Services.AddScoped<
-    IEnquiryFollowupRepository,
-    EnquiryFollowupRepository>();
+builder.Services.AddScoped<ITrainingCourseRepository,TrainingCourseRepository>();
+builder.Services.AddScoped<IEnquiryFollowupRepository,EnquiryFollowupRepository>();
 builder.Services.AddScoped<IEnquiryRepository, EnquiryRepository>();
 builder.Services.AddScoped<ILeadFollowupRepository,LeadFollowupRepository>();
+builder.Services.AddScoped<IQualificationRepository, QualificationRepository>();
+builder.Services.AddScoped<ILeadSourceRepository, LeadSourceRepository>();
+builder.Services.AddScoped<ILeadImportRepository,LeadImportRepository>();
 
 
 
@@ -91,17 +97,13 @@ builder.Services.AddScoped<ILeadFollowupRepository,LeadFollowupRepository>();
 // =========================
 
 builder.Services.AddScoped<ILeadService, LeadService>();
-
-builder.Services.AddScoped<
-    ITrainingCourseService,
-    TrainingCourseService>();
-
-builder.Services.AddScoped<
-    IEnquiryFollowupService,
-    EnquiryFollowupService>();
-
+builder.Services.AddScoped<ITrainingCourseService,TrainingCourseService>();
+builder.Services.AddScoped<IEnquiryFollowupService, EnquiryFollowupService>();
 builder.Services.AddScoped<IEnquiryService, EnquiryService>();
 builder.Services.AddScoped<ILeadFollowupService,LeadFollowupService>();
+builder.Services.AddScoped<IQualificationService, QualificationService>();
+builder.Services.AddScoped<ILeadSourceService, LeadSourceService>();
+builder.Services.AddScoped<ILeadImportService,LeadImportService>();
 
 
 

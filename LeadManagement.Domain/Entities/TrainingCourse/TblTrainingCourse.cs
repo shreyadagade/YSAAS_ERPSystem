@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LeadManagement.Domain.Entities.TrainingCourse;
 
-namespace LeadManagement.Domain.Entities
+namespace LeadManagement.Domain.Entities.TrainingCourse
 {
 
 

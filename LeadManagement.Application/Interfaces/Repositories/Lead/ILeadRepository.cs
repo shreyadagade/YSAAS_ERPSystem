@@ -1,4 +1,4 @@
-﻿using LeadManagement.Domain.Entities;
+﻿using LeadManagement.Domain.Entities.Lead;
 using System;
 using System.Collections.Generic;
 using System.Text;

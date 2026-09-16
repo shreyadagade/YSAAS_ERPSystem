@@ -43,7 +43,7 @@ namespace LeadManagement.Application.Services.Enquiry
             return await _enquiryRepository.RestoreAsync(enquiryId);
         }
 
-        public async Task<IEnumerable<CandidateDropdownDto>> GetCandidatesAsync()
+        public async Task<IEnumerable<EnquiryDto>> GetCandidatesAsync()
         {
             return await _enquiryRepository.GetCandidatesAsync();
         }

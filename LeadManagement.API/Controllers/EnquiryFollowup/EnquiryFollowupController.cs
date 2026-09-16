@@ -1,10 +1,9 @@
-﻿using LeadManagement.Application.DTOs.EnquiryFollowup;
+﻿
+using LeadManagement.Application.DTOs.EnquiryFollowup;
 using LeadManagement.Application.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LeadManagement.API.Controllers
+namespace LeadManagement.API.Controllers.EnquiryFollowup
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,7 +19,11 @@ namespace LeadManagement.API.Controllers
             _followupService = followupService;
         }
 
+        // =====================================================
+        // GET ALL
         // GET: api/EnquiryFollowup
+        // =====================================================
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -29,7 +32,11 @@ namespace LeadManagement.API.Controllers
             return Ok(followups);
         }
 
+        // =====================================================
+        // GET BY ID
         // GET: api/EnquiryFollowup/1
+        // =====================================================
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -41,12 +48,17 @@ namespace LeadManagement.API.Controllers
             return Ok(followup);
         }
 
-        // POST: api/EnquiryFollowup
+        // =====================================================
+        // CREATE
+        // POST: api/EnquiryFollowup/Create
+        // =====================================================
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create(
             [FromBody] EnquiryFollowupDto followup)
         {
-            var followupId = await _followupService.CreateAsync(followup);
+            var followupId =
+                await _followupService.CreateAsync(followup);
 
             return Ok(new
             {
@@ -55,7 +67,11 @@ namespace LeadManagement.API.Controllers
             });
         }
 
-        // PUT: api/EnquiryFollowup/1
+        // =====================================================
+        // UPDATE
+        // PUT: api/EnquiryFollowup/Update/1
+        // =====================================================
+
         [HttpPut("Update/{id:int}")]
         public async Task<IActionResult> Update(
             int id,
@@ -71,7 +87,11 @@ namespace LeadManagement.API.Controllers
             });
         }
 
-        // DELETE: api/EnquiryFollowup/1
+        // =====================================================
+        // DELETE
+        // DELETE: api/EnquiryFollowup/Delete/1
+        // =====================================================
+
         [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -83,7 +103,11 @@ namespace LeadManagement.API.Controllers
             });
         }
 
+        // =====================================================
+        // RESTORE
         // PUT: api/EnquiryFollowup/restore/1
+        // =====================================================
+
         [HttpPut("restore/{id:int}")]
         public async Task<IActionResult> Restore(int id)
         {
@@ -94,6 +118,27 @@ namespace LeadManagement.API.Controllers
                 message = "Follow Up Restored Successfully"
             });
         }
+
+        // =====================================================
+        // GET BY ENQUIRY ID
+        // GET: api/EnquiryFollowup/enquiry/1
+        // =====================================================
+
+        [HttpGet("enquiry/{enquiryId:int}")]
+        public async Task<IActionResult> GetByEnquiryId(int enquiryId)
+        {
+            var followups =
+                await _followupService.GetByEnquiryIdAsync(enquiryId);
+
+            if (followups == null || !followups.Any())
+            {
+                return NotFound(new
+                {
+                    message = "No follow-ups found for this enquiry."
+                });
+            }
+
+            return Ok(followups);
+        }
     }
 }
-

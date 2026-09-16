@@ -1,12 +1,10 @@
-﻿using LeadManagement.Domain.Entities;
-using System;
+﻿
+using LeadManagement.Domain.Entities.EnquiryFollowup;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace LeadManagement.Application.Interfaces.Repositories.EnquiryFollowup
 {
-    
-
     public interface IEnquiryFollowupRepository
     {
         Task<int> InsertAsync(TblEnquiryFollowup followup);
@@ -20,6 +18,9 @@ namespace LeadManagement.Application.Interfaces.Repositories.EnquiryFollowup
         Task<TblEnquiryFollowup?> GetByIdAsync(int followupId);
 
         Task<IEnumerable<TblEnquiryFollowup>> GetAllAsync();
+
+        // Get all follow-ups for a specific enquiry
+        Task<IEnumerable<TblEnquiryFollowup>> GetByEnquiryIdAsync(int enquiryId);
     }
 }
 

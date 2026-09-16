@@ -1,8 +1,8 @@
 ﻿using LeadManagement.Application.DTOs.Lead;
-using LeadManagement.Application.Interfaces.Services;
+using LeadManagement.Application.Interfaces.Services.Lead;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LeadManagement.API.Controllers
+namespace LeadManagement.API.Controllers.Lead
 {
     [Route("api/[controller]")]
     [ApiController]

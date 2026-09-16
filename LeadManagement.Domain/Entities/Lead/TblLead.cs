@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeadManagement.Domain.Entities
+namespace LeadManagement.Domain.Entities.Lead
 {
     
     public class TblLead
@@ -20,6 +20,7 @@ namespace LeadManagement.Domain.Entities
         public string? Description { get; set; }
         public string? Status { get; set; }
         public int? SourceId { get; set; }
+        public string? SourceName { get; set; }
 
         public DateTime? LeadDate { get; set; }
 

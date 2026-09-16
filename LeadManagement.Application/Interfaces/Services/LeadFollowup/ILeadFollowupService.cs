@@ -15,5 +15,6 @@ namespace LeadManagement.Application.Interfaces.Services
         Task<LeadFollowupDto?> GetByIdAsync(int followupId);
 
         Task<IEnumerable<LeadFollowupDto>> GetAllAsync();
+        Task<IEnumerable<LeadFollowupDto>> GetByLeadIdAsync(int leadId);
     }
 }
