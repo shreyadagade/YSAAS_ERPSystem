@@ -39,6 +39,8 @@ namespace UserManagement.API.Configuration
 
             services.AddScoped<IUserProfileService, UserProfileService>();
 
+            //services.AddScoped<IQualificationService, QualificationService>();
+
             return services;
         }
     }

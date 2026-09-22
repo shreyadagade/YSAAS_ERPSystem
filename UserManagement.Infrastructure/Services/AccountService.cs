@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UserManagement.Application.Configuration;
 using UserManagement.Application.DTOs.Account;
 using UserManagement.Application.DTOs.Email;
 using UserManagement.Application.Exceptions;
@@ -14,11 +16,15 @@ namespace UserManagement.Infrastructure.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailService _emailService;
+        private readonly EmailSettings _emailSettings;
         public AccountService(
-            UserManager<ApplicationUser> userManager, IEmailService emailService)
+            UserManager<ApplicationUser> userManager,
+            IEmailService emailService,
+            IOptions<EmailSettings> emailSettings)
         {
             _userManager = userManager;
             _emailService = emailService;
+            _emailSettings = emailSettings.Value;
         }
 
         public async Task<string> ChangePasswordAsync(string userId,ChangePasswordDto dto)
@@ -112,11 +118,37 @@ namespace UserManagement.Infrastructure.Services
                     "User account is deactivated.");
             }
 
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+           var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            var resetToken = $"{user.Id}|{token}";
+            var encodedToken = Uri.EscapeDataString(token);
 
-            return resetToken;
+            var resetLink =
+                $"{_emailSettings.FrontendUrl.TrimEnd('/')}/reset-password" +
+                $"?email={Uri.EscapeDataString(user.Email!)}" +
+                $"&token={encodedToken}";
+
+            var emailRequest = new EmailRequestDto
+            {
+                ToEmail = user.Email!,
+                Subject = "Reset Your Password",
+                Body = $"""
+           <p>Hello,</p>
+
+           <p>You requested to reset your password.</p>
+
+           <p>
+               <a href="{resetLink}">
+                   Click here to reset your password
+               </a>
+           </p>
+
+           <p>If you did not request this, please ignore this email.</p>
+           """
+            };
+
+            await _emailService.SendEmailAsync(emailRequest);
+
+            return "Password reset link has been sent to your email address.";
         }
 
         public async Task<string> ResetPasswordAsync(ResetPasswordDto dto)
@@ -124,6 +156,11 @@ namespace UserManagement.Infrastructure.Services
             if (dto == null)
             {
                 throw new BadRequestException("Request data is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.EmailAddress))
+            {
+                throw new BadRequestException("Email address is required.");
             }
 
             if (string.IsNullOrWhiteSpace(dto.Token))
@@ -136,17 +173,20 @@ namespace UserManagement.Infrastructure.Services
                 throw new BadRequestException("New password is required.");
             }
 
-            var tokenParts = dto.Token.Split('|', 2);
-
-            if (tokenParts.Length != 2)
+            if (string.IsNullOrWhiteSpace(dto.ConfirmPassword))
             {
-                throw new BadRequestException("Invalid reset token.");
+                throw new BadRequestException("Confirm password is required.");
             }
 
-            var userId = tokenParts[0];
-            var resetToken = tokenParts[1];
+            if (dto.NewPassword != dto.ConfirmPassword)
+            {
+                throw new BadRequestException(
+                    "New password and confirm password do not match.");
+            }
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var email = dto.EmailAddress.Trim();
+
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
@@ -158,6 +198,8 @@ namespace UserManagement.Infrastructure.Services
                 throw new ForbiddenException(
                     "User account is deactivated.");
             }
+
+            var resetToken = Uri.UnescapeDataString(dto.Token);
 
             var result = await _userManager.ResetPasswordAsync(
                 user,
@@ -176,7 +218,6 @@ namespace UserManagement.Infrastructure.Services
 
             return "Password reset successfully.";
         }
-
 
     }
 }

@@ -18,8 +18,8 @@ namespace UserManagement.API.Controllers
             _branchService = branchService;
         }
 
-
         [HttpGet("get-all")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllBranches()
         {
             var result = await _branchService.GetAllAsync();

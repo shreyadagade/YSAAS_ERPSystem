@@ -13,5 +13,7 @@ namespace UserManagement.Application.Configuration
         public string Host { get; set; } = string.Empty;
 
         public int Port { get; set; }
+
+        public string FrontendUrl { get; set; } = string.Empty;
     }
 }

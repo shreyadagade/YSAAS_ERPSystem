@@ -47,16 +47,15 @@ namespace UserManagement.API.Controllers
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
         {
-            var token = await _accountService.ForgotPasswordAsync(dto);
+            var result = await _accountService.ForgotPasswordAsync(dto);
 
             return StatusCode(
-                 StatusCodes.Status200OK,
-                 new
-                 {
-                     statusCode = StatusCodes.Status200OK,
-                     message = "Password reset token generated successfully.",
-                     token = token
-                 });
+                StatusCodes.Status200OK,
+                new
+                {
+                    statusCode = StatusCodes.Status200OK,
+                    message = result
+                });
         }
 
         [HttpPost("reset-password")]

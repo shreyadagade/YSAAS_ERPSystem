@@ -26,6 +26,7 @@ namespace UserManagement.Infrastructure.Persistence.Context
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<MenuResponseDto> MenuResponseDtos { get; set; }
         public DbSet<ProfileResponseDto> ProfileResponseDtos { get; set; }
+        //public DbSet<QualificationResponseDto> QualificationResponseDtos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -213,6 +214,13 @@ namespace UserManagement.Infrastructure.Persistence.Context
                 entity.Ignore(x => x.IsActive);
                 entity.Ignore(x => x.Roles);
             });
+
+            //builder.Entity<QualificationResponseDto>(entity =>
+            //{
+            //    entity.HasNoKey();
+            //});
+
+
         }
     }
 }
