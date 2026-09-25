@@ -13,7 +13,7 @@ using LeadManagement.Application.Interfaces.Services.Lead;
 using LeadManagement.Application.Services;
 using LeadManagement.Application.Services.Enquiry;
 using LeadManagement.Application.Services.Lead;
-using LeadManagement.Application.Settings;
+//using LeadManagement.Application.Settings;
 using LeadManagement.Infrastructure.Repositories;
 using LeadManagement.Infrastructure.Repositories.Enquiry;
 using LeadManagement.Infrastructure.Repositories.EnquiryFollowup;
@@ -21,13 +21,13 @@ using LeadManagement.Infrastructure.Repositories.Lead;
 using LeadManagement.Infrastructure.Repositories.LeadSource;
 using LeadManagement.Infrastructure.Repositories.TrainingCourse;
 using LeadManagement.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
+//using Microsoft.IdentityModel.Tokens;
+//using Microsoft.OpenApi;
 using Serilog;
-using System.Text;
+//using System.Text;
 
-using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,27 +57,31 @@ builder.Services.AddControllers();
 // Swagger
 // =========================
 
+
+
+
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header
-       
-    });
+//builder.Services.AddSwaggerGen(options =>
+//{
+//    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+//    {
+//        Name = "Authorization",
+//        Type = SecuritySchemeType.Http,
+//        Scheme = "bearer",
+//        BearerFormat = "JWT",
+//        In = ParameterLocation.Header
 
-    options.AddSecurityRequirement(document =>
-        new OpenApiSecurityRequirement
-        {
-            [new OpenApiSecuritySchemeReference("Bearer", document)] =
-                new List<string>()
-        });
-});
+//    });
+
+//    options.AddSecurityRequirement(document =>
+//        new OpenApiSecurityRequirement
+//        {
+//            [new OpenApiSecuritySchemeReference("Bearer", document)] =
+//                new List<string>()
+//        });
+//});
 
 // =========================
 // Repository Registration
@@ -110,74 +114,74 @@ builder.Services.AddScoped<ILeadImportService,LeadImportService>();
 
 
 
-// =========================
-// JWT Settings
-// =========================
+//// =========================
+//// JWT Settings
+//// =========================
 
-builder.Services.Configure<JwtSettings>(
-    builder.Configuration.GetSection("JwtSettings"));
+//builder.Services.Configure<JwtSettings>(
+//    builder.Configuration.GetSection("JwtSettings"));
 
-var jwtSettings = builder.Configuration
-    .GetSection("JwtSettings")
-    .Get<JwtSettings>();
+//var jwtSettings = builder.Configuration
+//    .GetSection("JwtSettings")
+//    .Get<JwtSettings>();
 
-if (jwtSettings == null ||
-    string.IsNullOrWhiteSpace(jwtSettings.Key))
-{
-    throw new InvalidOperationException(
-        "JWT settings are not configured.");
-}
-
-
-// =========================
-// JWT Service
-// =========================
-
-builder.Services.AddScoped<IJwtService, JwtService>();
+//if (jwtSettings == null ||
+//    string.IsNullOrWhiteSpace(jwtSettings.Key))
+//{
+//    throw new InvalidOperationException(
+//        "JWT settings are not configured.");
+//}
 
 
-// =========================
-// Authentication
-// =========================
+//// =========================
+//// JWT Service
+//// =========================
 
-builder.Services
-    .AddAuthentication(
-        JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters =
-            new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-
-                IssuerSigningKey =
-                    new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(
-                            jwtSettings.Key)),
-
-                ValidateIssuer = true,
-
-                ValidIssuer =
-                    jwtSettings.Issuer,
-
-                ValidateAudience = true,
-
-                ValidAudience =
-                    jwtSettings.Audience,
-
-                ValidateLifetime = true,
-
-                ClockSkew =
-                    TimeSpan.Zero
-            };
-    });
+//builder.Services.AddScoped<IJwtService, JwtService>();
 
 
-// =========================
-// Authorization
-// =========================
+//// =========================
+//// Authentication
+//// =========================
 
-builder.Services.AddAuthorization();
+//builder.Services
+//    .AddAuthentication(
+//        JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters =
+//            new TokenValidationParameters
+//            {
+//                ValidateIssuerSigningKey = true,
+
+//                IssuerSigningKey =
+//                    new SymmetricSecurityKey(
+//                        Encoding.UTF8.GetBytes(
+//                            jwtSettings.Key)),
+
+//                ValidateIssuer = true,
+
+//                ValidIssuer =
+//                    jwtSettings.Issuer,
+
+//                ValidateAudience = true,
+
+//                ValidAudience =
+//                    jwtSettings.Audience,
+
+//                ValidateLifetime = true,
+
+//                ClockSkew =
+//                    TimeSpan.Zero
+//            };
+//    });
+
+
+//// =========================
+//// Authorization
+//// =========================
+
+//builder.Services.AddAuthorization();
 
 
 // =========================
@@ -221,14 +225,14 @@ app.UseHttpsRedirection();
 // Authentication
 // =========================
 
-app.UseAuthentication();
+//app.UseAuthentication();
 
 
 // =========================
 // Authorization
 // =========================
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 
 // =========================
