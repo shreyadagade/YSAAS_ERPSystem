@@ -23,10 +23,10 @@ namespace LeadManagement.Application.DTOs.Enquiry
         public DateTime? BirthDate { get; set; }
         public int? QualificationID { get; set; }
 
-        //public string? Qualification { get; set; }
+        public string? Qualification { get; set; }
         public int? SourceId { get; set; }
 
-        //public string? LeadSources { get; set; }
+        public string? LeadSources { get; set; }
 
         public string? EnquiryFors { get; set; }
 
